@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <record id="mail_activity_data_update_password" model="mail.activity.type">
+            <field name="name">Update Password</field>
+            <field name="icon">fa-lock</field>
+            <field name="delay_count">0</field>
+            <field name="sequence">98</field>
+        </record>
+
+    </data>
+</odoo>

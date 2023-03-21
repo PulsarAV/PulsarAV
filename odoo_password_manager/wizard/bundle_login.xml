@@ -1,0 +1,106 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <!-- The general form user for dialogs -->
+    <record id="bundle_login_wizard_form_view_clear"  model="ir.ui.view">
+        <field name="name">bundle.login.form.view.clear</field>
+        <field name="model">bundle.login</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="bundle_id" readonly="1" options="{'no_open': 1}"/>
+                    <field name="password" widget="PasswordCopy" password="True" log_in="True"/>
+                </group>
+            </form>
+        </field>
+    </record>
+    <!-- The simple login wizard -->
+    <record id="bundle_login_wizard_form_view" model="ir.ui.view">
+        <field name="name">bundle.login.form.view</field>
+        <field name="model">bundle.login</field>
+        <field name="inherit_id" ref="odoo_password_manager.bundle_login_wizard_form_view_clear"/>
+        <field name="mode">primary</field>
+        <field name="priority">900</field>
+        <field name="arch" type="xml">
+            <form position="inside">
+                <footer>
+                    <button name="action_log_in"
+                            string="Log in"
+                            type="object"
+                            class="oe_highlight o_form_button_save"
+                    />
+                    <button string="Cancel" class="oe_link" special="cancel"/>
+                </footer>
+            </form>               
+        </field>
+    </record>
+    <!-- The update bundle wizard -->
+    <record id="bundle_login_wizard_form_view_update"  model="ir.ui.view">
+        <field name="name">bundle.login.form.view.update</field>
+        <field name="model">bundle.login</field>
+        <field name="inherit_id" ref="odoo_password_manager.bundle_login_wizard_form_view_clear"/>
+        <field name="mode">primary</field>
+        <field name="priority">950</field>
+        <field name="arch" type="xml">
+            <form position="inside">
+                <footer>
+                    <button name="action_update_password"
+                            string="Update password"
+                            type="object"
+                            class="oe_highlight o_form_button_save"
+                    />
+                    <button string="Cancel" class="oe_link" special="cancel"/>
+                </footer>
+            </form>
+            <field name="password" position="attributes">
+                <attribute name="string">Old Password</attribute>
+            </field>
+            <group position="inside">
+                <field name="new_password" widget="PasswordCopy" password="True" log_in="True"/>
+                <field name="new_password_confirmation" widget="PasswordCopy" password="True" log_in="True"/>
+            </group>                
+        </field>
+    </record>
+    <!-- The special form to be triggered from Python method to update salt -->
+    <record id="bundle_login_wizard_form_view_update_salt" model="ir.ui.view">
+        <field name="name">bundle.login.form.view.update.salt</field>
+        <field name="model">bundle.login</field>
+        <field name="inherit_id" ref="odoo_password_manager.bundle_login_wizard_form_view"/>
+        <field name="mode">primary</field>
+        <field name="priority">1000</field>
+        <field name="arch" type="xml">
+            <button name="action_log_in" position="replace">
+                <button name="action_update_bundle_key"
+                        string="Update bundle key and salt"
+                        type="object"
+                        class="oe_highlight o_form_button_save"
+                />
+            </button>
+        </field>
+    </record>
+    <record id="bundle_login_password_action_simple" model="ir.actions.act_window">
+        <field name="name">Log in</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">bundle.login</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="odoo_password_manager.bundle_login_wizard_form_view"/>
+        <field name="target">new</field>
+    </record>
+    <record id="bundle_login_password_action_update" model="ir.actions.act_window">
+        <field name="name">Update bundle password</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">bundle.login</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="odoo_password_manager.bundle_login_wizard_form_view_update"/>
+        <field name="target">new</field>
+    </record>
+    <record id="bundle_login_password_action_action" model="ir.actions.act_window">
+        <field name="name">Update bundle key and salt</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">bundle.login</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="odoo_password_manager.bundle_login_wizard_form_view_update_salt"/>
+        <field name="target">new</field>
+    </record>
+
+</odoo>

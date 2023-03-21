@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="odoo_password_manager.PwmJsTreeContainer" owl="1">
+        <t t-if="state.treeData and (state.treeData.length != 0 or props.canUpdate)">
+            <hr class="mb8 jstr-hr"/>
+            <div class="jstr-panel-header">
+                <span>
+                    <t t-out="title"/>
+                    <i class="fa fa-ban jstr-functional-button jstr-functional-button-clear ml4" t-on-click.prevent="() => this._onClearJsTree()"></i>
+                </span>
+            </div>
+            <div class="jstr-panel-body w-100">
+                <div class="jstr-search-row"  t-if="state.treeData.length != 0">
+                    <div class="jstr-search-view">
+                        <i class="fa fa-search jstr-search-icon jstr-search-icon-search" t-on-click="() => this._onSearchExecute()"/>
+                        <i class="fa fa-ban jstr-search-icon jstr-search-icon-trash" t-on-click="() => this._onSearchClear()"/>
+                        <div class="jstr-search-input-container">
+                            <input t-attf-id="jstr_input_#{id}" placeholder="search" t-on-change="(event) => this._onSearchChange(event)" t-on-keyup="(event) => this._onSearchkeyUp(event)"/>
+                        </div>
+                    </div>
+                </div>
+                <div t-att-id="id">
+                </div>
+                <div class="jstr-panel-body mb24">
+                    <span class="jstr-functional-button jstr-pull-right mr16" t-on-click="() => this._onAddRootTag()">... add</span>
+                </div>
+            </div>
+        </t>
+    </t>
+
+</templates>
