@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+
+        <!-- General Configuration -->
+        <record id="view_syscoon_financeinterface_configuration" model="ir.ui.view">
+            <field name="name">res.config.settings.view.form.syscoon.financeinterface.configuration</field>
+            <field name="model">res.config.settings</field>
+            <field name="priority" eval="80" />
+            <field name="inherit_id" ref="base.res_config_settings_view_form" />
+            <field name="arch" type="xml">
+                <xpath expr="//div[hasclass('settings')]" position="inside">
+                    <div id="syscoon_financeinterface" class="app_settings_block"  data-string="Finance Interface" string="Finance Interface" data-key="syscoon_financeinterface" groups="syscoon_financeinterface.group_syscoon_financeinterface">
+                        <div id="syscoon_financeinterface_general_settings">
+                            <h2>Finance Interface</h2>
+                            <div class="row mt16 o_settings_container">
+                                <div class="col-12 col-lg-6 o_setting_box" title="Activation">
+                                    <div class="o_setting_left_pane">
+                                        <field name="company_export_finance_interface_active"/>
+                                    </div>
+                                    <div class="o_setting_right_pane">
+                                        <label for="company_export_finance_interface_active"/>
+                                        <span class="fa fa-lg fa-building-o" title="Values set here are company-specific." aria-label="Values set here are company-specific." groups="base.group_multi_company" role="img"/>
+                                        <div class="text-muted">
+                                            Activate the Finance-Interface for this company. If activated, all options include the menu entries will be visible.
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-lg-6 o_setting_box"  title="Basic settings for the finance interface." attrs="{'invisible': [('company_export_finance_interface_active', '=', False)]}">
+                                    <div class="o_setting_left_pane"/>
+                                    <div class="o_setting_right_pane">
+                                        <span class="o_form_label" >Select your default export interface.</span>
+                                        <div class="text-muted">
+                                            Choose your prefered export interface which automatically applies in the export wizard.
+                                        </div>
+                                        <div class="row mt16">
+                                            <div class="content-group">
+                                                <label string="Select Interface"  for="company_export_finance_interface" class="col-lg-3 o_light_label" />
+                                                <field name="company_export_finance_interface"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

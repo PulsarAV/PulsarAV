@@ -1,0 +1,31 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#   * syscoon_partner_accounts_automatic_sale
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 15.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-10-08 12:17+0000\n"
+"PO-Revision-Date: 2021-10-08 12:17+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: syscoon_partner_accounts_automatic_sale
+#: model:syscoon.accounts.automatic.mode,name:syscoon_partner_accounts_automatic_sale.syscoon_automatic_mode_sale_order_numbers
+msgid "Sale Order (Customer Numbers)"
+msgstr "Verkaufsauftrag (Kundennummen)"
+
+#. module: syscoon_partner_accounts_automatic_sale
+#: model:syscoon.accounts.automatic.mode,name:syscoon_partner_accounts_automatic_sale.syscoon_automatic_mode_sale_order
+msgid "Sale Order (Debit Accounts)"
+msgstr "Vekaufsauftag (Debitorennummern)"
+
+#. module: syscoon_partner_accounts_automatic_sale
+#: model:ir.model,name:syscoon_partner_accounts_automatic_sale.model_sale_order
+msgid "Sales Order"
+msgstr "Verkaufsauftrag"

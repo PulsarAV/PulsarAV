@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- General Configuration -->
+        <record id="view_syscoon_financeinterface_configuration_datev_xml" model="ir.ui.view">
+            <field name="name">res.config.settings.view.form.syscoon.financeinterface.configuration.datev.xml</field>
+            <field name="model">res.config.settings</field>
+            <field name="priority" eval="80"/>
+            <field name="inherit_id" ref="syscoon_financeinterface.view_syscoon_financeinterface_configuration"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[@id='syscoon_financeinterface']" position="inside">
+                    <div id="syscoon_financeinterface_datev_xml_settings" attrs="{'invisible': [('company_export_finance_interface_active', '=', False)]}">
+                        <h2>DATEV XML Export Settings</h2>
+                        <div class="row mt16 o_settings_container">
+                            <div class="col-12 col-lg-6 o_setting_box" title="Selection between the XML-Export formats.">
+                                <div class="o_setting_left_pane"/>
+                                <div class="o_setting_right_pane">
+                                    <span class="o_form_label">Selection for the XML-export formats.</span>
+                                    <span class="fa fa-lg fa-building-o" title="Values set here are company-specific." aria-label="Values set here are company-specific." groups="base.group_multi_company" role="img"/>
+                                    <div class="text-muted">
+                                        Choose between two formats of the XML-export.<br/>
+                                        Standard = without accounts = you will have booking suggestions in DATEV<br/>
+                                        Extended = include accounts = you will have direct bookings in DATEV<br/>
+                                    </div>
+                                    <div class="mt16">
+                                         <div class="content-group">
+                                            <field name="company_export_xml_mode" class="o_light_label mt16" widget="radio"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-6 o_setting_box"
+                                id="company_export_xml_group_lines"
+                                title="Enable Invoice Line Grouping.">
+                                <div class="o_setting_left_pane">
+                                    <field name="company_export_xml_group_lines"/>
+                                </div>
+                                <div class="o_setting_right_pane">
+                                    <label for="company_export_xml_group_lines"/>
+                                    <span class="fa fa-lg fa-building-o" title="Values set here are company-specific." aria-label="Values set here are company-specific." groups="base.group_multi_company" role="img"/>
+                                    <div class="text-muted">
+                                        Group invoice lines that have the same account, tax, analytic account and analytic tag.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-6 o_setting_box"
+                                id="company_export_xml_analytic_accounts"
+                                title="Enable exporting Analytic Accounts.">
+                                <div class="o_setting_left_pane">
+                                    <field name="company_export_xml_analytic_accounts"/>
+                                </div>
+                                <div class="o_setting_right_pane">
+                                    <label for="company_export_xml_analytic_accounts"/>
+                                    <span class="fa fa-lg fa-building-o" title="Values set here are company-specific." aria-label="Values set here are company-specific." groups="base.group_multi_company" role="img"/>
+                                    <div class="text-muted">
+                                        Enabling this option will add the analytic accounts in to the XML export.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

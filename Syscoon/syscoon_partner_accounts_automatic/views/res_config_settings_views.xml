@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="res_config_settings_view_form" model="ir.ui.view">
+            <field name="name">res.config.settings.view.form.inherit.account</field>
+            <field name="model">res.config.settings</field>
+            <field name="priority" eval="60"/>
+            <field name="inherit_id" ref="account.res_config_settings_view_form"/>
+            <field name="arch" type="xml">
+                <div id="use_separate_accounts"  position="after">
+                    <div class="col-12 col-lg-6 o_setting_box"  >
+                        <group>
+                            <field name="create_auto_account_on" widget="many2many_checkboxes" class="o_light_label"/>
+                        </group>
+                    </div>
+                </div>
+            </field>
+        </record>
+    </data>
+</odoo>

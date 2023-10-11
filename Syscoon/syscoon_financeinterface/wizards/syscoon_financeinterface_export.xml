@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+
+        <record id="syscoon_financeinterface_export_wizard_view" model="ir.ui.view">
+            <field name="name">syscoon.financeinterface.export.wizard.view</field>
+            <field name="model">syscoon.financeinterface.export</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Financial Export">
+                    <field name="export_id" invisible="1" />
+                    <group name="1st_settings">
+                        <field name="mode" />
+                    </group>
+                    <group name="2nd_settings">
+                        <field name="type" invisible="1" />
+                        <field  name="date_from" required="1" attrs="{'invisible': [('type', '!=', 'date_range')]}"/>
+                        <field name="date_to"  required="1" attrs="{'invisible': [('type', '!=', 'date_range')]}"  />
+                        <field  name="date"   required="1"   attrs="{'invisible': [('type', '!=', 'date')]}" />
+                    </group>
+                    <footer>
+                        <button string="Cancel" special="cancel" />
+                        <button string="Start Export"  name="action_start" type="object"  class="btn-default"  />
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record  id="syscoon_financeinterface_export_wizard_action" model="ir.actions.act_window"  >
+            <field name="name">Create Move Export</field>
+            <field name="res_model">syscoon.financeinterface.export</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="syscoon_financeinterface_export_wizard_view" />
+            <field name="target">new</field>
+        </record>
+
+        <menuitem
+                name="Create Finance Export"
+                action="syscoon_financeinterface_export_wizard_action"
+                id="syscoon_financenterface_wizard_action_view"
+                parent="menu_finance_interface"
+                groups="group_syscoon_financeinterface"
+                sequence="5"
+        />
+
+    </data>
+</odoo>

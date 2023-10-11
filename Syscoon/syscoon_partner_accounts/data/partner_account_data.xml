@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <data noupdate="1">
+
+       	<record id="partner_account_receivable_sequence" model="ir.sequence">
+            <field eval="'partner.auto.receivable'" name="code"/>
+            <field eval="'Receivable'" name="name"/>
+            <field name="number_next" eval="10000"/>
+        </record>
+
+       	<record id="partner_account_payable_sequence" model="ir.sequence">
+            <field eval="'partner.auto.payable'" name="code"/>
+            <field eval="'Payable'" name="name"/>
+            <field name="number_next" eval="70000"/>
+        </record>
+
+        <record id="partner_account_customer_number_sequence" model="ir.sequence">
+            <field eval="'partner.auto.customer.number'" name="code"/>
+            <field eval="'Customer Number'" name="name"/>
+            <field name="number_next" eval="100000"/>
+        </record>
+
+        <record id="partner_account_supplier_number_sequence" model="ir.sequence">
+            <field eval="'partner.auto.supplier.number'" name="code"/>
+            <field eval="'Supplier Number'" name="name"/>
+            <field name="number_next" eval="700000"/>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- View settings for Account Chart -->
+        <record id="syscoon_financeinterface_datev_ascii_view_account_form" model="ir.ui.view">
+            <field name="name">syscoon.financeinterface.datev.ascii.view.account.form</field>
+            <field name="model">account.account</field>
+            <field name="inherit_id" ref="account.view_account_form"/>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <xpath expr="//group" position="inside">
+                    <field name="export_finance_interface_active" invisible="1"/>
+                    <group name="syscoon_financeinterface_datev" string="DATEV Settings" attrs="{'invisible': [('export_finance_interface_active', '=', False)]}">
+                        <field name="datev_automatic_account"/>
+                        <field name="datev_automatic_tax" widget="many2many_tags" attrs="{'invisible': [('datev_automatic_account', '=', False)]}"/>
+                        <field name="datev_no_tax" attrs="{'invisible': [('datev_automatic_account', '=', False)]}"/>
+                        <field name="datev_vatid_required" attrs="{'invisible': [('datev_automatic_account', '=', False)]}"/>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- View settings for Taxes -->
+        <record id="syscoon_financeinterface_datev_ascii_view_tax_form" model="ir.ui.view">
+            <field name="name">syscoon.financeinterface.datev.ascii.view.tax.form</field>
+            <field name="model">account.tax</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="account.view_tax_form" />
+            <field name="arch" type="xml">
+                <xpath expr="//group" position="inside">
+                    <field name="export_finance_interface_active" invisible="1"/>
+                    <group name="syscoon_financeinterface_datev" attrs="{'invisible': [('export_finance_interface_active', '=', False)]}">
+                        <field name="datev_tax_key"/>
+                        <field name="datev_tax_case"/>
+                        <field name="datev_country_id"/>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

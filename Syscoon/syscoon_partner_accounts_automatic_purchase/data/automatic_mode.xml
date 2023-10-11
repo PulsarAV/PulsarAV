@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <data>
+
+        <record id="syscoon_automatic_mode_purchase_order" model="syscoon.accounts.automatic.mode">
+            <field name="name">Purchase Order (Credit Accounts)</field>
+            <field name="code">purchase_order_supplier</field>
+        </record>
+
+        <record id="syscoon_automatic_mode_purchase_order_numbers" model="syscoon.accounts.automatic.mode">
+            <field name="name">Purchase Order (Supplier Numbers)</field>
+            <field name="code">purchase_order_supplier_numbers</field>
+        </record>
+
+    </data>
+</odoo>

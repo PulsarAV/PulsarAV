@@ -1,0 +1,144 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#   * syscoon_partner_accounts
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 15.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-10-08 10:07+0000\n"
+"PO-Revision-Date: 2021-10-08 10:07+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: syscoon_partner_accounts
+#: model:ir.model.fields,field_description:syscoon_partner_accounts.field_res_config_settings__add_number_to_partner_number
+msgid "Add Account Number as Customer- / Supplier-Numbers"
+msgstr "Kontonummer als Kunden- / Lieferantennummer übernehmen"
+
+#. module: syscoon_partner_accounts
+#: model:ir.model.fields,field_description:syscoon_partner_accounts.field_res_company__add_number_to_partner_number
+msgid "Add Account Number to Partner Numbers"
+msgstr "Kontonummer als Partnernummer übernehmen"
+
+#. module: syscoon_partner_accounts
+#: model:ir.model.fields,field_description:syscoon_partner_accounts.field_res_company__add_number_to_partner_ref
+#: model:ir.model.fields,field_description:syscoon_partner_accounts.field_res_config_settings__add_number_to_partner_ref
+msgid "Add Customer or Supplier Number to Partner Reference"
+msgstr "Kunden- oder Lieferantennummer zur Partner Referenz hinzufügen"
+
+#. module: syscoon_partner_accounts
+#: model_terms:ir.ui.view,arch_db:syscoon_partner_accounts.res_config_settings_view_form
+msgid "Automatic Account Generation"
+msgstr "Automatische Kontengenerierung"
+
+#. module: syscoon_partner_accounts
+#: model:ir.model,name:syscoon_partner_accounts.model_res_company
+msgid "Companies"
+msgstr "Unternehmen"
+
+#. module: syscoon_partner_accounts
+#: model:ir.model,name:syscoon_partner_accounts.model_res_config_settings
+msgid "Config Settings"
+msgstr "Konfigurationseinstellungen"
+
+#. module: syscoon_partner_accounts
+#: model:ir.model,name:syscoon_partner_accounts.model_res_partner
+msgid "Contact"
+msgstr "Kontakt"
+
+#. module: syscoon_partner_accounts
+#: model_terms:ir.ui.view,arch_db:syscoon_partner_accounts.syscoon_partern_accounts_partner_form
+msgid "Create Customer Number"
+msgstr "Kudennummer erstellen"
+
+#. module: syscoon_partner_accounts
+#: model_terms:ir.ui.view,arch_db:syscoon_partner_accounts.syscoon_partern_accounts_partner_form
+msgid "Create Payable Account"
+msgstr "Kreditorenkonto erzeugen"
+
+#. module: syscoon_partner_accounts
+#: model_terms:ir.ui.view,arch_db:syscoon_partner_accounts.syscoon_partern_accounts_partner_form
+msgid "Create Receivable Account"
+msgstr "Debitorenkonto erzeugen"
+
+#. module: syscoon_partner_accounts
+#: model_terms:ir.ui.view,arch_db:syscoon_partner_accounts.syscoon_partern_accounts_partner_form
+msgid "Create Supplier Number"
+msgstr "Lieferantennummer erstellen"
+
+#. module: syscoon_partner_accounts
+#: model:ir.model.fields,field_description:syscoon_partner_accounts.field_res_partner__creditor_number
+#: model:ir.model.fields,field_description:syscoon_partner_accounts.field_res_users__creditor_number
+msgid "Creditor Number"
+msgstr "Kreditorennummer"
+
+#. module: syscoon_partner_accounts
+#: model:ir.model.fields,field_description:syscoon_partner_accounts.field_res_partner__customer_number
+#: model:ir.model.fields,field_description:syscoon_partner_accounts.field_res_users__customer_number
+msgid "Customer Number"
+msgstr "Kundennummer"
+
+#. module: syscoon_partner_accounts
+#: model:ir.model.fields,field_description:syscoon_partner_accounts.field_res_company__customer_number_sequence_id
+#: model:ir.model.fields,field_description:syscoon_partner_accounts.field_res_config_settings__customer_number_sequence_id
+msgid "Customer Number Sequence"
+msgstr "Kundennummernsequenz"
+
+#. module: syscoon_partner_accounts
+#: model:ir.model.fields,field_description:syscoon_partner_accounts.field_res_partner__debitor_number
+#: model:ir.model.fields,field_description:syscoon_partner_accounts.field_res_users__debitor_number
+msgid "Debitor Number"
+msgstr "Debitorennummer"
+
+#. module: syscoon_partner_accounts
+#: model:ir.model.fields,field_description:syscoon_partner_accounts.field_res_company__payable_template_id
+#: model:ir.model.fields,field_description:syscoon_partner_accounts.field_res_config_settings__payable_template_id
+msgid "Payable Account Template"
+msgstr "Lieferantenkontenvorlage"
+
+#. module: syscoon_partner_accounts
+#: model:ir.model.fields,field_description:syscoon_partner_accounts.field_res_company__payable_sequence_id
+#: model:ir.model.fields,field_description:syscoon_partner_accounts.field_res_config_settings__payable_sequence_id
+msgid "Payable Sequence"
+msgstr "Kreditorensequenz"
+
+#. module: syscoon_partner_accounts
+#: model:ir.model.fields,field_description:syscoon_partner_accounts.field_res_company__receivable_template_id
+#: model:ir.model.fields,field_description:syscoon_partner_accounts.field_res_config_settings__receivable_template_id
+msgid "Receivable Account Template"
+msgstr "Debitoren-Vorlage"
+
+#. module: syscoon_partner_accounts
+#: model:ir.model.fields,field_description:syscoon_partner_accounts.field_res_company__receivable_sequence_id
+#: model:ir.model.fields,field_description:syscoon_partner_accounts.field_res_config_settings__receivable_sequence_id
+msgid "Receivable Sequence"
+msgstr "Debitorensequenz"
+
+#. module: syscoon_partner_accounts
+#: model:ir.model.fields,field_description:syscoon_partner_accounts.field_res_partner__supplier_number
+#: model:ir.model.fields,field_description:syscoon_partner_accounts.field_res_users__supplier_number
+msgid "Supplier Number"
+msgstr "Lieferantennummer"
+
+#. module: syscoon_partner_accounts
+#: model:ir.model.fields,field_description:syscoon_partner_accounts.field_res_company__supplier_number_sequence_id
+#: model:ir.model.fields,field_description:syscoon_partner_accounts.field_res_config_settings__supplier_number_sequence_id
+msgid "Supplier Number Sequence"
+msgstr "Lieferantennummernsequenz"
+
+#. module: syscoon_partner_accounts
+#: model:ir.model.fields,field_description:syscoon_partner_accounts.field_res_company__use_separate_accounts
+#: model:ir.model.fields,field_description:syscoon_partner_accounts.field_res_config_settings__use_separate_accounts
+msgid "Use Separate Accounts"
+msgstr "Separate Buchhaltungskonten erzeugen"
+
+#. module: syscoon_partner_accounts
+#: model:ir.model.fields,field_description:syscoon_partner_accounts.field_res_company__use_separate_partner_numbers
+#: model:ir.model.fields,field_description:syscoon_partner_accounts.field_res_config_settings__use_separate_partner_numbers
+msgid "Use separate Customer- / Supplier-Numbers"
+msgstr "Separate Kunden- / Lieferantennummern verwenden"

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- View settings for Account Move -->
+        <record id="syscoon_financeinterface_datev_ascii_view_move_form" model="ir.ui.view">
+            <field name="name">syscoon.financeinterface.datev.ascii.view.move.form</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account.view_move_form"/>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <xpath expr="//group" position="inside">
+                    <field name="export_finance_interface_active" invisible="1"/>
+                    <group id="syscoon_financeinterface_datev" attrs="{'invisible': [('export_finance_interface_active', '=', False)]}">
+                        <group>
+                            <field name="datev_checks_enabled"/>
+                            <field name="datev_ref" readonly="0"/>
+                        </group>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

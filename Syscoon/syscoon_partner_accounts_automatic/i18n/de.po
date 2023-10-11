@@ -1,0 +1,125 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#   * syscoon_partner_accounts_automatic
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 15.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-10-08 10:12+0000\n"
+"PO-Revision-Date: 2021-10-08 10:12+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: syscoon_partner_accounts_automatic
+#: model:ir.model.fields,field_description:syscoon_partner_accounts_automatic.field_syscoon_accounts_automatic_mode__code
+msgid "Code"
+msgstr ""
+
+#. module: syscoon_partner_accounts_automatic
+#: model:ir.model,name:syscoon_partner_accounts_automatic.model_res_company
+msgid "Companies"
+msgstr "Unternehmen"
+
+#. module: syscoon_partner_accounts_automatic
+#: model:ir.model,name:syscoon_partner_accounts_automatic.model_res_config_settings
+msgid "Config Settings"
+msgstr "Konfigurationseinstellungen"
+
+#. module: syscoon_partner_accounts_automatic
+#: model:ir.model,name:syscoon_partner_accounts_automatic.model_res_partner
+msgid "Contact"
+msgstr "Kontakt"
+
+#. module: syscoon_partner_accounts_automatic
+#: model:ir.model.fields,field_description:syscoon_partner_accounts_automatic.field_res_company__create_auto_account_on
+#: model:ir.model.fields,field_description:syscoon_partner_accounts_automatic.field_res_config_settings__create_auto_account_on
+msgid "Create Auto Account On"
+msgstr "Automatisch erstellen bei"
+
+#. module: syscoon_partner_accounts_automatic
+#: model:ir.model.fields,field_description:syscoon_partner_accounts_automatic.field_syscoon_accounts_automatic_mode__create_uid
+msgid "Created by"
+msgstr "Erstellt von"
+
+#. module: syscoon_partner_accounts_automatic
+#: model:ir.model.fields,field_description:syscoon_partner_accounts_automatic.field_syscoon_accounts_automatic_mode__create_date
+msgid "Created on"
+msgstr "Erstellen bei"
+
+#. module: syscoon_partner_accounts_automatic
+#: model:ir.model.fields,field_description:syscoon_partner_accounts_automatic.field_syscoon_accounts_automatic_mode__display_name
+msgid "Display Name"
+msgstr "Anzeigename"
+
+#. module: syscoon_partner_accounts_automatic
+#: model:ir.model.fields,field_description:syscoon_partner_accounts_automatic.field_syscoon_accounts_automatic_mode__id
+msgid "ID"
+msgstr ""
+
+#. module: syscoon_partner_accounts_automatic
+#: model:ir.model.fields,field_description:syscoon_partner_accounts_automatic.field_syscoon_accounts_automatic_mode____last_update
+msgid "Last Modified on"
+msgstr "Zuletzt geändert am"
+
+#. module: syscoon_partner_accounts_automatic
+#: model:ir.model.fields,field_description:syscoon_partner_accounts_automatic.field_syscoon_accounts_automatic_mode__write_uid
+msgid "Last Updated by"
+msgstr "Zuletzt geändet durch"
+
+#. module: syscoon_partner_accounts_automatic
+#: model:ir.model.fields,field_description:syscoon_partner_accounts_automatic.field_syscoon_accounts_automatic_mode__write_date
+msgid "Last Updated on"
+msgstr "Zuletzt aktuallisiert am"
+
+#. module: syscoon_partner_accounts_automatic
+#: model:ir.model.fields,field_description:syscoon_partner_accounts_automatic.field_syscoon_accounts_automatic_mode__name
+msgid "Name"
+msgstr ""
+
+#. module: syscoon_partner_accounts_automatic
+#: model:syscoon.accounts.automatic.mode,name:syscoon_partner_accounts_automatic.syscoon_automatic_mode_vendors
+msgid "Parnter (Credit Accounts)"
+msgstr "Parnter (Keditorenkonten)"
+
+#. module: syscoon_partner_accounts_automatic
+#: model:syscoon.accounts.automatic.mode,name:syscoon_partner_accounts_automatic.syscoon_automatic_mode_customer_numbers
+msgid "Partner (Customer Numbers)"
+msgstr "Partner (Kundennummern)"
+
+#. module: syscoon_partner_accounts_automatic
+#: model:syscoon.accounts.automatic.mode,name:syscoon_partner_accounts_automatic.syscoon_automatic_mode_customers
+msgid "Partner (Debit Accounts)"
+msgstr "Partner (Debitorenkonten)"
+
+#. module: syscoon_partner_accounts_automatic
+#: model:syscoon.accounts.automatic.mode,name:syscoon_partner_accounts_automatic.syscoon_automatic_mode_vendor_numbers
+msgid "Partner (Supplier Numbers)"
+msgstr "Partner (Lieferantennummern)"
+
+#. module: syscoon_partner_accounts_automatic
+#: model:ir.model.fields,help:syscoon_partner_accounts_automatic.field_res_company__create_auto_account_on
+msgid ""
+"Select where the Accounts should be created. If on creating an invoice no "
+"account exists, it will created it then."
+msgstr ""
+"Wählen Sie wann die Konten erstellt werden sollen. Wenn beim Erstellen der "
+"Rechnung kein Konto existiet, wid es autmatisch erstellt."
+
+#. module: syscoon_partner_accounts_automatic
+#: model:ir.model.fields,help:syscoon_partner_accounts_automatic.field_res_config_settings__create_auto_account_on
+msgid ""
+"Select where the Accounts should be created. Please notice, without a "
+"slection no accounts will be created automatically."
+msgstr ""
+"Wählen Sie wann die Konten erstellt werden sollen. Bitte beachten Sie dass "
+"ohne Auswahl keine Konten erstellt werden."
+
+#. module: syscoon_partner_accounts_automatic
+#: model:ir.model,name:syscoon_partner_accounts_automatic.model_syscoon_accounts_automatic_mode
+msgid "syscoon Accounts Automatic Mode"
+msgstr "syscoon Automatischer Konten-Modus"
