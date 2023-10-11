@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <data>
+
+        <record id="syscoon_automatic_mode_customers" model="syscoon.accounts.automatic.mode">
+            <field name="name">Partner (Debit Accounts)</field>
+            <field name="code">partner_customer</field>
+        </record>
+
+        <record id="syscoon_automatic_mode_vendors" model="syscoon.accounts.automatic.mode">
+            <field name="name">Parnter (Credit Accounts)</field>
+            <field name="code">partner_supplier</field>
+        </record>
+
+        <record id="syscoon_automatic_mode_customer_numbers" model="syscoon.accounts.automatic.mode">
+            <field name="name">Partner (Customer Numbers)</field>
+            <field name="code">partner_customer_numbers</field>
+        </record>
+
+        <record id="syscoon_automatic_mode_vendor_numbers" model="syscoon.accounts.automatic.mode">
+            <field name="name">Partner (Supplier Numbers)</field>
+            <field name="code">partner_supplier_numbers</field>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="syscoon_financeinterface_datev_import_view_tax_form" model="ir.ui.view">
+            <field name="name">syscoon.financeinterface.datev.import.view.tax.form</field>
+            <field name="model">account.tax</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="syscoon_financeinterface_datev_ascii.syscoon_financeinterface_datev_ascii_view_tax_form" />
+            <field name="arch" type="xml">
+                <xpath expr="//group[@name='syscoon_financeinterface_datev']" position="inside">
+                    <field name="datev_discount_account"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

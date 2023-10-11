@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <template id="export_report_document">
+            <t t-call="web.internal_layout">
+                <div class="row mt32 mb32">
+                    <h1>Protocol for exported acoount moves</h1>
+                </div>
+                <div class="row mt32 mb32">
+                    <div class="col-auto">
+                        <strong>Date:</strong>
+                        <p t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d %H:%M')"/>
+                    </div>
+                    <div class="col-auto">
+                        <strong>Name:</strong>
+                        <p class="m-0" t-field="doc.name"/>
+                    </div>
+                    <div class="col-auto">
+                        <strong>Export Modus:</strong>
+                        <p class="m-0" t-field="doc.mode"/>
+                    </div>
+                    <div class="col-auto">
+                        <strong>Period:</strong>
+                        <p class="m-0" t-field="doc.period"/>
+                    </div>
+                </div>
+                <div class="row mt32 mb32" t-if="doc.log">
+                    <div class="col-12">
+                        <strong>Log:</strong>
+                        <p class="m-0" t-field="doc.log"/>
+                    </div>
+                </div>
+                <div class="row mt32 mb32">
+                    <div class="col-12">
+                        <strong>Account Moves</strong>
+                    </div>
+                </div>
+                <table class="table table-sm o_main_table">
+                    <thead>
+                        <tr>
+                            <th name="th_date" class="text-left">Datum</th>
+                            <th name="th_name" class="text-left">Name</th>
+                            <th name="th_journal" class="text-left">Journal</th>
+                            <th name="th_amount_total" class="text-right">Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-foreach="doc.account_moves_ids" t-as="line">
+                            <tr>
+                                <td name="td_date" class="text-left"><span t-field="line.date"/></td>
+                                <td name="td_name" class="text-left"><span t-field="line.name"/></td>
+                                <td name="td_journal" class="text-left"><span t-field="line.journal_id"/></td>
+                                <td name="td_amount_total" class="text-right"><span t-field="line.amount_total"/></td>
+                            </tr>
+                        </t>
+                    </tbody>
+                </table>
+            </t>
+        </template>
+
+        <template id="export_report">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="doc">
+                    <t t-call="syscoon_financeinterface.export_report_document" t-lang="user.lang"/>
+                </t>
+            </t>
+        </template>
+
+        <record id="syscoon_financeinterface_report" model="ir.actions.report">
+            <field name="name">Exports</field>
+            <field name="model">syscoon.financeinterface</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">syscoon_financeinterface.export_report</field>
+            <field name="report_file">syscoon_financeinterface.export_report</field>
+            <field name="binding_model_id" ref="model_syscoon_financeinterface"/>
+            <field name="binding_type">report</field>
+            <field name="print_report_name">(object._get_report_base_filename())</field>
+        </record>
+
+    </data>
+</odoo>

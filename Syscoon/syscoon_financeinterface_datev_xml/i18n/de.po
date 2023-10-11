@@ -1,0 +1,307 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#   * syscoon_financeinterface_datev_xml
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 15.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-09-28 17:46+0000\n"
+"PO-Revision-Date: 2022-09-28 17:46+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: syscoon_financeinterface_datev_xml
+#: code:addons/syscoon_financeinterface_datev_xml/models/syscoon_financeinterface.py:0
+#, python-format
+msgid "%s (id=%s) could not be exported: "
+msgstr "%s (id=%s) kann nicht exportiert werden: "
+
+#. module: syscoon_financeinterface_datev_xml
+#: code:addons/syscoon_financeinterface_datev_xml/models/syscoon_financeinterface.py:0
+#, python-format
+msgid "%s has been exported"
+msgstr "%s wurden exportiert"
+
+#. module: syscoon_financeinterface_datev_xml
+#: model_terms:ir.ui.view,arch_db:syscoon_financeinterface_datev_xml.view_syscoon_financeinterface_configuration_datev_xml
+msgid ""
+"<span class=\"fa fa-lg fa-building-o\" title=\"Values set here are company-"
+"specific.\" aria-label=\"Values set here are company-specific.\" "
+"groups=\"base.group_multi_company\" role=\"img\"/>"
+msgstr ""
+"<span class=\"fa fa-lg fa-building-o\" title=\"Die hier eingestellten Werte sind unternehmens-"
+"spezifisch.\" aria-label=\"Die hier eingestellten Werte sind firmenspezifisch.\" "
+"groups=\"base.group_multi_company\" role=\"img\"/>"
+
+#. module: syscoon_financeinterface_datev_xml
+#: model_terms:ir.ui.view,arch_db:syscoon_financeinterface_datev_xml.view_syscoon_financeinterface_configuration_datev_xml
+msgid ""
+"<span class=\"o_form_label\">Selection for the XML-export formats.</span>\n"
+"                                    <span class=\"fa fa-lg fa-building-o\" title=\"Values set here are company-specific.\" aria-label=\"Values set here are company-specific.\" groups=\"base.group_multi_company\" role=\"img\"/>"
+msgstr ""
+"<span class=\"o_form_label\">Auswahl für die XML-Exportformate.</span>\n"
+"                                    <span class=\"fa fa-lg fa-building-o\" title=\"Hier eingestellte Werte sind unternehmensspezifisch.\" aria-label=\"Hier eingestellte Werte sind unternehmensspezifisch.\" groups=\"base.group_multi_company\" role=\"img\"/>"
+
+
+#. module: syscoon_financeinterface_datev_xml
+#: model_terms:ir.ui.view,arch_db:syscoon_financeinterface_datev_xml.syscoon_financeinterface_xml_view_move_form
+msgid "Accounting Date"
+msgstr "Buchungsdatum"
+
+#. module: syscoon_financeinterface_datev_xml
+#: code:addons/syscoon_financeinterface_datev_xml/models/syscoon_financeinterface.py:0
+#: code:addons/syscoon_financeinterface_datev_xml/models/syscoon_financeinterface.py:0
+#: code:addons/syscoon_financeinterface_datev_xml/models/syscoon_financeinterface.py:0
+#, python-format
+msgid "An error occured while saving %s export in %s"
+msgstr "Ein Fehler ist währnd der Speicherung des Exportes %s in %s geschehen"
+
+#. module: syscoon_financeinterface_datev_xml
+#: model:ir.model.fields.selection,name:syscoon_financeinterface_datev_xml.selection__syscoon_financeinterface_export__xml_mode__bedi
+msgid "BEDI Link"
+msgstr "BEDI Beleg-Link"
+
+#. module: syscoon_financeinterface_datev_xml
+#: model:ir.model.fields.selection,name:syscoon_financeinterface_datev_xml.selection__syscoon_financeinterface_export__xml_invoices__both
+msgid "Both"
+msgstr "Beide"
+
+#. module: syscoon_financeinterface_datev_xml
+#: model_terms:ir.ui.view,arch_db:syscoon_financeinterface_datev_xml.view_syscoon_financeinterface_configuration_datev_xml
+msgid ""
+"Choose between two formats of the XML-export.<br/>\n"
+"                                        Standard = without accounts = you will have booking suggestions in DATEV<br/>\n"
+"                                        Extended = include accounts = you will have direct bookings in DATEV<br/>"
+msgstr ""
+"Wählen Sie zwischen zwei Formaten des XML-Exportes.<br/>\n"
+"                                        Standard = ohne Konten = Erzeugt Buchungsvorschläge in DATEV<br/>\n"
+"                                        Extended = mit Koten = Erzeugt direkte Buchungen in DATEV<br/>"
+
+#. module: syscoon_financeinterface_datev_xml
+#: model:ir.model,name:syscoon_financeinterface_datev_xml.model_res_company
+msgid "Companies"
+msgstr "Unternehmen"
+
+#. module: syscoon_financeinterface_datev_xml
+#: model:ir.model,name:syscoon_financeinterface_datev_xml.model_res_config_settings
+msgid "Config Settings"
+msgstr "Konfigurationseinstellungen"
+
+#. module: syscoon_financeinterface_datev_xml
+#: model:ir.model.fields,field_description:syscoon_financeinterface_datev_xml.field_syscoon_financeinterface_xml__create_uid
+msgid "Created by"
+msgstr "Erstellt von"
+
+#. module: syscoon_financeinterface_datev_xml
+#: model:ir.model.fields,field_description:syscoon_financeinterface_datev_xml.field_syscoon_financeinterface_xml__create_date
+msgid "Created on"
+msgstr "Erstellt am"
+
+#. module: syscoon_financeinterface_datev_xml
+#: model:ir.model.fields.selection,name:syscoon_financeinterface_datev_xml.selection__syscoon_financeinterface_export__xml_invoices__customers
+msgid "Customer Invoices"
+msgstr "Kundenrechnungen"
+
+#. module: syscoon_financeinterface_datev_xml
+#: model:ir.model.fields.selection,name:syscoon_financeinterface_datev_xml.selection__syscoon_financeinterface__mode__datev_xml
+#: model:ir.model.fields.selection,name:syscoon_financeinterface_datev_xml.selection__syscoon_financeinterface_export__mode__datev_xml
+msgid "DATEV XML"
+msgstr ""
+
+#. module: syscoon_financeinterface_datev_xml
+#: model:ir.model.fields.selection,name:syscoon_financeinterface_datev_xml.selection__res_company__export_finance_interface__datev_xml
+msgid "DATEV XML Document Data"
+msgstr "DATEV XML Dokumentendaten"
+
+#. module: syscoon_financeinterface_datev_xml
+#: model_terms:ir.ui.view,arch_db:syscoon_financeinterface_datev_xml.view_syscoon_financeinterface_configuration_datev_xml
+msgid "DATEV XML Export Settings"
+msgstr "DATEV XML Export Einstellungen"
+
+#. module: syscoon_financeinterface_datev_xml
+#: code:addons/syscoon_financeinterface_datev_xml/models/syscoon_financeinterface_xml.py:0
+#: code:addons/syscoon_financeinterface_datev_xml/models/syscoon_financeinterface_xml.py:0
+#, python-format
+msgid "Description"
+msgstr "Beschreibung"
+
+#. module: syscoon_financeinterface_datev_xml
+#: model:ir.model.fields,field_description:syscoon_financeinterface_datev_xml.field_syscoon_financeinterface_xml__display_name
+msgid "Display Name"
+msgstr "Anzeigename"
+
+#. module: syscoon_financeinterface_datev_xml
+#: model_terms:ir.ui.view,arch_db:syscoon_financeinterface_datev_xml.view_syscoon_financeinterface_configuration_datev_xml
+msgid "Enable Invoice Line Grouping."
+msgstr "Aktiviere gruppieren von Rechnungszeilen"
+
+#. module: syscoon_financeinterface_datev_xml
+#: model_terms:ir.ui.view,arch_db:syscoon_financeinterface_datev_xml.view_syscoon_financeinterface_configuration_datev_xml
+msgid "Enable exporting Analytic Accounts."
+msgstr "Aktivieren Sie den Export von Analytischen Konten."
+
+#. module: syscoon_financeinterface_datev_xml
+#: model_terms:ir.ui.view,arch_db:syscoon_financeinterface_datev_xml.view_syscoon_financeinterface_configuration_datev_xml
+msgid ""
+"Enabling this option will add the analytic accounts in to the XML export."
+msgstr "Wenn Sie diese Option aktivieren, werden die analytischen Konten in den XML-Export aufgenommen."
+
+#. module: syscoon_financeinterface_datev_xml
+#: model:ir.model.fields,field_description:syscoon_financeinterface_datev_xml.field_res_company__export_xml_analytic_accounts
+#: model:ir.model.fields,field_description:syscoon_financeinterface_datev_xml.field_res_config_settings__company_export_xml_analytic_accounts
+msgid "Export Analytic Accounts"
+msgstr "Analytische Konten exportieren"
+
+#. module: syscoon_financeinterface_datev_xml
+#: model:ir.model.fields,field_description:syscoon_financeinterface_datev_xml.field_res_company__export_finance_interface
+msgid "Export Finance Interface"
+msgstr "Export Finanz-Interface"
+
+#. module: syscoon_financeinterface_datev_xml
+#: model:ir.model.fields,help:syscoon_financeinterface_datev_xml.field_res_company__export_xml_mode
+#: model:ir.model.fields,help:syscoon_financeinterface_datev_xml.field_res_config_settings__company_export_xml_mode
+#: model:ir.model.fields,help:syscoon_financeinterface_datev_xml.field_syscoon_financeinterface_export__xml_mode
+msgid "Export Methode: Standard: without Accounts, Extended: with Accounts"
+msgstr "Export Methode: Standard: ohne Konten, Extended: mit Konten"
+
+#. module: syscoon_financeinterface_datev_xml
+#: model:ir.model.fields,field_description:syscoon_financeinterface_datev_xml.field_syscoon_financeinterface__mode
+#: model:ir.model.fields,field_description:syscoon_financeinterface_datev_xml.field_syscoon_financeinterface_export__mode
+msgid "Export Mode"
+msgstr "Export Modus"
+
+#. module: syscoon_financeinterface_datev_xml
+#: model:ir.model,name:syscoon_financeinterface_datev_xml.model_syscoon_financeinterface_export
+msgid "Export Wizard for the syscoon financeinterface"
+msgstr "Export-Assistent für das syscoon Finanzinterface"
+
+#. module: syscoon_financeinterface_datev_xml
+#: code:addons/syscoon_financeinterface_datev_xml/models/syscoon_financeinterface.py:0
+#, python-format
+msgid ""
+"Export stopped! \n"
+" Invoice %s can not exported, because the PDF has no EOF-Marker. \n"
+" Please repair it and start the export again."
+msgstr ""
+"Export abgebrochen! \n"
+" Rechnung %s kann nicht exportiert werden weil das PDF keinen EOF-Marker hat. \n"
+" Bitte reparieren Sie dieses und starten Sie den Export erneut."
+
+#. module: syscoon_financeinterface_datev_xml
+#: model:ir.model.fields.selection,name:syscoon_financeinterface_datev_xml.selection__res_company__export_xml_mode__extended
+#: model:ir.model.fields.selection,name:syscoon_financeinterface_datev_xml.selection__syscoon_financeinterface_export__xml_mode__extended
+msgid "Extended"
+msgstr "Erweitert"
+
+#. module: syscoon_financeinterface_datev_xml
+#: code:addons/syscoon_financeinterface_datev_xml/wizards/syscoon_financeinterface_export.py:0
+#, python-format
+msgid ""
+"For the DATEV XML export you must select the type \"Date Range\" to do an "
+"export!"
+msgstr "Für den DATEV XML-Export muss der Typ \"Datumsbereich\" ausgewählt sein!"
+
+#. module: syscoon_financeinterface_datev_xml
+#: model:ir.model.fields,field_description:syscoon_financeinterface_datev_xml.field_res_company__export_xml_group_lines
+#: model:ir.model.fields,field_description:syscoon_financeinterface_datev_xml.field_res_config_settings__company_export_xml_group_lines
+msgid "Group Invoice Lines"
+msgstr "Gruppiere Rechnungszeilen"
+
+#. module: syscoon_financeinterface_datev_xml
+#: model:ir.model.fields,help:syscoon_financeinterface_datev_xml.field_res_company__export_xml_group_lines
+#: model:ir.model.fields,help:syscoon_financeinterface_datev_xml.field_res_config_settings__company_export_xml_group_lines
+#: model_terms:ir.ui.view,arch_db:syscoon_financeinterface_datev_xml.view_syscoon_financeinterface_configuration_datev_xml
+msgid ""
+"Group invoice lines that have the same account, tax, analytic account and "
+"analytic tag."
+msgstr ""
+"Gruppiert Rechnungszeilen welche das selbe Konto, den selben Steuersatz, die"
+" selbe Kostenstelle und den selben Kostenstellen Tag hat."
+
+#. module: syscoon_financeinterface_datev_xml
+#: model:ir.model.fields,field_description:syscoon_financeinterface_datev_xml.field_syscoon_financeinterface_xml__id
+msgid "ID"
+msgstr ""
+
+#. module: syscoon_financeinterface_datev_xml
+#: model:ir.model.fields,help:syscoon_financeinterface_datev_xml.field_res_company__export_xml_analytic_accounts
+#: model:ir.model.fields,help:syscoon_financeinterface_datev_xml.field_res_config_settings__company_export_xml_analytic_accounts
+msgid "If disabled no analytic account will be exported."
+msgstr "Wenn diese Option deaktiviert ist, wird kein analytisches Konto exportiert."
+
+#. module: syscoon_financeinterface_datev_xml
+#: model:ir.model.fields,field_description:syscoon_financeinterface_datev_xml.field_syscoon_financeinterface_export__xml_invoices
+msgid "Invoices"
+msgstr "Rechnungen"
+
+#. module: syscoon_financeinterface_datev_xml
+#: model:ir.model.fields,field_description:syscoon_financeinterface_datev_xml.field_syscoon_financeinterface_xml____last_update
+msgid "Last Modified on"
+msgstr "Zuletzt geändert am"
+
+#. module: syscoon_financeinterface_datev_xml
+#: model:ir.model.fields,field_description:syscoon_financeinterface_datev_xml.field_syscoon_financeinterface_xml__write_uid
+msgid "Last Updated by"
+msgstr "Zuletzt aktualisiert von"
+
+#. module: syscoon_financeinterface_datev_xml
+#: model:ir.model.fields,field_description:syscoon_financeinterface_datev_xml.field_syscoon_financeinterface_xml__write_date
+msgid "Last Updated on"
+msgstr "Zuletzt aktualisiert am"
+
+#. module: syscoon_financeinterface_datev_xml
+#: code:addons/syscoon_financeinterface_datev_xml/models/account_payment_term.py:0
+#, python-format
+msgid "Only a value between 11 and 99 is allowed."
+msgstr "Nur ein Wert zwischen 11 und 99 ist erlaubt."
+
+#. module: syscoon_financeinterface_datev_xml
+#: code:addons/syscoon_financeinterface_datev_xml/models/syscoon_financeinterface.py:0
+#, python-format
+msgid "Please check if the export path %s is not writalbe, please check!"
+msgstr ""
+"Bitte prüfen Sie ob der Export-Pfad %s mit Schreibrechten versehen ist!"
+
+#. module: syscoon_financeinterface_datev_xml
+#: model_terms:ir.ui.view,arch_db:syscoon_financeinterface_datev_xml.view_syscoon_financeinterface_configuration_datev_xml
+msgid "Selection between the XML-Export formats."
+msgstr "Bitte wählen Sie aus den XML-Export Formaten."
+
+#. module: syscoon_financeinterface_datev_xml
+#: model:ir.model.fields.selection,name:syscoon_financeinterface_datev_xml.selection__res_company__export_xml_mode__standard
+#: model:ir.model.fields.selection,name:syscoon_financeinterface_datev_xml.selection__syscoon_financeinterface_export__xml_mode__standard
+msgid "Standard"
+msgstr ""
+
+#. module: syscoon_financeinterface_datev_xml
+#: code:addons/syscoon_financeinterface_datev_xml/models/syscoon_financeinterface.py:0
+#, python-format
+msgid "There are no invoices to export in the selected date range!"
+msgstr "Es gibt keine Rechnungen im gewählten Zeitraum zu exportieren!"
+
+#. module: syscoon_financeinterface_datev_xml
+#: model:ir.model.fields.selection,name:syscoon_financeinterface_datev_xml.selection__syscoon_financeinterface_export__xml_invoices__vendors
+msgid "Vendor Invoices"
+msgstr "Lieferantenrechnungen"
+
+#. module: syscoon_financeinterface_datev_xml
+#: model:ir.model.fields,field_description:syscoon_financeinterface_datev_xml.field_res_company__export_xml_mode
+#: model:ir.model.fields,field_description:syscoon_financeinterface_datev_xml.field_res_config_settings__company_export_xml_mode
+#: model:ir.model.fields,field_description:syscoon_financeinterface_datev_xml.field_syscoon_financeinterface_export__xml_mode
+msgid "XML-Export Methode"
+msgstr ""
+
+#. module: syscoon_financeinterface_datev_xml
+#: model:ir.model,name:syscoon_financeinterface_datev_xml.model_syscoon_financeinterface_xml
+msgid "definitions for the syscoon financeinterface DATEV XML-export"
+msgstr "Definitionen für den syscoon Finanzinterface DATEV XML-Export"
+
+#. module: syscoon_financeinterface_datev_xml
+#: model:ir.model,name:syscoon_financeinterface_datev_xml.model_syscoon_financeinterface
+msgid "syscoon Financial Interface"
+msgstr "syscoon Finanzinterface"

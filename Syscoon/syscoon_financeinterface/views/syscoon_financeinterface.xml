@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+
+        <menuitem id="menu_finance_interface" name="Finance Interface" parent="account.menu_finance" sequence="30" groups="group_syscoon_financeinterface"/>
+        <menuitem id="menu_finance_interface_configuration" name="Configuration" parent="menu_finance_interface" sequence="90" groups="base.group_no_one"/>
+
+        <record id="syscoon_financeinterface_form_view" model="ir.ui.view">
+            <field name="name">syscoon.financeinterface.form.view</field>
+            <field name="model">syscoon.financeinterface</field>
+            <field name="arch" type="xml">
+                <form string="Financial Export">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                                <field name="mode"/>
+                                <field name="period" attrs="{'invisible': [('period', '=', False)]}"/>
+                            </group>
+                        </group>
+                        <group string="Logs">
+                            <field name="log" nolabel="1" colspan="2" attrs="{'invisible': [('log', '=', False)]}"/>
+                        </group>
+                        <group string="Moves / Invoices">
+                            <field colspan="2" nolabel="1" name="account_moves_ids" attrs="{'invisible': [('account_moves_ids', '=', [])]}"/>
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+                        <field name="activity_ids" widget="mail_activity"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="syscoon_financeinterface_tree_view" model="ir.ui.view">
+            <field name="name">syscoon.financeinterface.tree.view</field>
+            <field name="model">syscoon.financeinterface</field>
+            <field name="arch" type="xml">
+                <tree string="Financial Export">
+                    <field name="name"/>
+                    <field name="mode"/>
+                    <field name="period"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="syscoon_financeinterface_search_view" model="ir.ui.view">
+            <field name="name">syscoon.financeinterface.searc.view</field>
+            <field name="model">syscoon.financeinterface</field>
+            <field name="arch" type="xml">
+                <search string="Search Finance Interface">
+                    <field name="name"/>
+                    <field name="mode"/>
+                    <field name="period"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="syscoon_financeinterface_action" model="ir.actions.act_window">
+            <field name="name">Financial Exports</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">syscoon.financeinterface</field>
+            <field name="view_id" ref="syscoon_financeinterface_tree_view"/>
+            <field name="search_view_id" ref="syscoon_financeinterface_search_view"/>
+        </record>
+
+        <menuitem action="syscoon_financeinterface_action" id="menu_syscoon_financeinterface_eport" parent="menu_finance_interface" groups="group_syscoon_financeinterface" sequence="10"/>
+
+        <record id="syscoon_financeinterface_bookingtext_config_form_view" model="ir.ui.view">
+            <field name="name">syscoon.financeinterface.bookingtext.config.form.view</field>
+            <field name="model">syscoon.financeinterface.bookingtext.config</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Export Bookingtext Config">
+                    <sheet>
+                        <group>
+                            <field name="name" readonly="1"/>
+                            <field name="sequence"/>
+                            <field name="journal_id"/>
+                            <field name="field"/>
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+                        <field name="activity_ids" widget="mail_activity"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="syscoon_financeinterface_bookingtext_config_tree_view" model="ir.ui.view">
+            <field name="name">syscoon.financeinterface.bookingtext.config.tree.view</field>
+            <field name="model">syscoon.financeinterface.bookingtext.config</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Export Bookingtext Config">
+                    <field name="sequence"/>
+                    <field name="name"/>
+                    <field name="field"/>
+                    <field name="journal_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="syscoon_financeinterface_bookingtext_config_action" model="ir.actions.act_window">
+            <field name="name">Export Bookingtext Config</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">syscoon.financeinterface.bookingtext.config</field>
+            <field name="view_id" ref="syscoon_financeinterface_bookingtext_config_tree_view"/>
+        </record>
+
+        <menuitem action="syscoon_financeinterface_bookingtext_config_action" id="menu_syscoon_financeinterface_bookingtex_config" parent="menu_finance_interface_configuration" groups="base.group_no_one" sequence="10"/>
+
+    </data>
+</odoo>

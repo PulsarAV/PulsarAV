@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <data>
+
+        <record id="syscoon_automatic_mode_sale_order" model="syscoon.accounts.automatic.mode">
+            <field name="name">Sale Order (Debit Accounts)</field>
+            <field name="code">sale_order_customer</field>
+        </record>
+
+        <record id="syscoon_automatic_mode_sale_order_numbers" model="syscoon.accounts.automatic.mode">
+            <field name="name">Sale Order (Customer Numbers)</field>
+            <field name="code">sale_order_customer_numbers</field>
+        </record>
+
+    </data>
+</odoo>

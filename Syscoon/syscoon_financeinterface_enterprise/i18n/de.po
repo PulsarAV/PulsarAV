@@ -1,0 +1,21 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#   * syscoon_financeinterface_enterprise
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 15.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-10-10 09:10+0000\n"
+"PO-Revision-Date: 2021-10-10 09:10+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: syscoon_financeinterface_enterprise
+#: model:ir.model,name:syscoon_financeinterface_enterprise.model_account_general_ledger
+msgid "General Ledger Report"
+msgstr "Umsätze nach Konten und Perioden"

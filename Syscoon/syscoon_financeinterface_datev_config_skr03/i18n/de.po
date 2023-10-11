@@ -1,0 +1,49 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#   * syscoon_financeinterface_datev_config_skr03
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 15.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-10-10 09:02+0000\n"
+"PO-Revision-Date: 2021-10-10 09:02+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: syscoon_financeinterface_datev_config_skr03
+#: model:ir.model,name:syscoon_financeinterface_datev_config_skr03.model_account_account
+msgid "Account"
+msgstr "Konto"
+
+#. module: syscoon_financeinterface_datev_config_skr03
+#: model:ir.model,name:syscoon_financeinterface_datev_config_skr03.model_res_company
+msgid "Companies"
+msgstr "Unternehmen"
+
+#. module: syscoon_financeinterface_datev_config_skr03
+#: model:ir.model.fields.selection,name:syscoon_financeinterface_datev_config_skr03.selection__res_company__datev_auto_set_accounts__skr03
+msgid "SKR03"
+msgstr ""
+
+#. module: syscoon_financeinterface_datev_config_skr03
+#: model:ir.model.fields,field_description:syscoon_financeinterface_datev_config_skr03.field_res_company__datev_auto_set_accounts
+msgid "Set Accounts and Taxes"
+msgstr "Konten und Steuern setzen"
+
+#. module: syscoon_financeinterface_datev_config_skr03
+#: model:ir.model,name:syscoon_financeinterface_datev_config_skr03.model_account_tax
+msgid "Tax"
+msgstr "Steuer"
+
+#. module: syscoon_financeinterface_datev_config_skr03
+#: code:addons/syscoon_financeinterface_datev_config_skr03/models/res_company.py:0
+#, python-format
+msgid ""
+"You try to update the accounts for more than one company at the same time. "
+"This is not possible. Please contact your Administrator."
+msgstr ""
