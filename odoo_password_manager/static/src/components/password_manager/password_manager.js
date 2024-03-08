@@ -1,5 +1,6 @@
 /** @odoo-module **/
 
+import { _lt } from "@web/core/l10n/translation";
 import { checkBundleSecurity } from "@odoo_password_manager/views/dialogs/password_login_dialog/password_login_dialog";
 import { download } from "@web/core/network/download";
 import { PasswordExportDataDialog } from "@odoo_password_manager/views/dialogs/password_export_dialog/password_export_dialog";
@@ -10,6 +11,16 @@ const componentModel = "password.key";
 
 
 export class PasswordManager extends Component {
+    static template = "odoo_password_manager.PasswordManager";
+    static components = { PasswordPreview };
+    static props = {
+        currentSelection: { type: Array },
+        selection: { type: Array },
+        kanbanModel: { type: Object },
+        canUpdate: { type: Boolean },
+        bundleIds: { type: Array },
+        reloadNavigation: { type: Function },
+    };
     /*
     * Re-write to import required services and update props on the component start
     */
@@ -24,11 +35,11 @@ export class PasswordManager extends Component {
             await this._loadExportConf(this.props);
         });
     }
-    /* 
+    /*
     * Getter for records from selection
     */
     get records() {
-        var result = null; 
+        var result = null;
         if (this.props.selection && this.props.selection.length != 0) { result = this.props.selection };
         return result
     }
@@ -64,25 +75,30 @@ export class PasswordManager extends Component {
         await this.props.kanbanModel.root.load();
         this.props.kanbanModel.notify();
     }
+    /*
+    * The method to update selected records after update (e.g. when record was deleted)
+    */
     async _updateRootSelection(recordIds) {
         const context = { active_test: false };
         this.props.kanbanModel.selectedRecords = await this.orm.searchRead(
             componentModel, [["id", "in", recordIds]], ["name", "user_name", "link_url", "password_len"], { context }
-        );        
+        );
     }
     /*
     * Remove all previously chosen records from selection
     */
-    async _onClearSelection() {
+    _onClearSelection() {
         const kanbanModel = this.props.kanbanModel;
         const needReload = this.props.currentSelection.length === 0;
-        _.each(this.props.currentSelection, function (record) {
+        this.props.currentSelection.forEach(function (record) {
             record.toggleSelection(false);
         });
-        _.each(this.props.selection, function (record) {
+        this.props.selection.forEach(function (record) {
             kanbanModel._updateModelSelection(record, false);
-        }); 
-        if (needReload) { this.refreshAfterUpdate() };
+        });
+        if (needReload) {
+            this.refreshAfterUpdate();
+        };
     }
     /*
     * The method to execute clicked mass action
@@ -92,9 +108,12 @@ export class PasswordManager extends Component {
         const recordIds = this.props.selection.map((rec) => rec.id);
         const actionResult = await this.orm.call(componentModel, "action_proceed_mass_action", [recordIds, massActionID]);
         if (actionResult.type) {
-            this.actionService.doAction(actionResult,  { onClose: async () => { 
+            this.actionService.doAction(actionResult,  { onClose: async () => {
                 await this._updateRootSelection(recordIds);
-                this.refreshAfterUpdate() 
+                this.refreshAfterUpdate();
+                if (actionResult.context && actionResult.context.need_navigation_reload) {
+                    this.props.reloadNavigation();
+                }
             }})
         }
         else {
@@ -109,8 +128,8 @@ export class PasswordManager extends Component {
         await checkBundleSecurity(this.props.bundleIds, this.orm, this.dialogService)
         const recordIds = this.props.selection.map((rec) => rec.id);
         const dialogProps = {
-            recordIds,
             download: this.downloadExport.bind(this),
+            defaultExportList: [],
             getExportedFields: this.getExportedFields.bind(this),
             root: this.props.kanbanModel.root,
         };
@@ -128,7 +147,7 @@ export class PasswordManager extends Component {
             type: field.field_type || field.type,
         }));
         if (import_compat) {
-            exportedFields.unshift({ name: "id", label: this.env._t("External ID") });
+            exportedFields.unshift({ name: "id", label: _lt("External ID") });
         }
         await download({
             data: {
@@ -152,6 +171,3 @@ export class PasswordManager extends Component {
         return fields
     }
 };
-
-PasswordManager.template = "odoo_password_manager.PasswordManager";
-PasswordManager.components = { PasswordPreview }

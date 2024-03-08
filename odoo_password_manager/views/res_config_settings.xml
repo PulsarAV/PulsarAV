@@ -2,86 +2,60 @@
 <odoo>
 
     <record id="res_config_settings_view_form" model="ir.ui.view">
-        <field name="name">res.config.settings.view.form.product.management</field>
+        <field name="name">res.config.settings.view.form.password.manager</field>
         <field name="model">res.config.settings</field>
         <field name="inherit_id" ref="base.res_config_settings_view_form"/>
         <field name="arch" type="xml">
-            <xpath expr="//div[hasclass('settings')]" position="inside">
-                <div class="app_settings_block"
-                     data-string="Password Manager"
-                     string="Password Manager"
-                     data-key="odoo_password_manager"
-                     name="odoo_password_manager"
-                >
-                    <h2>Password Manager Options</h2>
-                    <div class="row mt16 o_settings_container">
-                        <div name="gen_on_create_option" class="col-xs-12 col-md-6 o_setting_box">
-                            <div name="gen_on_createh_option_1" class="o_setting_left_pane">
-                                <field name="generate_passord_on_create"/>
+            <xpath expr="//form" position="inside">
+                <app data-string="Password Manager" string="Password Manager" name="odoo_password_manager">
+                    <block title="Password Manager Options">
+                        <setting help="If checked, Odoo will automatically generate a paraphrase as soon as a new password is registered">
+                            <field name="generate_passord_on_create"/>
+                        </setting>
+                        <setting help="Define the default length for generated passwords">
+                            <field name="defau_password_length"/>
+                        </setting>
+                        <setting help="Define how generated passwords should look by default">
+                            <field name="defau_password_charset"/>
+                        </setting>
+                        <setting help="Turn on to prepare custom fields for passwords.">
+                            <field name="module_odoo_password_manager_custom_fields"/>
+                            <div name="custom_field_option_hint" class="text-muted mb16">
+                                The tool
+                                <a href='https://apps.odoo.com/apps/modules/17.0/odoo_password_manager_custom_fields/'>
+                                    Password Manager: Custom Fields
+                                </a> (38 Euros extra) is required
                             </div>
-                            <div name="gen_on_create_option_2" class="o_setting_right_pane">
-                                <label for="generate_passord_on_create"/>
-                                <div name="gen_on_create_option_hint" class="text-muted">
-                                    If checked, Odoo will automatically generate a paraphrase as soon as a new password is registered
+                        </setting>
+                        <setting help="Let users export found and selected passwords. The access group 'Access to export feature' is required">
+                            <field name="password_management_export_option"/>
+                        </setting>
+                        <setting help="Turn on to allow sharing passwords with Odoo portal users">
+                            <field name="group_password_portal_sharing"/>
+                            <group invisible="not group_password_portal_sharing">
+                                <field name="portal_sharing_link_url"/>
+                                <field name="portal_sharing_phone"/>
+                                <field name="portal_sharing_email"/>
+                                <field name="portal_sharing_notes"/>
+                            </group>
+                            <div name="portal_vault_option_2">
+                                <div invisible="not group_password_portal_sharing">
+                                    <label for="pw_custom_portal_fields"/>
+                                    <div name="portal_vault_hint" class="text-muted">
+                                        Select other password fields that should be shown in portal vaults
+                                    </div>
+                                    <field name="pw_custom_portal_fields" widget="many2many_tags" class="w-100"/>
+                                    <field name="pw_custom_portal_fields_str" invisible="1"/>
                                 </div>
                             </div>
-                        </div>
-                        <div name="password_length_option" class="col-xs-12 col-md-6 o_setting_box">
-                            <div name="password_length_option_1" class="o_setting_left_pane"></div>
-                            <div name="password_length_option_2" class="o_setting_right_pane">
-                                <label for="defau_password_length"/>
-                                <div name="password_length_option_hint" class="text-muted">
-                                    Define the default length for generated passwords
-                                </div>
-                                <field name="defau_password_length"/>
-                            </div>
-                        </div>
-                        <div name="charset_option" class="col-xs-12 col-md-6 o_setting_box">
-                            <div name="charset_option_1" class="o_setting_left_pane">
-
-                            </div>
-                            <div name="charset_option_2" class="o_setting_right_pane">
-                                <label for="defau_password_charset"/>
-                                <div name="charset_option_hint" class="text-muted">
-                                    Define how generated passwords should look by default
-                                </div>
-                                <field name="defau_password_charset" class="w-100"/>
-                            </div>
-                        </div>
-                        <div name="custom_field_option" class="col-xs-12 col-md-6 o_setting_box">
-                            <div name="custom_field_option_1" class="o_setting_left_pane">
-                                <field name="module_odoo_password_manager_custom_fields"/>
-                            </div>
-                            <div name="custom_field_option_2" class="o_setting_right_pane">
-                                <label for="module_odoo_password_manager_custom_fields"/>
-                                <div name="custom_field_option_hint" class="text-muted">
-                                    Turn on to prepare custom fields for passwords. The tool
-                                    <a href='https://apps.odoo.com/apps/modules/16.0/odoo_password_manager_custom_fields/'>
-                                        Password Manager: Custom Fields
-                                    </a> (38 Euros extra) is required
-                                </div>
-                            </div>
-                        </div>
-                        <div name="export_option" class="col-xs-12 col-md-6 o_setting_box">
-                            <div name="export_option_1" class="o_setting_left_pane">
-                                <field name="password_management_export_option"/>
-                            </div>
-                            <div name="export_option_2" class="o_setting_right_pane">
-                                <label for="password_management_export_option"/>
-                                <div name="export_option_hint" class="text-muted">
-                                    Let users export found and selected passwords. The access group "Access to export feature" is required
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <h2>Mass actions</h2>
-                    <div class="row mt16 o_settings_container">
+                        </setting>
+                    </block>
+                    <block title="Mass actions">
                         <field name="passwords_ir_actions_server_ids" class="w-100" context="{'default_model_id': ir_actions_server_pwm_default_model_id}"/>
                         <field name="passwords_ir_actions_server_ids_str" invisible="1"/>
                         <field name="ir_actions_server_pwm_default_model_id" invisible="1"/>
-                    </div>
-                    <h2>Duplicates search</h2>
-                    <div class="row mt16 o_settings_container">
+                    </block>
+                    <block title="Duplicates search">
                         <div name="duplicates_hint" class="w-100 text-muted mb8">
                             Select criteria for how to search password duplicates
                         </div>
@@ -91,8 +65,8 @@
                                class="w-100"
                         />
                         <field name="duplicate_pw_fields_ids_str" invisible="1"/>
-                    </div>
-                </div>
+                    </block>
+                </app>
             </xpath>
         </field>
     </record>

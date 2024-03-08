@@ -1,0 +1,8 @@
+#portal_vault_container {
+    .password-mask { overflow: hidden }
+    .password-preview-button {
+        float: right;
+        margin-left: 4px;
+    }
+    .password-wrap { white-space: normal !important }
+}

@@ -1,16 +1,17 @@
 # -*- coding: utf-8 -*-
 {
     "name": "Password Manager",
-    "version": "16.0.1.1.5",
+    "version": "17.0.1.3.2",
     "category": "Extra Tools",
     "author": "faOtools",
-    "website": "https://faotools.com/apps/16.0/password-manager-710",
+    "website": "https://faotools.com/apps/17.0/password-manager-819",
     "license": "Other proprietary",
     "application": True,
     "installable": True,
     "auto_install": False,
     "depends": [
-        "mail"
+        "mail",
+        "portal"
     ],
     "data": [
         "security/security.xml",
@@ -25,8 +26,11 @@
         "views/password_bundle.xml",
         "views/password_tag.xml",
         "views/res_partner.xml",
+        "views/portal_password_bundle.xml",
+        "views/templates.xml",
         "wizard/update_password_tag.xml",
         "wizard/update_password_partner.xml",
+        "wizard/share_portal_password.xml",
         "wizard/odoo_password_merge.xml",
         "views/menu.xml"
     ],
@@ -55,6 +59,12 @@
                 "odoo_password_manager/static/src/components/password_preview/*.scss",
                 "odoo_password_manager/static/src/components/password_navigation/*.xml",
                 "odoo_password_manager/static/src/components/password_navigation/*.js"
+        ],
+        "web.assets_frontend": [
+                "odoo_password_manager/static/src/components/portal_password/*.xml",
+                "odoo_password_manager/static/src/components/portal_password/*.js",
+                "odoo_password_manager/static/src/js/vault_login.js",
+                "odoo_password_manager/static/src/js/vault_login.scss"
         ]
 },
     "demo": [
@@ -66,17 +76,18 @@
                 "cryptography"
         ]
 },
-    "summary": "The tool to safely keep passwords in Odoo for shared use. Shared vaults. Password generator. Team passwords. Password keeper. Encryption. Keypass. Password checkup",
+    "summary": "The tool to safely keep passwords in Odoo for shared use. Shared vaults. Password generator. Team passwords. Shared passwords. Password keeper. Encryption. Keypass. Password checkup",
     "description": """For the full details look at static/description/index.html
 * Features * 
 - Shared use, encryption, and protection of passwords
+- Portal vaults
 - &lt;i class=&#39;fa fa-gears&#39;&gt;&lt;/i&gt; Custom attributes for Odoo passwords 
 - Duplicates detection and passwords merging
 #odootools_proprietary""",
     "images": [
         "static/description/main.png"
     ],
-    "price": "159.0",
+    "price": "198.0",
     "currency": "EUR",
-    "live_test_url": "https://faotools.com/my/tickets/newticket?&url_app_id=103&ticket_version=16.0&url_type_id=3",
+    "live_test_url": "https://faotools.com/my/tickets/newticket?&url_app_id=103&ticket_version=17.0&url_type_id=3",
 }

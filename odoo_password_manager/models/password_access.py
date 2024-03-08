@@ -27,14 +27,12 @@ class password_access(models.Model):
                     _("The responsible user should be either an administrator or should have full rights")
                 )
             if len(access.bundle_id.access_ids.filtered(lambda acc: acc.responsible_for_update)) > 1:
-                raise ValidationError(
-                    _("There might be a single responsible user assigned!")
-                )
+                raise ValidationError(_("There might be a single responsible user assigned!"))
 
-    @api.onchange("group_id")
-    def _onchange_group_id(self):
+    @api.depends("group_id")
+    def _compute_user_id(self):
         """
-        Onchange method for group_id
+        Onchange method for user_id
         The goal is to make sure responsibles are only users, not groups and that groups and user are not assigned
         simultaneously
         """
@@ -43,34 +41,21 @@ class password_access(models.Model):
                 access.responsible_for_update = False
                 access.user_id = False
 
-    @api.onchange("user_id")
-    def _onchange_user_id(self):
+    @api.depends("user_id", "responsible_for_update")
+    def _compute_group_id(self):
         """
-        Onchange method for user_id
-        The goal is to make sure that that groups and user are not assigned simultaneously
-        """
-        for access in self:
-            if access.user_id:
-                access.group_id = False
-
-    @api.onchange("responsible_for_update")
-    def _onchange_responsible_for_update(self):
-        """
-        Onchange method for responsible_for_update
-        The goal is to make sure group is not assigned as responsible
+        Compute method for group_id
+        The goal is to make sure that that groups and user are not assigned simultaneously and group is not assigned as
+        responsible
         """
         for access in self:
-            if access.responsible_for_update:
+            if access.user_id or access.responsible_for_update:
                 access.group_id = False
 
-    user_id = fields.Many2one("res.users", string="User")
-    group_id = fields.Many2one("res.groups", string="User group")
+    user_id = fields.Many2one("res.users", string="User", compute=_compute_user_id, readonly=False, store=True)
+    group_id = fields.Many2one("res.groups", string="User group", compute=_compute_group_id, readonly=False, store=True)
     access_level = fields.Selection(
-        [
-            ("admin", "Admininstrator"),
-            ("full", "Full rights"),
-            ("readonly", "Readonly access"),
-        ],
+        [("admin", "Admininstrator"), ("full", "Full rights"), ("readonly", "Readonly access")],
         string="Access Level",
         default="readonly",
     )
@@ -78,9 +63,13 @@ class password_access(models.Model):
     responsible_for_update = fields.Boolean(
         string="Responsible for passwords update",
         help="For this user, activities to update passwords will be generated according to the bundle update policies",
+        compute=_compute_user_id,
+        readonly=False,
+        store=True,
     )
 
-    _order = "access_level, id"
+    # the order by responsible_for_update is required for the constraint _constrains_access_level_responsible_for_update
+    _order = "responsible_for_update desc, access_level, id"
 
     @api.model
     def _return_all_bundles(self, cuser, modes=["admin"]):
@@ -102,11 +91,11 @@ class password_access(models.Model):
          * clear_caches is required to clean current bundles from cache: in case of deletion it becomes a broken
            recordset
         """
-        self.clear_caches()
+        self.env.registry.clear_cache()
         all_accesses = self.search([])
         res_accesses = all_accesses.filtered(
             lambda acc: acc.access_level in modes \
-                        and (cuser.id == acc.user_id.id or acc.group_id.id in cuser.groups_id.ids)
+                and (cuser.id == acc.user_id.id or acc.group_id.id in cuser.groups_id.ids)
         )
         bundles = res_accesses.mapped("bundle_id")
         return bundles
@@ -131,15 +120,15 @@ class password_access(models.Model):
                     ("bundle_id", "=", access.bundle_id.id),
                     ("no_update_required", "=", False),
                     ("mail_activity_update_id", "=", False),
-                    "|",
-                        ("password_update_date", "=", False),
-                        ("password_update_date", "<=", last_update_date),
+                    "|", ("password_update_date", "=", False), ("password_update_date", "<=", last_update_date),
                 ])
                 for password in passwords:
                     values = {
                         "res_id": password.id,
                         "res_model_id": self.env["ir.model"]._get_id(name="password.key"),
-                        "activity_type_id": self.sudo().env.ref("odoo_password_manager.mail_activity_data_update_password").id,
+                        "activity_type_id": self.sudo().env.ref(
+                            "odoo_password_manager.mail_activity_data_update_password"
+                        ).id,
                         "summary": _("Update password"),
                         "date_deadline": fields.date.today(),
                         "user_id": access.user_id.id,

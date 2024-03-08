@@ -12,7 +12,7 @@ export class BundleKanbanController extends KanbanController {
     setup() {
         this.orm = useService("orm");
         this.dialogService = useService("dialog");
-    	super.setup(...arguments);
+        super.setup(...arguments);
     }
     /*
     * Overwrite to check security
@@ -21,5 +21,4 @@ export class BundleKanbanController extends KanbanController {
         await checkBundleSecurity([record.data.id], this.orm, this.dialogService);
         super.openRecord(...arguments);
     }
-
 };

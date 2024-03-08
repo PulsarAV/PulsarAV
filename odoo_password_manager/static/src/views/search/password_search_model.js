@@ -1,7 +1,9 @@
 /** @odoo-module **/
 
-import { SearchModel } from "@web/search/search_model";
+import { _t } from "@web/core/l10n/translation";
 import { Domain } from "@web/core/domain";
+import { SearchModel } from "@web/search/search_model";
+
 
 export class PasswordSearchModel extends SearchModel {
     /*
@@ -9,7 +11,7 @@ export class PasswordSearchModel extends SearchModel {
     */
     setup(services) {
         this.jsTreeDomain = [];
-        this.kanbanOrder = {name: "name", asc: true}; // this is default order
+        this.kanbanOrder = { name: "name", asc: true }; // this is default order
         super.setup(...arguments);
     }
     /*
@@ -17,7 +19,7 @@ export class PasswordSearchModel extends SearchModel {
     * Regretfully, none of child method can be triggered, so we have to redefine the whole return
     */
     _getDomain(params = {}) {
-        var domain =  super._getDomain(...arguments);        
+        var domain =  super._getDomain(...arguments);
         try {
             domain = Domain.and([domain, this.jsTreeDomain]);
             return params.raw
@@ -25,9 +27,10 @@ export class PasswordSearchModel extends SearchModel {
                 : domain.toList(Object.assign({}, this.globalContext, this.userService.context));
         } catch (error) {
             throw new Error(
-                `${this.env._t("Failed to evaluate the domain")} ${domain.toString()}.\n${
-                    error.message
-                }`
+                _t("Failed to evaluate the domain: %(domain)s.\n%(error)s", {
+                    domain: domain.toString(),
+                    error: error.message,
+                })
             );
         };
     }
