@@ -21,11 +21,10 @@ class bundle_security_mixin(models.AbstractModel):
 
         Methods:
          * _check_bundle_key
-        """ 
+        """
         result = super(bundle_security_mixin, self).read(fields=fields, load=load)
         if self._name == "password.key":
             try:
-                # this is ugly hack to the moment since js cannot catch the error in read()
                 self._check_bundle_key()
             except:
                 result = []
@@ -116,14 +115,13 @@ class bundle_security_mixin(models.AbstractModel):
             xml_id = self.sudo().env.ref("odoo_password_manager.bundle_login_password_action_simple").id
             raise RedirectWarning(
                 message=_("The bundle session is expired! Please log in"),
-                action=xml_id, 
+                action=xml_id,
                 button_text=_("Press to log in"),
                 additional_context= {"default_bundle_id": default_bundle_id.id},
             )
 
         if not self:
-            return True        
-        
+            return True
         if self._name == "password.bundle":
             # IMPORTANT: check does not assume check for read/create
             bundles_ids = self
@@ -132,7 +130,6 @@ class bundle_security_mixin(models.AbstractModel):
 
         if not bundles_ids:
             return True
-
         for bundle in bundles_ids:
             # no extra security > no special checks
             # here we also check for previous_security in context for the case when not secured bundle becomes secured
@@ -148,7 +145,7 @@ class bundle_security_mixin(models.AbstractModel):
                 return_login_popup(bundle)
             # bundle password (and, hence, salt) was updated after the last log in
             if bundle.password_update_time and last_login < bundle.password_update_time:
-                bundle._clear_session(last_login)
+                bundle._clear_session(bundle.id, last_login)
                 return_login_popup(bundle)
             # log in is not valid since it is too old in comparison to set session length
             now = fields.Datetime.now()
@@ -162,7 +159,7 @@ class bundle_security_mixin(models.AbstractModel):
     def _clear_session(self, bundle_id, last_login):
         """
         The method to clear bundle hash from session and return required by the method list
-        
+
         Args:
          * bundle - int
          * last_login - datetime or Fale
@@ -173,15 +170,11 @@ class bundle_security_mixin(models.AbstractModel):
         Extra info:
          * we take session valus from request to be 100% sure it is fine
         """
+        today_now = fields.Datetime.now()
         new_session_bundles = request.session.get("pw_bundles")
-        new_session_bundles.update({
-            bundle_id: {
-                "last_login": last_login,
-                "bundle_hash": False,
-            }
-        })
+        new_session_bundles.update({bundle_id: {"last_login": last_login, "bundle_hash": False}})
         request.session.update({
             "pw_bundles": new_session_bundles,
-            "pw_bundle_last_update": fields.Datetime.now(), # IMPORTANT; @see 1 password.bundle _update_session_bundles
+            "pw_bundle_last_update": today_now, # IMPORTANT; @see 1 password.bundle _update_session_bundles
         })
         return True

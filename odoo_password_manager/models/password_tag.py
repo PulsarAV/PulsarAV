@@ -25,3 +25,22 @@ class password_tag(models.Model):
     )
 
     _order = "sequence, id"
+
+    def action_update_nodes(self, node):
+        """
+        The method to update record after d&d
+
+        Args:
+         * node - str (nodex_)
+
+        Extra info:
+         * We are in try/except to make sure that an excess node is removed
+         * Expected singleton
+        """
+        try:
+            node_int = int(node[6:])
+            node_id = self.env["password.key"].browse(node_int).exists()
+            if self.exists() and node_id and self.id not in node_id.tag_ids.ids:
+                node_id.write({"tag_ids": [(4, self.id)]})
+        except:
+            pass

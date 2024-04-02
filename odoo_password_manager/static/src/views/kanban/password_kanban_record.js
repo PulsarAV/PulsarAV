@@ -1,10 +1,8 @@
 /** @odoo-module **/
 
+import { _t } from "@web/core/l10n/translation";
 import { KanbanRecord } from "@web/views/kanban/kanban_record";
-import { KANBAN_BOX_ATTRIBUTE } from "@web/views/kanban/kanban_arch_parser";
-const { xml } = owl;
-
-const notGlobalActions = ["a", ".dropdown", ".oe_kanban_action"].join(",");
+const notGlobalActions = ["a", ".dropdown", ".oe_kanban_action", ".jstr-kanban-copy"].join(",");
 
 
 export class PasswordKanbanRecord extends KanbanRecord {
@@ -13,9 +11,7 @@ export class PasswordKanbanRecord extends KanbanRecord {
     */
     getRecordClasses() {
         let result = super.getRecordClasses();
-        if (this.props.record.selected) {
-            result += " jstr-kanban-selected";
-        }
+        if (this.props.record.selected) { result += " jstr-kanban-selected" };
         return result;
     }
     /*
@@ -23,28 +19,38 @@ export class PasswordKanbanRecord extends KanbanRecord {
     */
     onGlobalClick(ev) {
         if (ev.target.closest(notGlobalActions)) {
-            return;
+            if (ev.target.closest(".jstr-kanban-copy")) {
+                this.props.record.onCopyData(ev, ev.target.closest(".jstr-kanban-copy").id);
+            }
+            else { return }
         }
-        this.props.record.onRecordClick(ev, {});
+        else { this.props.record.onRecordClick(ev, {}) };
     }
     /*
-    * The method to manage key presses on kanban view (always add to selection)
+    * The method to get a record to change its values
     */
-    onKeydown(ev) {
-        if (ev.key !== "Enter" && ev.key !== " ") {
-            return;
-        }
-        ev.preventDefault();
-        return this.props.record.onRecordClick(ev, {});
+    onDragStart(event) {
+        event.preventDefault(); // to avoid standard drag&drop
+        if (!this.props.record.selected) {
+           this.props.record.toggleSelection(true)
+        };
+        const selectedRecords = this.props.record.model.selectedRecords.map(function(record) {
+            return { id: "nodex_" + record.id, text: record.name, icon: "nodex_update" }
+        });
+        const draggableElement = document.createElement("div");
+        draggableElement.classList.add("jstree-default");
+        draggableElement.id = "jstree-dnd";
+        const draggableIcon = document.createElement("i");
+        draggableIcon.classList.add("jstree-icon", "jstree-er");
+        $(draggableIcon).appendTo(draggableElement);
+        const dragText = selectedRecords.length == 1 ? selectedRecords[0].text : selectedRecords.length + _t(" key(s)");
+        draggableElement.append(dragText);
+        $.vakata.dnd.start(event, {
+            jstree: true,
+            obj: $("<a>", { id: "dnd_anchor", class: "jstree-anchor", href: "#" }),
+            nodes: selectedRecords,
+        }, draggableElement);
     }
 };
 
-PasswordKanbanRecord.template = xml`
-    <div
-        role="article"
-        t-att-class="getRecordClasses()"
-        t-on-click.synthetic="onGlobalClick"
-        t-on-keydown.synthetic="onKeydown"
-        t-ref="root">
-        <t t-call="{{ templates['${KANBAN_BOX_ATTRIBUTE}'] }}"/>
-    </div>`;
+PasswordKanbanRecord.template = "odoo_password_manager.PasswordKanbanRecord";

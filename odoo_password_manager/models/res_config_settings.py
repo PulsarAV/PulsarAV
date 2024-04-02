@@ -27,8 +27,8 @@ class res_config_settings(models.TransientModel):
 
     @api.depends("passwords_ir_actions_server_ids_str")
     def _compute_passwords_ir_actions_server_ids(self):
-        """ 
-        Compute method for passwords_ir_actions_server_ids 
+        """
+        Compute method for passwords_ir_actions_server_ids
         """
         for setting in self:
             ir_actions_server_ids = []
@@ -42,8 +42,8 @@ class res_config_settings(models.TransientModel):
 
     @api.depends("duplicate_pw_fields_ids_str")
     def _compute_duplicate_pw_fields_ids(self):
-        """ 
-        Compute method for duplicate_pw_fields_ids 
+        """
+        Compute method for duplicate_pw_fields_ids
         """
         for setting in self:
             duplicate_pw_fields_ids = []
@@ -54,6 +54,21 @@ class res_config_settings(models.TransientModel):
                 except Exception as e:
                     duplicate_pw_fields_ids = []
             setting.duplicate_pw_fields_ids = [(6, 0, duplicate_pw_fields_ids)]
+
+    @api.depends("pw_custom_portal_fields_str")
+    def _compute_pw_custom_portal_fields(self):
+        """
+        Compute method for pw_custom_portal_fields
+        """
+        for setting in self:
+            pw_custom_portal_fields = []
+            if setting.pw_custom_portal_fields_str:
+                try:
+                    actions_list = safe_eval(setting.pw_custom_portal_fields_str)
+                    pw_custom_portal_fields = self.env["ir.model.fields"].search([("id", "in", actions_list)]).ids
+                except Exception as e:
+                    pw_custom_portal_fields = []
+            setting.pw_custom_portal_fields = [(6, 0, pw_custom_portal_fields)]
 
     def _inverse_passwords_ir_actions_server_ids(self):
         """
@@ -75,11 +90,41 @@ class res_config_settings(models.TransientModel):
                 duplicate_pw_fields_ids_str = "{}".format(setting.duplicate_pw_fields_ids.ids)
             setting.duplicate_pw_fields_ids_str = duplicate_pw_fields_ids_str
 
+    def _inverse_pw_custom_portal_fields(self):
+        """
+        Inverse method for pw_custom_portal_fields
+        """
+        for setting in self:
+            pw_custom_portal_fields_str = ""
+            if setting.pw_custom_portal_fields:
+                pw_custom_portal_fields_str = "{}".format(setting.pw_custom_portal_fields.ids)
+            setting.pw_custom_portal_fields_str = pw_custom_portal_fields_str
 
     module_odoo_password_manager_custom_fields = fields.Boolean(string="Custom fields for passwords")
     password_management_export_option = fields.Boolean(
         string="Export passwords",
         config_parameter="password_management_export_option",
+    )
+    group_password_portal_sharing = fields.Boolean(
+        string="Portal vaults",
+        implied_group="odoo_password_manager.group_portal_password_vaults",
+        group="base.group_portal,base.group_user",
+    )
+    portal_sharing_link_url = fields.Boolean(
+        string="Show URL",
+        config_parameter="password_management_portal_vault_link_url",
+    )
+    portal_sharing_phone = fields.Boolean(
+        string="Show Phone",
+        config_parameter="password_management_portal_vault_phone",
+    )
+    portal_sharing_email = fields.Boolean(
+        string="Show Email",
+        config_parameter="password_management_portal_vault_email",
+    )
+    portal_sharing_notes = fields.Boolean(
+        string="Show Notes",
+        config_parameter="password_management_portal_vault_notes",
     )
     generate_passord_on_create = fields.Boolean(
         string="Generate passwords on create",
@@ -109,21 +154,37 @@ class res_config_settings(models.TransientModel):
         domain=[("model_id.model", "=", "password.key")],
     )
     passwords_ir_actions_server_ids_str = fields.Char(
-        string="Password pass actions (Str)", 
+        string="Password pass actions (Str)",
         config_parameter="passwords_passwords_ir_actions_server_ids",
     )
     duplicate_pw_fields_ids = fields.Many2many(
-        "ir.model.fields", 
+        "ir.model.fields",
         compute=_compute_duplicate_pw_fields_ids,
         inverse=_inverse_duplicate_pw_fields_ids,
         string="Password duplicates fields",
         domain=[
-            ("model", "=", "password.key"),
-            ("store", "=", True),
+            ("model", "=", "password.key"), ("store", "=", True),
             ("ttype", "not in", ["one2many", "many2many", "binary", "reference", "serialized"]),
         ],
     )
     duplicate_pw_fields_ids_str = fields.Char(
-        string="Password duplicates fields (Str)", 
+        string="Password duplicates fields (Str)",
         config_parameter="odoo_password_manager.duplicate_pw_fields_ids",
+    )
+    pw_custom_portal_fields = fields.Many2many(
+        "ir.model.fields",
+        compute=_compute_pw_custom_portal_fields,
+        inverse=_inverse_pw_custom_portal_fields,
+        string="Other portal fields",
+        domain=[
+            ("model", "=", "password.key"),
+            ("ttype", "in", ["char", "text", "html", "boolean", "selection", "integer", "float"]),
+            ("store", "=", True),
+            ("name", "not in",
+                ["id", "user_name", "link_url", "phone", "email", "notes", "password", "confirm_password"]),
+        ],
+    )
+    pw_custom_portal_fields_str = fields.Char(
+        string="Other portal fields (str)",
+        config_parameter="odoo_password_manager.pw_custom_portal_fields",
     )

@@ -8,3 +8,7 @@ from . import password_bundle
 from . import password_key
 from . import password_node
 from . import password_tag
+from . import portal_share_mixin
+from . import portal_password_bundle
+from . import portal_password_key
+

@@ -18,9 +18,7 @@ export class PasswordExportDataDialog extends ExportDataDialog {
             // we use on such approach instead of filtering to save the order of fields and to loop over a short array
             const exportList = [];
             const knownFields = this.knownFields;
-            _.each(defaultPasswordFields, function(name) {
-                exportList.push(knownFields[name]);
-            })
+            defaultPasswordFields.forEach(function (name) { exportList.push(knownFields[name]) });
             this.state.exportList = exportList;
         }
     }
