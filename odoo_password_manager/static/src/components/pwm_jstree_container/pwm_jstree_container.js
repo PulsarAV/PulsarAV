@@ -8,11 +8,19 @@ import { useService } from "@web/core/utils/hooks";
 const { Component, onWillStart, onMounted, useState } = owl;
 
 const componentModel = "password.key";
-const searchSections = {"password_tags": _lt("Tags"), "password_types": _lt("Types")};
-const jsTreemodels = {"password_tags": "password.tag", "password_types": "password.custom.type"};
+const jsTreemodels = {"password_tags": "password.tag", "password_types": "password.custom.type", "portal_vaults": "portal.password.bundle"};
 
 
 export class PwmJsTreeContainer extends Component {
+    static template = "odoo_password_manager.PwmJsTreeContainer";
+    static props = {
+        jstreeTitle: { type: String },
+        jstreeId: { type: String },
+        onUpdateSearch: { type: Function },
+        kanbanModel: { type: Object },
+        bundleIds: { type: Array },
+        canUpdate: { type: Boolean },
+    };
     /*
     * Re-write to import required services and update props on the component start
     */
@@ -47,9 +55,7 @@ export class PwmJsTreeContainer extends Component {
     */
     async _loadTreeData() {
         const jstreeData = await this.orm.call(
-            componentModel,
-            "action_get_hierarchy",
-            [this.id, this.props.bundleIds],
+            componentModel, "action_get_hierarchy", [this.id, this.props.bundleIds],
         );
         Object.assign(this.state, { treeData: jstreeData });
     }
@@ -62,16 +68,7 @@ export class PwmJsTreeContainer extends Component {
             "select_node": false,
             "items": function($node) {
                 const jsTreeAnchor = self.jsTreeAnchor.jstree(true);
-                return {
-                    "Create": {
-                        "separator_before": false,
-                        "separator_after": false,
-                        "label": _lt("Create"),
-                        "action": function (obj) {
-                            $node = jsTreeAnchor.create_node($node);
-                            jsTreeAnchor.edit($node);
-                        }
-                    },
+                var actions = {
                     "Rename": {
                         "separator_before": false,
                         "separator_after": false,
@@ -91,10 +88,21 @@ export class PwmJsTreeContainer extends Component {
                         "action": function (obj) { jsTreeAnchor.delete_node($node) }
                     },
                 };
+                if (self.id != "portal_vaults") {
+                    Object.assign(actions, { "Create": {
+                        "separator_before": false,
+                        "separator_after": false,
+                        "label": _lt("Create"),
+                        "action": function (obj) {
+                            $node = jsTreeAnchor.create_node($node);
+                            jsTreeAnchor.edit($node);
+                        }
+                    }})
+                }
+                return actions
             },
         };
     }
-
     /*
     * The method to initiate jstree
     */
@@ -102,15 +110,27 @@ export class PwmJsTreeContainer extends Component {
         var self = this,
             plugins = ["checkbox", "state", "search"],
             contextMenu = {};
-
         if (this.props.canUpdate) {
             plugins = plugins.concat(["contextmenu", "dnd"])
             contextMenu = this._getJsTreeContextMenu();
         };
         const jsTreeOptions = {
             "core" : {
+                "check_callback" : function (operation, node, node_parent, node_position, more) {
+                    if (operation === "move_node") {
+                        if (node.icon == "nodex_update"){
+                            if (!node_parent || node_parent.id == "#") {
+                                return false
+                            };
+                            if (self.id == "portal_vaults") {
+                                // temporary blocked because of the concurrent update issues
+                                return false
+                            };
+                        };
+                    };
+                    return true
+                },
                 "themes": {"icons": false},
-                "check_callback" : true,
                 "data": this.state.treeData,
                 "multiple" : true,
             },
@@ -213,6 +233,15 @@ export class PwmJsTreeContainer extends Component {
     */
     async _onUpdateNode(jsTreeAnchor, data, position) {
         await checkBundleSecurity(this.props.bundleIds, this.orm, this.dialogService);
+        if (data.node && data.node.icon && data.node.icon === "nodex_update") {
+            // this is records drag&drop
+            await this.orm.call(
+                jsTreemodels[this.id], "action_update_nodes", [[parseInt(data.node.parent)], data.node.id],
+            );
+            this.jsTreeAnchor.jstree(true).delete_node(data.node);
+            await this._onUpdateDomain(jsTreeAnchor);
+            return true
+        };
         if (data.node.id === parseInt(data.node.id).toString()) {
             // node exists in tree (no need for refreshing)
             if (position) {
@@ -220,30 +249,24 @@ export class PwmJsTreeContainer extends Component {
                 position = parseInt(data.position);
             };
             await this.orm.call(
-                componentModel,
-                "action_update_node",
-                [jsTreemodels[this.id], parseInt(data.node.id), data.node, position],
+                componentModel, "action_update_node", [jsTreemodels[this.id], parseInt(data.node.id), data.node, position]
             );
         }
         else {
             // brand new node
             const newNodeId = await this.orm.call(
-                componentModel,
-                "action_create_node",
-                [jsTreemodels[this.id], data.node, this.props.bundleIds],
+                componentModel, "action_create_node", [jsTreemodels[this.id], data.node, this.props.bundleIds]
             );
             jsTreeAnchor.set_id(data.node, newNodeId);
         }
     }
     /*
-     * The method to trigger unlink of jstree node 
+     * The method to trigger unlink of jstree node
     */
     async _onDeleteNode(data) {
         await checkBundleSecurity(this.props.bundleIds, this.orm, this.dialogService);
         await this.orm.call(
-            componentModel,
-            "action_delete_node",
-            [jsTreemodels[this.id], parseInt(data.node.id)],
+            componentModel, "action_delete_node", [jsTreemodels[this.id], parseInt(data.node.id)]
         );
     }
     /*
@@ -262,22 +285,22 @@ export class PwmJsTreeContainer extends Component {
     */
     async _onEditNodeForm(jsTreeAnchor, node) {
         await checkBundleSecurity(this.props.bundleIds, this.orm, this.dialogService);
-        const modelContext = this.props.kanbanModel.rootParams.context;
+        const modelContext = this.props.kanbanModel.env.context;
         this.dialogService.add(FormViewDialog, {
             resModel: jsTreemodels[this.id],
             resId: parseInt(node.id),
             context: modelContext,
             title: _lt("Edit"),
-            onRecordSaved: async (formRecord) => { 
+            onRecordSaved: async (formRecord) => {
                 jsTreeAnchor.set_text(node, formRecord.data.name);
                 if (formRecord.data.parent_id && formRecord.data.parent_id.length != 0) {
                     const newParent = formRecord.data.parent_id[0].toString();
                     if (newParent != node.parent) {
                         jsTreeAnchor.move_node(node, newParent);
                     };
-                };            
+                };
             },
-        });        
+        });
     }
     /*
     * The method to calculate domain based on JsTree values
@@ -288,6 +311,9 @@ export class PwmJsTreeContainer extends Component {
         }
         else if (this.id == "password_types") {
             return this._getMany2OneDomain(checkedTreeItems, "custom_type_id");
+        }
+        else if (this.id == "portal_vaults") {
+            return this._getMany2ManyDomain(checkedTreeItems, "vault_ids");
         }
         return []
     }
@@ -306,7 +332,7 @@ export class PwmJsTreeContainer extends Component {
     */
     _getMany2ManyDomain(checkedTreeItems, field) {
         var domain = [];
-        _.each(checkedTreeItems, function (checkedItem) {
+        checkedTreeItems.forEach(function (checkedItem) {
             domain = Domain.or([domain, [[field, "in", parseInt(checkedItem)]]]).toList();
         });
         return domain;
@@ -319,15 +345,13 @@ export class PwmJsTreeContainer extends Component {
     _highlightParent(jsTreeAnchor, checkedNodes, jsSelector) {
         $(jsSelector + "* .jstr-selected-parent").removeClass("jstr-selected-parent");
         var allParentNodes = [];
-        _.each(checkedNodes, function (node) {
+        checkedNodes.forEach(function (node) {
             const thisNodeParents = jsTreeAnchor.get_path(node, false, true);
             allParentNodes = allParentNodes.concat(thisNodeParents);
         });
         allParentNodes = [... new Set(allParentNodes)];
-        _.each(allParentNodes, function(nodeID) {
+        allParentNodes.forEach(function (nodeID) {
             $(jsSelector + " * .jstree-node#" + nodeID).addClass("jstr-selected-parent");
         });
-    } 
+    }
 }
-
-PwmJsTreeContainer.template = "odoo_password_manager.PwmJsTreeContainer";

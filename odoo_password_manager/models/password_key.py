@@ -6,11 +6,11 @@ from werkzeug import urls
 
 from odoo import _, api, fields, models
 from odoo.addons.odoo_password_manager.models.password_bundle import INCORRECT_CONFIRM_PASSWORD_WARNING
-from odoo.exceptions import AccessError, ValidationError 
+from odoo.exceptions import AccessError, ValidationError
 from odoo.osv.expression import OR
 from odoo.tools.safe_eval import safe_eval
 from odoo.tools import is_html_empty
- 
+
 _logger = logging.getLogger(__name__)
 
 try:
@@ -26,9 +26,16 @@ except:
 
 try:
     from zxcvbn import zxcvbn
+    def zxcvbn_calc(password):
+        if len(password) > 200:
+            # for very long passwords the method will be hanging for a long time. So we estimate the first 200 letters
+            # that, in practice, should be more than enough
+            return zxcvbn(password[:200])
+        else:
+            return zxcvbn(password)
 except ImportError as e:
     _logger.error(e)
-    def zxcvbn(password):
+    def zxcvbn_calc(password):
         return 0
 
 ALLOWED_UNDER_SUDO = [
@@ -46,14 +53,25 @@ class password_key(models.Model):
     _name = "password.key"
     _inherit = ["mail.activity.mixin", "mail.thread", "bundle.security.mixin"]
     _description = "Password"
+    _mail_post_access = "read"
 
     @api.model
     def default_bundle_id(self):
         """
         Default method for bundle_id (needed in case of page refresh)
         """
-        if self.env.context.get("params") and self.env.context.get("params").get("default_bundle_id"):
-            return self.env.context.get("params").get("default_bundle_id")
+        if self._context.get("params") and self._context.get("params").get("default_bundle_id"):
+            return self._context.get("params").get("default_bundle_id")
+
+    @api.depends("password")
+    def _compute_password_streng(self):
+        """
+        Onchange method for password
+        The goal is to show calculated strength in real time
+        """
+        for passwordkey in self:
+            password_streng = passwordkey.password and str(zxcvbn_calc(passwordkey.password).get("score")) or "0"
+            passwordkey.password_streng = password_streng
 
     def _compute_duplicates_count(self):
         """
@@ -126,15 +144,6 @@ class password_key(models.Model):
         for password in self:
             password.attachment_ids.write({"res_id": password.id})
 
-    @api.onchange("password")
-    def _onchange_password(self):
-        """
-        Onchange method for password
-        The goal is to show calculated strength in real time
-        """
-        for passwordkey in self:
-            passwordkey.password_streng = passwordkey.password and str(zxcvbn(passwordkey.password).get("score")) or "0"
-
     @api.model
     def _generate_order_by(self, order_spec, query):
         """
@@ -146,24 +155,34 @@ class password_key(models.Model):
             res = res.replace('"password_key"."name"', 'LOWER("password_key"."name")')
         return res
 
+    @api.depends("access_user_group_ids", "access_user_group_ids.users", "access_user_ids")
+    def _compute_access_all_user_ids(self):
+        """
+        Compute method for access_all_user_ids
+        """
+        for passwordkey in self:
+            users = passwordkey.access_user_group_ids.mapped("users")
+            user_ids = (users | passwordkey.access_user_ids).ids
+            passwordkey.access_all_user_ids = [(6, 0, user_ids)]
+
+    @api.depends("share_ids")
+    def _compute_vault_ids(self):
+        """
+        Compute method for vault_ids
+        """
+        for passwordkey in self:
+            passwordkey.vault_ids = [(6, 0, passwordkey.share_ids.mapped("portal_password_bundle_id").ids)]
+
     name = fields.Char(string="Reference")
-    bundle_id = fields.Many2one(
-        "password.bundle",
-        string="Bundle",
-        ondelete="cascade",
-        default=default_bundle_id,
-    )
+    bundle_id = fields.Many2one("password.bundle", string="Bundle", ondelete="cascade", default=default_bundle_id)
     user_name = fields.Char(string="User name")
     password = fields.Char(string="Password", copy=False)
     password_streng = fields.Selection(
-        [
-            ("0", "Horrible"),
-            ("1", "Bad"),
-            ("2", "Weak"),
-            ("3", "Good"),
-            ("4", "Strong"),
-        ],
+        [("0", "Horrible"), ("1", "Bad"), ("2", "Weak"), ("3", "Good"), ("4", "Strong")],
         string="Password Strength",
+        compute=_compute_password_streng,
+        readonly=False,
+        store=True,
     )
     password_len = fields.Integer(string="Password Length", default=0)
     confirm_password = fields.Char(string="Confirm Password", copy=False)
@@ -171,7 +190,7 @@ class password_key(models.Model):
     mail_activity_update_id = fields.Many2one("mail.activity", string="Mail Activity to update password")
     email = fields.Char(string="Email")
     link_url = fields.Char(string="URL", inverse=_inverse_link_url)
-    phone = fields.Char(string="Phone",)
+    phone = fields.Char(string="Phone")
     partner_id = fields.Many2one("res.partner", string="Partner")
     tag_ids = fields.Many2many(
         "password.tag",
@@ -209,6 +228,41 @@ class password_key(models.Model):
     )
     color = fields.Integer(string="Color Index")
     active = fields.Boolean(string="Active", default=True)
+    access_user_group_ids = fields.Many2many(
+        "res.groups",
+        "res_groups_password_key_rel_table",
+        "res_groups_id",
+        "password_key_id",
+        string="Access Groups",
+        help="""If selected, a user should belong to one of those groups or among 'Access Users' to access this key.
+The exceptions are (1) Bundle 'Full rights' managers and administrators; (2) The bundle creator.
+To access the key a user should also have an access to its bundle""",
+    )
+    access_user_ids = fields.Many2many(
+        "res.users",
+        "res_users_password_key_rel_table",
+        "res_users_id",
+        "password_key_id",
+        string="Access Users",
+        help="""If selected, a user should be among the chosen users or should belong to one of those groups to access \
+this key.
+The exceptions are (1) Bundle 'Full rights' managers and administrators; (2) The bundle creator.
+To access the key a user should also have an access to its bundle""",
+    )
+    access_all_user_ids = fields.Many2many(
+        "res.users",
+        "res_users_password_key_all_rel_table",
+        "res_users_id",
+        "password_key_id",
+        string="All Access Users",
+        compute=_compute_access_all_user_ids,
+        compute_sudo=True,
+        store=True,
+    )
+    share_ids = fields.One2many("portal.password.key", "password_id", string="Shares")
+    vault_ids = fields.Many2many(
+        "portal.password.bundle", compute=_compute_vault_ids, compute_sudo=True, store=True,
+    )
 
     _order = "name ASC, id"
 
@@ -225,8 +279,7 @@ class password_key(models.Model):
                 if pw_dict.get("password"):
                     pw_dict.update({"password": bundle_id.decrypt_key(pw_dict.get("password"))})
                 if pw_dict.get("confirm_password"):
-                    pw_dict.update({"confirm_password": bundle_id.decrypt_key(pw_dict.get("confirm_password"))
-                    })
+                    pw_dict.update({"confirm_password": bundle_id.decrypt_key(pw_dict.get("confirm_password"))})
         return result
 
     @api.model_create_multi
@@ -237,19 +290,14 @@ class password_key(models.Model):
         Methods:
          * _calculate_properties
         """
-        global_ctx_bundle_id = self.env.context.get("default_bundle_id") or (self.env.context.get("params") \
-            and self.env.context.get("params").get("default_bundle_id")) or False
-        need2check_confirm_pw = need2copy_confirm_pw = False
-        if not self._context.get("no_more_check"):
-            need2check_confirm_pw = True
-            if self.env.context.get("import_file"):
-                need2copy_confirm_pw = True
+        global_ctx_bundle_id = self._context.get("default_bundle_id") or (self._context.get("params") \
+            and self._context.get("params").get("default_bundle_id")) or False
+        need2copy_confirm_pw = self._context.get("import_file")
         today_date = fields.Date.today()
-
         for values in vals_list:
             if need2copy_confirm_pw and not values.get("confirm_password"):
                 values["confirm_password"] = values.get("password")
-            if need2check_confirm_pw and values.get("password") != values.get("confirm_password"):
+            if values.get("password") != values.get("confirm_password"):
                 raise ValidationError(INCORRECT_CONFIRM_PASSWORD_WARNING)
             bundle_to_edit = values.get("bundle_id") or global_ctx_bundle_id
             bundle_id = self.env["password.bundle"].browse(bundle_to_edit)
@@ -265,7 +313,7 @@ class password_key(models.Model):
         password_ids = super(password_key, self).create(vals_list)
         return password_ids
 
-    def write(self, values):
+    def write(self, vals):
         """
         Overwrite to decrypt password and confirm_password
         In case bundle id or password or confirm password are changed --> encrypt password
@@ -273,13 +321,12 @@ class password_key(models.Model):
         Methods:
          * _calculate_properties
         """
-        if not self._context.get("no_more_check"):
-            if values.get("password") != values.get("confirm_password"):
-                raise ValidationError(INCORRECT_CONFIRM_PASSWORD_WARNING)
-
+        if not self._context.get("import_file") and vals.get("password") != vals.get("confirm_password"):
+            raise ValidationError(INCORRECT_CONFIRM_PASSWORD_WARNING)
         res = True
         for password_object in self:
             pw_updated = False
+            values = vals.copy()
             if (values.get("bundle_id"), values.get("password"), values.get("confirm_password")).count(None) != 3:
                 pw_updated = values.get("password") is not None
                 pw_dict = password_object.read(fields=["password", "bundle_id"], load=False)[0] # to decrypt
@@ -426,7 +473,7 @@ class password_key(models.Model):
          * bool
         """
         export_conf = False
-        if self.env.is_admin() or self.env.user.has_group("base.group_allow_export"): 
+        if self.env.is_admin() or self.env.user.has_group("base.group_allow_export"):
             Config = self.env["ir.config_parameter"].sudo()
             export_conf = safe_eval(Config.get_param("password_management_export_option", "False"))
         return export_conf
@@ -471,6 +518,25 @@ class password_key(models.Model):
                     local_context.update({"default_password_ids": [(6, 0, pw_ids.ids)]})
                     result["context"] = local_context
         return result or {}
+
+    def action_return_share_action(self):
+        """
+        The method to prepare the wizard action to share passwords
+
+        Returns:
+         * dict (action)
+        """
+        if not self:
+            raise ValidationError(_("There are no passwords selected! Please select at least one password"))
+        bundle_ids = self.mapped("bundle_id")
+        if len(bundle_ids) != 1:
+            raise ValidationError(
+                _("The passwords relate to different bundles. Sharing is possible within a single bundle only!")
+            )
+        bundle_id = bundle_ids[0]
+        action = self.env.ref("odoo_password_manager.share_portal_password_action").sudo().read()[0]
+        action["context"] = {"default_bundle_id": bundle_id.id, "need_navigation_reload": True}
+        return action
 
     def action_return_duplicates_action(self):
         """
@@ -521,6 +587,10 @@ class password_key(models.Model):
             result = self.env["password.tag"]._return_nodes(bundle_ids)
         elif key == "password_types":
             result = self.env["password.key"]._return_types_nodes()
+        elif key == "portal_vaults":
+            result = False
+            if self.env.user.has_group("odoo_password_manager.group_portal_password_vaults"):
+                result = self.env["portal.password.bundle"]._return_nodes(bundle_ids) or False
         return result
 
     @api.model
@@ -621,7 +691,7 @@ class password_key(models.Model):
         encrypted_password = password
         if password:
             encrypted_password = bundle_id.encrypt_key(password)
-            password_streng = str(zxcvbn(password).get("score"))
+            password_streng = str(zxcvbn_calc(password).get("score"))
             password_len = len(password)
         return encrypted_password, password_streng, password_len
 
@@ -688,14 +758,14 @@ class password_key(models.Model):
         return list(PASSWORD_FIELDS_TO_MERGE) + list(self._merge_get_fields_specific().keys())
 
     def _get_merged_data(self):
-        """ 
+        """
         The method to read fields of merged opportunities
         The idea is the same as in case of crm.lead merging tool (@see crm.lead _merge_data):
          * text: all the values are concatenated
          * m2m and o2m: those fields aren't processed
          * m2o: the first not null value prevails (the other are dropped)
          * any other type of field: same as m2o
-        
+
         Returns:
          * dict of new values for passwords
         """

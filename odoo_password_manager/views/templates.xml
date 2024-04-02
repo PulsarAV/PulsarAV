@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="portal_layout" name="Portal layout: Password Manager" inherit_id="portal.portal_breadcrumbs" priority="40">
+        <xpath expr="//ol[hasclass('o_portal_submenu')]" position="inside">
+            <li t-if="page_name == 'Password Vaults' or vault_id" t-attf-class="breadcrumb-item #{'active ' if not vault_id else ''}">
+                <a t-if="vault_id" t-attf-href="/my/password_vaults?{{ keep_query() }}">Password Vaults</a>
+                <t t-else="">Password Vaults</t>
+            </li>
+            <li t-if="vault_id" class="breadcrumb-item active">
+                <t t-out="vault_id.name"/>
+            </li>
+        </xpath>
+    </template>
+    <template id="portal_my_home_odoo_password_manager" name="Show Password Vaults" inherit_id="portal.portal_my_home" priority="200" customize_show="True">
+        <xpath expr="//div[hasclass('o_portal_docs')]" position="before">
+            <t t-set="portal_service_category_enable" t-value="True"/>
+        </xpath>
+        <div id="portal_service_category" position="inside">
+            <t t-call="portal.portal_docs_entry">
+                <t t-set="icon" t-value="'/odoo_password_manager/static/src/img/vault.png'"/>
+                <t t-set="title">Password Vaults</t>
+                <t t-set="url" t-value="'/my/password_vaults'"/>
+                <t t-set="text">Access shared passwords</t>
+                <t t-set="placeholder_count" t-value="'pwm_count'"/>
+            </t>
+        </div>
+    </template>
+    <template id="portal_vaults" name="Password Vaults">
+        <t t-call="portal.portal_layout">
+            <div t-if="not vault_ids" class="mt8">
+                <p>There are currently no shared password vaults</p>
+            </div>
+            <div t-else="vault_ids" class="mt8" t-call="portal.portal_table">
+                <thead>
+                    <tr class="active">
+                        <th>Vault</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <t t-foreach="vault_ids" t-as="vault">
+                    <tr>
+                        <td>
+                            <a t-attf-href="/my/password_vaults/#{vault.id}?#{keep_query()}">
+                                <t t-out="vault.name"/>
+                            </a>
+                        </td>
+                        <td>
+                            <a t-attf-href="/my/password_vaults/#{vault.id}?#{keep_query()}">
+                                <t t-out="vault.passwords_len"/> Passwords
+                            </a>
+                        </td>
+                    </tr>
+                </t>
+            </div>
+        </t>
+    </template>
+    <template id="portal_vault" name="Password Vault">
+        <t t-call="portal.portal_layout">
+            <t t-if="passwords is not None">
+                <t t-set="breadcrumbs_searchbar" t-value="True"/>
+                <t t-call="portal.portal_searchbar">
+                    <t t-set="title">Passwords</t>
+                </t>
+            </t>
+            <t t-set="additional_title" t-value="vault_id.name"/>
+            <div id="portal_vault_container">
+                <form t-if="passwords is None" class="mt8 row">
+                    <div class="col-lg-4 col-md-4 col-sm-6">
+                        <input id="portal_vault_password" t-att-data-id="vault_id.id" type="password" required="required" class="form-control" placeholder="please enter the vault password"/>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-6">
+                        <button id="portal_vault_login" type="submit" class="btn btn-secondary">Log In</button>
+                    </div>
+                </form>
+                <div t-if="done_search" class="alert alert-info mt8">
+                    <t t-if="done_search">
+                        Last search: "<t t-out="done_search"/>".
+                    </t>
+                    <a t-att-href="default_url">Clear search</a>
+                </div>
+                <div t-if="not passwords and passwords is not None" class="mt8">
+                    <p>There are no passwords found in this vault.</p>
+                </div>
+                <div t-if="passwords" class="mt8" t-call="portal.portal_table">
+                    <thead>
+                        <tr class="active">
+                            <th>Reference</th>
+                            <th>User Name</th>
+                            <th>Password</th>
+                            <th t-if="'link_url' in extra_fields">URL</th>
+                            <th t-if="'phone' in extra_fields">Phone</th>
+                            <th t-if="'email' in extra_fields">Email</th>
+                            <th t-if="'notes' in extra_fields">Notes</th>
+                            <t t-if="c_labels" t-foreach="c_labels" t-as="c_label">
+                                <th><t t-out="c_label"/></th>
+                            </t>
+                        </tr>
+                    </thead>
+                    <t t-foreach="passwords" t-as="password_dict">
+                        <t t-set="pw_id" t-value="password_dict.get('id')"/>
+                        <t t-set="pw_url" t-value="password_dict.get('link_url')"/>
+                        <t t-if="c_labels">
+                            <t t-set="c_values" t-value="custom_values.get(pw_id)"/>
+                        </t>
+                        <tr>
+                            <td><t t-out="password_dict.get('name')"/></td>
+                            <td><t t-out="password_dict.get('user_name') or ''"/></td>
+                            <td>
+                                <span class="portal_vault_mask" t-att-data-id="pw_id" t-att-data-pw_len="password_dict.get('password_len')"/>
+                            </td>
+                            <td t-if="'link_url' in extra_fields"><t t-if="pw_url">
+                                <a t-att-href="pw_url" target="_blank"><t t-out="pw_url"/></a>
+                            </t></td>
+                            <td t-if="'phone' in extra_fields"><t t-out="password_dict.get('phone') or ''"/></td>
+                            <td t-if="'email' in extra_fields"><t t-out="password_dict.get('email') or ''"/></td>
+                            <td t-if="'notes' in extra_fields" class="password-wrap"><t t-out="password_dict.get('notes') or ''"/></td>
+                            <t t-if="c_labels">
+                                <t t-foreach="c_values" t-as="c_field">
+                                    <td t-attf-class="#{c_field.get('type') == 'html' and 'password-wrap' or ''}"><t t-out="c_field.get('value') or ''"/></td>
+                                </t>
+                            </t>
+                        </tr>
+                    </t>
+                </div>
+            </div>
+        </t>
+    </template>
+
+
+</odoo>

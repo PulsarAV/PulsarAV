@@ -14,6 +14,18 @@
             <field name="numbercall">-1</field>
             <field name="doall">False</field>
         </record>
+        <record id="password_vault_clear" model="ir.cron">
+            <field name="name">[Password Manager] Clear Expired Portal Vaults</field>
+            <field name="model_id" ref="odoo_password_manager.model_portal_password_bundle"/>
+            <field name="state">code</field>
+            <field name="code">model.action_clear_expired_vaults()</field>
+            <field name="nextcall" eval="(DateTime.now() + timedelta(days=1)).strftime('%Y-%m-%d 00:10:00')" />
+            <field name="user_id" ref="base.user_root"/>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field name="doall">False</field>
+        </record>
 
       </data>
 </odoo>

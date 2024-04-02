@@ -11,6 +11,16 @@ class password_node(models.AbstractModel):
     """
     _name = "password.node"
     _description = "Password Node"
+    _rec_name = "complete_name"
+
+    @api.depends("parent_id", "name")
+    def _compute_complete_name(self):
+        """
+        Overerite to reflect parent's hierarch
+        """
+        for node in self:
+            name = u"{}{}".format(node.parent_id and node.parent_id.display_name + "/" or "", node.name)
+            node.complete_name = name
 
     @api.constrains("parent_id")
     def _check_node_recursion(self):
@@ -24,13 +34,13 @@ class password_node(models.AbstractModel):
     def _inverse_bundle_id(self):
         """
         Inverse method for bundle_id
-        If node bundle is changed, we firstly check it suits the parent and then update all child nodes to the same 
+        If node bundle is changed, we firstly check it suits the parent and then update all child nodes to the same
         bundle
         """
         for node in self:
             if node.parent_id and node.parent_id.bundle_id != node.bundle_id:
                 node.bundle_id = node.parent_id.bundle_id
-            else:
+            elif node.child_ids:
                 node.child_ids.write({"bundle_id": node.bundle_id.id}) # recursion
 
     def _inverse_active(self):
@@ -39,6 +49,8 @@ class password_node(models.AbstractModel):
          1. If a parent is not active, we activate it. It recursively activate all its further parents
          2. Deacticate all children. It will invoke deactivation recursively of all children after
         """
+        if self._name == "portal.password.bundle":
+            return
         for node in self:
             if node.active:
                 # 1
@@ -48,24 +60,10 @@ class password_node(models.AbstractModel):
                 # 2
                 node.child_ids.write({"active": False})
 
-    bundle_id = fields.Many2one(
-        "password.bundle", 
-        string="Bundle", 
-        ondelete="cascade",
-        inverse=_inverse_bundle_id,
-    )
+    bundle_id = fields.Many2one("password.bundle", string="Bundle", ondelete="cascade", inverse=_inverse_bundle_id)
+    complete_name = fields.Char("Complete Name", compute=_compute_complete_name, recursive=True, store=True)
     active = fields.Boolean(string="Active", default=True, inverse=_inverse_active)
     sequence = fields.Integer(string="Sequence", default=0)
-    
-    def name_get(self):
-        """
-        Overloading the method, to reflect parent's name recursively
-        """
-        result = []
-        for node in self:
-            name = u"{}{}".format(node.parent_id and node.parent_id.name_get()[0][1] + "/" or "", node.name)
-            result.append((node.id, name))
-        return result
 
     @api.model
     def _return_nodes(self, bundle_ids):
@@ -106,12 +104,7 @@ class password_node(models.AbstractModel):
            ** text - folder_name
            ** children - array with the same keys
         """
-        nodes = self.search([
-            ("id", "in", self.ids),
-            "|",
-                ("parent_id", "=", False),
-                ("parent_id", "not in", self.ids),
-        ])
+        nodes = self.search([("id", "in", self.ids), "|", ("parent_id", "=", False), ("parent_id", "not in", self.ids)])
         res = []
         for node in nodes:
             res.append(node._return_nodes_recursive(restrict_nodes=self))
@@ -162,10 +155,10 @@ class password_node(models.AbstractModel):
                 node_bundle_id = parent_obj.bundle_id.id
             else:
                 parent_id = False
-        
+
         new_node_vals = {
-            "name": name, 
-            "parent_id": parent_id, 
+            "name": name,
+            "parent_id": parent_id,
             "bundle_id": node_bundle_id is not None and node_bundle_id or bundle_id
         }
         new_node = self.create([new_node_vals])

@@ -22,7 +22,7 @@
                 </div>
                 <div t-att-id="id">
                 </div>
-                <div class="jstr-panel-body mb24">
+                <div class="jstr-panel-body mb24" t-if="id != 'portal_vaults'">
                     <span class="jstr-functional-button jstr-pull-right mr16" t-on-click="() => this._onAddRootTag()">... add</span>
                 </div>
             </div>

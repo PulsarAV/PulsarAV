@@ -66,7 +66,7 @@ class bundle_login(models.TransientModel):
 
     def action_update_bundle_key(self):
         """
-        The method to check credentials and trigger key/salt update. That, in turn, launches password 
+        The method to check credentials and trigger key/salt update. That, in turn, launches password
         encryption/decryption
 
         Methods:

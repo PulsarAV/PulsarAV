@@ -12,10 +12,18 @@ const componentModel = "password.key";
 const searchSections = {
     "password_tags": _lt("Tags"),
     "password_types": _lt("Types"),
+    "portal_vaults": _lt("Portal Vaults"),
 }
 
 
 export class PasswordNavigation extends Component {
+    static template = "odoo_password_manager.PasswordNavigation";
+    static components = { PwmJsTreeContainer };
+    static props = {
+        kanbanList: { type: Object },
+        bundleIds: { type: Array },
+        canUpdate: { type: Boolean },
+    };
     /*
     * Re-write to import required services and update props on the component start
     */
@@ -45,7 +53,6 @@ export class PasswordNavigation extends Component {
             kanbanModel: this.props.kanbanList.model,
             bundleIds: this.props.bundleIds,
             canUpdate: this.props.canUpdate,
-            bundleIds: this.props.bundleIds,
         }
     }
     /*
@@ -63,10 +70,10 @@ export class PasswordNavigation extends Component {
     */
     _prepareJsTreeDomain(jstreeId, domain) {
         var jsTreeDomain = [];
-        this.jsTreeDomains[jstreeId] = domain;  
-        _.each(this.jsTreeDomains, function (val_domain) {
+        this.jsTreeDomains[jstreeId] = domain;
+        Object.values(this.jsTreeDomains).forEach(function (val_domain) {
             jsTreeDomain = Domain.and([jsTreeDomain, val_domain])
-        })
+        });
         return jsTreeDomain
     }
     /*
@@ -79,23 +86,22 @@ export class PasswordNavigation extends Component {
         var fullDomain = this.env.searchModel._getDomain();
         if (fullDomain.length != 0) {
             const selectedRecords = kanbanModel.selectedRecords.map((rec) => rec.id);
-            fullDomain = Domain.or([fullDomain, [["id", "in", selectedRecords]]]).toList();            
+            fullDomain = Domain.or([fullDomain, [["id", "in", selectedRecords]]]).toList();
         }
         kanbanModel.selectedRecords = await this.orm.searchRead(
             componentModel, fullDomain, ["name", "user_name", "link_url", "password_len"]
         );
         await kanbanModel.root.load();
-        kanbanModel.notify();        
+        kanbanModel.notify();
     }
     /*
     * The method to reseqeunce kanban list
     * We clear orderBy each time since the UI assumes sorting only by a single criteria
-    * Security check is done on the kanban rendering
     */
     async _applySorting() {
-        this.props.kanbanList.orderBy = [];
-        this.props.kanbanList.orderBy.push({name: this.kanbanOrder, asc: this.asc});
-        this.props.kanbanList.orderBy.push({name: "id"});
+        this.props.kanbanList.config.orderBy = [];
+        this.props.kanbanList.config.orderBy.push({name: this.kanbanOrder, asc: this.asc});
+        this.props.kanbanList.config.orderBy.push({name: "id"});
         this.env.searchModel.updateOrderBy({name: this.kanbanOrder, asc: !this.asc});
         await this.props.kanbanList.sortBy(this.kanbanOrder);
     }
@@ -115,6 +121,3 @@ export class PasswordNavigation extends Component {
         await this._applySorting();
     }
 };
-
-PasswordNavigation.template = "odoo_password_manager.PasswordNavigation";
-PasswordNavigation.components = { PwmJsTreeContainer }

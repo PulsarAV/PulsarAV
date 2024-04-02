@@ -1,30 +1,34 @@
 /** @odoo-module **/
 
-import { KanbanDynamicRecordList } from "@web/views/kanban/kanban_model";
-import { useService } from "@web/core/utils/hooks";
+import { DynamicRecordList } from "@web/model/relational_model/dynamic_record_list";
 
 
-export class PasswordKanbanDynamicRecordList extends KanbanDynamicRecordList {
+export class PasswordKanbanDynamicRecordList extends DynamicRecordList {
     /*
-    * Re-write to trigger toggle selection for the old selection 
+    * Re-write to trigger toggle selection for the old selection
     */
-    async load() {
-        await super.load();
-        const selectedRecords = this.model.selectedRecords;
-        _.each(this.records, function (record) {
-            if (selectedRecords.find(rec => rec.id === record.resId)) {
-                record.toggleSelection(true, true);
-            }
-        });
+    setup(config, data) {
+        super.setup(...arguments);
+        this.reSelect();
     }
     /*
-    * Overwrite to save selected records to state
+    * Re-write to trigger toggle selection for the old selection
     */
-    exportState() {
-        const state = {
-            ...super.exportState(),
-            selectedRecords: this.model.selectedRecords,
+    async _load(offset, limit, orderBy, domain) {
+        await super._load(...arguments);
+        this.reSelect();
+    }
+    /*
+    * The method to trigger toggle selection for the old selection
+    */
+    reSelect() {
+        if (this.records.length) {
+            const selectedRecords = this.model.selectedRecords;
+            this.records.forEach(function (record) {
+                if (selectedRecords.find(rec => rec.id === record.resId)) {
+                    record.selected = true;
+                };
+            });
         };
-        return state
     }
-}
+};

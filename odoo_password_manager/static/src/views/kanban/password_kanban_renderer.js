@@ -33,8 +33,9 @@ export class PasswordKanbanRenderer extends KanbanRenderer {
     * The method to find actively used bundle(s)
     */
     async _getBundles(props) {
-        if (this.props.list.model.rootParams.context.default_bundle_ids) {
-            this.bundles = this.props.list.model.rootParams.context.default_bundle_ids
+        const localCtx = props.list.evalContext;
+        if (localCtx.default_bundle_ids) {
+            this.bundles = localCtx.default_bundle_ids;
         }
         else {
             // we are for all the passwords
@@ -45,11 +46,7 @@ export class PasswordKanbanRenderer extends KanbanRenderer {
     * The method to check the access rights for bundle(s)
     */
     async _checkUpdateRight(props) {
-        const canUpdate = await this.orm.call(
-            componentModel,
-            "action_check_bundle_edit_rights",
-            [this.bundleIds],
-        );
+        const canUpdate = await this.orm.call(componentModel, "action_check_bundle_edit_rights", [this.bundleIds]);
         Object.assign(this.state, { canUpdate: canUpdate });
     }
     /*
@@ -57,6 +54,12 @@ export class PasswordKanbanRenderer extends KanbanRenderer {
     */
     get bundleIds() {
         return this.bundles;
+    }
+    /*
+    * The method to update the navigation panel
+    */
+    _reloadNavigation() {
+        Object.assign(this.state, { "reloaded": !this.state.reloaded })
     }
     /*
     * Prepare props for the PasswordManager (right navigation & mass actions component)
@@ -68,6 +71,7 @@ export class PasswordKanbanRenderer extends KanbanRenderer {
             kanbanModel: this.props.list.model,
             canUpdate: this.state.canUpdate,
             bundleIds: this.bundleIds,
+            reloadNavigation: this._reloadNavigation.bind(this),
         };
     }
     /*
@@ -78,7 +82,7 @@ export class PasswordKanbanRenderer extends KanbanRenderer {
             kanbanList: this.props.list,
             canUpdate: this.state.canUpdate,
             bundleIds: this.bundleIds,
-        }
+        };
     }
 };
 

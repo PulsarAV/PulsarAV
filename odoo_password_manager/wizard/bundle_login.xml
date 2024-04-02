@@ -24,14 +24,10 @@
         <field name="arch" type="xml">
             <form position="inside">
                 <footer>
-                    <button name="action_log_in"
-                            string="Log in"
-                            type="object"
-                            class="oe_highlight o_form_button_save"
-                    />
+                    <button name="action_log_in" string="Log in" type="object" class="oe_highlight o_form_button_save"/>
                     <button string="Cancel" class="oe_link" special="cancel"/>
                 </footer>
-            </form>               
+            </form>
         </field>
     </record>
     <!-- The update bundle wizard -->
@@ -44,11 +40,7 @@
         <field name="arch" type="xml">
             <form position="inside">
                 <footer>
-                    <button name="action_update_password"
-                            string="Update password"
-                            type="object"
-                            class="oe_highlight o_form_button_save"
-                    />
+                    <button name="action_update_password" string="Update password" type="object" class="oe_highlight o_form_button_save"/>
                     <button string="Cancel" class="oe_link" special="cancel"/>
                 </footer>
             </form>
@@ -58,7 +50,7 @@
             <group position="inside">
                 <field name="new_password" widget="PasswordCopy" password="True" log_in="True"/>
                 <field name="new_password_confirmation" widget="PasswordCopy" password="True" log_in="True"/>
-            </group>                
+            </group>
         </field>
     </record>
     <!-- The special form to be triggered from Python method to update salt -->
@@ -70,11 +62,7 @@
         <field name="priority">1000</field>
         <field name="arch" type="xml">
             <button name="action_log_in" position="replace">
-                <button name="action_update_bundle_key"
-                        string="Update bundle key and salt"
-                        type="object"
-                        class="oe_highlight o_form_button_save"
-                />
+                <button name="action_update_bundle_key" string="Update bundle key and salt" type="object" class="oe_highlight o_form_button_save"/>
             </button>
         </field>
     </record>

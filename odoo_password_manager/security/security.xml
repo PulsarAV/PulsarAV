@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data noupdate="0">
+
+        <!-- Special group to turn on the portal sharing -->
+        <record id="group_portal_password_vaults" model="res.groups">
+            <field name="name">Password Portal Vaults</field>
+            <field name="category_id" ref="base.module_category_hidden"/>
+        </record>
         <!-- Bundles -->
         <record id="password_bundle_read_rule" model="ir.rule">
             <field name="name">Password Bundles Read Rule</field>
             <field name="model_id" ref="odoo_password_manager.model_password_bundle"/>
-            <field name="domain_force">[
-                "|",
-                    ("create_uid", "in", [user.id]),
-                    ("has_read_right_to", "=", user.id),
-            ]</field>
+            <field name="domain_force">["|", ("create_uid", "in", [user.id]), ("has_read_right_to", "=", user.id)]</field>
             <field name="perm_read" eval="True"/>
             <field name="perm_write" eval="False"/>
             <field name="perm_create" eval="False"/>
@@ -18,11 +20,7 @@
         <record id="password_bundle_write_rule" model="ir.rule">
             <field name="name">Password Bundles Write Rule</field>
             <field name="model_id" ref="odoo_password_manager.model_password_bundle"/>
-            <field name="domain_force">[
-                "|",
-                    ("create_uid", "in", [user.id]),
-                    ("has_admin_right_to", "=", user.id),
-            ]</field>
+            <field name="domain_force">["|",("create_uid", "in", [user.id]), ("has_admin_right_to", "=", user.id)]</field>
             <field name="perm_read" eval="False"/>
             <field name="perm_write" eval="True"/>
             <field name="perm_create" eval="True"/>
@@ -32,11 +30,7 @@
         <record id="password_access_read_rule" model="ir.rule">
             <field name="name">Password Levels Read Rule</field>
             <field name="model_id" ref="odoo_password_manager.model_password_access"/>
-            <field name="domain_force">[
-                "|",
-                    ("bundle_id.create_uid", "in", [user.id]),
-                    ("bundle_id.has_read_right_to", "=", user.id),
-            ]</field>
+            <field name="domain_force">["|", ("bundle_id.create_uid", "in", [user.id]), ("bundle_id.has_read_right_to", "=", user.id)]</field>
             <field name="perm_read" eval="True"/>
             <field name="perm_write" eval="False"/>
             <field name="perm_create" eval="False"/>
@@ -45,11 +39,7 @@
         <record id="password_access_write_rule" model="ir.rule">
             <field name="name">Password Levels Write Rule</field>
             <field name="model_id" ref="odoo_password_manager.model_password_access"/>
-            <field name="domain_force">[
-                "|",
-                    ("bundle_id.create_uid", "in", [user.id]),
-                    ("bundle_id.has_admin_right_to", "=", user.id),
-            ]</field>
+            <field name="domain_force">["|", ("bundle_id.create_uid", "in", [user.id]), ("bundle_id.has_admin_right_to", "=", user.id),]</field>
             <field name="perm_read" eval="False"/>
             <field name="perm_write" eval="True"/>
             <field name="perm_create" eval="True"/>
@@ -60,9 +50,15 @@
             <field name="name">Password Read Rule</field>
             <field name="model_id" ref="odoo_password_manager.model_password_key"/>
             <field name="domain_force">[
-                "|",
-                    ("bundle_id.create_uid", "in", [user.id]),
-                    ("bundle_id.has_read_right_to", "=", user.id),
+                "&amp;",
+                    "|",
+                        ("bundle_id.create_uid", "in", [user.id]),
+                        ("bundle_id.has_read_right_to", "=", user.id),
+                    "|", "|", "|",
+                        ("bundle_id.create_uid", "in", [user.id]),
+                        ("bundle_id.has_full_right_to", "=", user.id),
+                        ("access_all_user_ids", "in", [user.id]),
+                        "&amp;", ("access_user_group_ids", "=", False), ("access_user_ids", "=", False),
             ]</field>
             <field name="perm_read" eval="True"/>
             <field name="perm_write" eval="False"/>
@@ -72,11 +68,7 @@
         <record id="password_key_write_rule" model="ir.rule">
             <field name="name">Password Write Rule</field>
             <field name="model_id" ref="odoo_password_manager.model_password_key"/>
-            <field name="domain_force">[
-                "|",
-                    ("bundle_id.create_uid", "in", [user.id]),
-                    ("bundle_id.has_full_right_to", "=", user.id),
-            ]</field>
+            <field name="domain_force">["|", ("bundle_id.create_uid", "in", [user.id]), ("bundle_id.has_full_right_to", "=", user.id),]</field>
             <field name="perm_read" eval="False"/>
             <field name="perm_write" eval="True"/>
             <field name="perm_create" eval="True"/>
@@ -87,10 +79,7 @@
             <field name="name">Password Tag Read Rule</field>
             <field name="model_id" ref="odoo_password_manager.model_password_tag"/>
             <field name="domain_force">[
-                "|", "|",
-                    ("bundle_id", "=", False),
-                    ("bundle_id.create_uid", "in", [user.id]),
-                    ("bundle_id.has_read_right_to", "=", user.id),
+                "|", "|", ("bundle_id", "=", False), ("bundle_id.create_uid", "in", [user.id]), ("bundle_id.has_read_right_to", "=", user.id),
             ]</field>
             <field name="perm_read" eval="True"/>
             <field name="perm_write" eval="False"/>
@@ -101,16 +90,69 @@
             <field name="name">Password Tag Write Rule</field>
             <field name="model_id" ref="odoo_password_manager.model_password_tag"/>
             <field name="domain_force">[
-                "|", "|",
-                    ("bundle_id", "=", False),
-                    ("bundle_id.create_uid", "in", [user.id]),
-                    ("bundle_id.has_full_right_to", "=", user.id),
+                "|", "|", ("bundle_id", "=", False), ("bundle_id.create_uid", "in", [user.id]), ("bundle_id.has_full_right_to", "=", user.id),
             ]</field>
             <field name="perm_read" eval="False"/>
             <field name="perm_write" eval="True"/>
             <field name="perm_create" eval="True"/>
             <field name="perm_unlink" eval="True"/>
         </record>
+        <!-- Portal vaults -->
+        <record id="portal_password_bundle_read_rule" model="ir.rule">
+            <field name="name">Portal Vaults Internal Users</field>
+            <field name="model_id" ref="odoo_password_manager.model_portal_password_bundle"/>
+            <field name="domain_force">[
+                "|", "|", ("bundle_id", "=", False), ("bundle_id.create_uid", "in", [user.id]), ("bundle_id.has_read_right_to", "=", user.id),
+            ]</field>
+            <field name="groups" eval="[(4,ref('base.group_user'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+        <record id="portal_password_bundle_read_rule_portal" model="ir.rule">
+            <field name="name">Portal Vaults Portal Users</field>
+            <field name="model_id" ref="odoo_password_manager.model_portal_password_bundle"/>
+            <field name="domain_force">[
+                "|", ("partner_ids", "=", user.partner_id.id), ("partner_ids", "=", user.partner_id.commercial_partner_id.id),
+            ]</field>
+            <field name="groups" eval="[(4,ref('base.group_portal'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+        <!-- Portal passwords -->
+        <record id="portal_password_key_read_rule" model="ir.rule">
+            <field name="name">Portal Passwords Internal Users</field>
+            <field name="model_id" ref="odoo_password_manager.model_portal_password_key"/>
+            <field name="domain_force">[
+                "|", "|",
+                    ("portal_password_bundle_id.bundle_id", "=", False),
+                    ("portal_password_bundle_id.bundle_id.create_uid", "in", [user.id]),
+                    ("portal_password_bundle_id.bundle_id.has_read_right_to", "=", user.id),
+            ]</field>
+            <field name="groups" eval="[(4,ref('base.group_user'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+        <record id="portal_password_key_read_rule_portal" model="ir.rule">
+            <field name="name">Portal Passwords Portal Users</field>
+            <field name="model_id" ref="odoo_password_manager.model_portal_password_key"/>
+            <field name="domain_force">[
+                "|",
+                    ("portal_password_bundle_id.partner_ids", "=", user.partner_id.id),
+                    ("portal_password_bundle_id.partner_ids", "=", user.partner_id.commercial_partner_id.id),
+            ]</field>
+            <field name="groups" eval="[(4,ref('base.group_portal'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+
     </data>
 
 </odoo>

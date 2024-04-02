@@ -137,11 +137,7 @@ class password_bundle(models.Model):
 
     name = fields.Char(string="Name")
     passwords_ids = fields.One2many("password.key", "bundle_id", string="Passwords")
-    passwords_count = fields.Integer(
-        string="Passwords Count",
-        compute=_compute_passwords_count,
-        store=True,
-    )
+    passwords_count = fields.Integer(string="Passwords Count", compute=_compute_passwords_count, store=True)
     tag_ids = fields.One2many("password.tag", "bundle_id", string="Available tags")
     access_ids = fields.One2many(
         "password.access",
@@ -149,19 +145,19 @@ class password_bundle(models.Model):
         string="Access Levels",
         copy=True,
         help="""Bundles
-A user may access (read) the passwords bundle: 
- (a) if this user is its creator; 
+A user may access (read) the passwords bundle:
+ (a) if this user is its creator;
  (b) if this user has any access level.
-A user may create, update (including change of extra bundle password) or delete the passwords bundle: 
+A user may create, update (including change of extra bundle password) or delete the passwords bundle:
  (a) if this user is its creator;
  (b) this user has the "Administrator" access level.
 
 Passwords
-A user may access (read) the password: 
- (a) if this user is the linked bundle creator; 
+A user may access (read) the password:
+ (a) if this user is the linked bundle creator;
  (b) if this user has any access level to the linked bundle.
-A user may create, update or delete a password: 
- (a) if this user is the linked bundle creator; 
+A user may create, update or delete a password:
+ (a) if this user is the linked bundle creator;
  (b) if this user has the "Full rights" access level to the linked bundle.
 
 Tags
@@ -169,8 +165,8 @@ A user may access password tags:
  (a) if this user is the linked bundle creator;
  (b) if this user has any access level to the linked bundle;
  (c) if a password tag does not have a linked bundle.
-A user may create, update or delete password tags: 
- (a) if this user is the linked bundle creator; 
+A user may create, update or delete password tags:
+ (a) if this user is the linked bundle creator;
  (b) if this user has the "Full rights" access level to the linked bundle;
  (c) if a password tag does not have a linked bundle.
 """,
@@ -213,11 +209,7 @@ access levels.",
     extra_password_setup = fields.Boolean(string="Extra password is set up")
     password = fields.Char(string="Bundle Password", copy=False)
     confirm_password = fields.Char(string="Confirm Bundle Password", copy=False)
-    password_update_time = fields.Datetime(
-        string="Password/Salt update time",
-        readonly=True,
-        copy=False,
-    )
+    password_update_time = fields.Datetime(string="Password/Salt update time", readonly=True, copy=False)
     session_length = fields.Integer(string="Max Session Length (Minutes)", default=60)
     bundle_key = fields.Text(string="Bundle Key", readonly=True, copy=False)
     bundle_salt = fields.Text(string="Bundle Salt", readonly=True, copy=False)
@@ -276,7 +268,7 @@ number of days",
                 "extra_password_setup": extra_security,
                 "bundle_key": self._generate_new_bundle_key(),
                 "bundle_salt": self._generate_new_bundle_salt(),
-            })   
+            })
             # bundle is created really not often, so for the goals of clean code, we prefer to make a single create
             bundle_id = super(password_bundle, self).create([values])
             if bundle_password:
@@ -397,13 +389,13 @@ number of days",
         """
         The method to encrypt BUNDLE password to the database
         The method assumes clearing passwords if extra security is not needed (to avoid their further double decryption)
-    
+
         Args:
          * password - char (not yet encrypted password)
          * confirm_password - char (not yet encrypted password)
          * extra_password_security - boolean - whether password should be checked
 
-        Methods: 
+        Methods:
          * _encrypt_bundle_password
 
         Returns:
@@ -414,7 +406,7 @@ number of days",
             if password != confirm_password:
                 raise ValidationError(INCORRECT_CONFIRM_PASSWORD_WARNING)
             bundle_password = self._encrypt_bundle_password(password)
-        return bundle_password       
+        return bundle_password
 
     @api.model
     def _encrypt_bundle_password(self, password):
@@ -460,7 +452,7 @@ number of days",
     @api.model
     def _generate_new_bundle_key(self):
         """
-        The method to prepare a new bundle key 
+        The method to prepare a new bundle key
 
         Returns:
          * str
@@ -476,7 +468,7 @@ number of days",
         """
         The method to generate a new key to encrypt/decrypt passwods
         In case there are passwords they should be decrypted with old key and encrypted with a new one
-        IMPROTANT: if there bundle is secured with an extra password, to decrypt keys we use salted password.   
+        IMPORTANT: if there bundle is secured with an extra password, to decrypt keys we use salted password.
 
         Args:
          * password - char
@@ -488,13 +480,14 @@ number of days",
          * _generate_new_bundle_key
          * _update_session_bundles
          * _refresh_bundle_keys
-        
+
         Extra info:
          * Expecteds singleton
         """
+        today_now = fields.Datetime.now()
         if password:
             # check firstly the rights, and update the session
-            self.action_login_bundle(password) 
+            self.action_login_bundle(password)
         try:
             old_bundle_key = self._get_bundle_key()
             self.bundle_salt = self._generate_new_bundle_salt()
@@ -503,7 +496,7 @@ number of days",
                 # need to refresh session again since salt is changed
                 self._update_session_bundles(password)
             self._refresh_bundle_keys(old_bundle_key)
-            self.password_update_time = fields.Datetime.now()
+            self.password_update_time = today_now
         except Exception as er:
             raise ValidationError(_("The encryption key and salt can't be updated: {}".format(er)))
 
@@ -523,7 +516,7 @@ number of days",
          * In each 'key get' we should decrypt
          * We do not clear cache here to avoid too frequent requests, it is already done in each write,create,unlink
            and read
-         * We cannot safe mere bundle_key to the session since there is no moment when it can be saved there. 
+         * We cannot safe mere bundle_key to the session since there is no moment when it can be saved there.
          * Expected singleton
         """
         bundle_decryption_key = self.bundle_key
@@ -540,7 +533,7 @@ number of days",
     def _update_session_bundles(self, password, password_change=None):
         """
         The method to add current bundle to session. So, to keep last_login datetime and if bundle key is derived
-        from password 
+        from password
 
         1. EXTREMELY IMPORTANT: starting from v.16, session is somehow cached, and for UNCLEAR REASONS update done
         in this method is not applied. Adding an extra parameter to session update FOR UNCLEAR RASONS solve that.
@@ -552,6 +545,7 @@ number of days",
 
         Methods:
          * _encrypt_fernet
+         * _generate_bundle_hash
 
         Extra info:
          * Bundle hash is encrypted with public key, so in the session it is kept in encrypted way
@@ -559,36 +553,34 @@ number of days",
            but keys are decrypted without salt)
          * Expected singleton
         """
+        today_now = fields.Datetime.now()
         bundle_hash = False
         if self.extra_password_security and self.bundle_salt:
-            bundle_salt = base64.b64decode(self.bundle_salt.encode("utf-8"))
-            decoded_password = password.encode("utf-8")
-            kdf = PBKDF2HMAC(
-                algorithm=hashes.SHA256(), length=32, salt=bundle_salt, iterations=480000,
-            )
-            bundle_hash = base64.urlsafe_b64encode(kdf.derive(decoded_password))
-            bundle_hash = self._encrypt_fernet(bundle_hash.decode(), self.bundle_key)
+            bundle_hash = self._generate_bundle_hash(self.bundle_salt, self.bundle_key, password)
         session_bundles = request.session.get("pw_bundles") and request.session.get("pw_bundles").copy() or {}
-        session_bundles.update({
-            self.id: {"last_login": fields.Datetime.now(), "bundle_hash": bundle_hash}
-        })
+        session_bundles.update({self.id: {"last_login": fields.Datetime.now(), "bundle_hash": bundle_hash}})
         request.session.update({
             "pw_bundles": session_bundles,
-            "pw_bundle_last_update": fields.Datetime.now(), # 1 IMPORTANT
+            "pw_bundle_last_update": today_now, # 1 IMPORTANT
         })
         if password_change:
-            self.password_update_time = fields.Datetime.now()
+            self.password_update_time = today_now
 
     def _refresh_bundle_keys(self, old_bundle_key):
         """
-        The method to launch decrypt, and then encrypt linked password keys 
+        The method to launch decrypt, and then encrypt linked password keys
 
         Args:
          * old_bundle_key - str - previous bundle key/salt&password to decrypt linked passwords keys
 
         Extra info:
+         * IMPORTANT: portal bundles should be updated before real passwords
          * Expected singleton
         """
+        portal_bundle_ids = self.with_context(active_test=False).env["portal.password.bundle"].search([
+            ("bundle_id", "=", self.id)
+        ])
+        portal_bundle_ids.with_context(old_bundle_key=old_bundle_key, no_new_portal_passwords=True).write({"bundle_id": self.id})
         password_ids = self.with_context(active_test=False).env["password.key"].search([("bundle_id", "=", self.id)])
         password_ids.with_context(old_bundle_key=old_bundle_key).write({"bundle_id": self.id})
 
@@ -654,7 +646,7 @@ number of days",
         Args:
          * password - str
          * bundle_key - str
-        
+
         Return:
          * str
         """
@@ -676,7 +668,7 @@ number of days",
         Args:
          * password - str
          * bundle_key - str
-        
+
         Return:
          * str
         """
@@ -689,3 +681,26 @@ number of days",
         except Exception as error:
             _logger.warning("Password can't be decrypted: {}".format(error))
         return decrypted_key
+
+    @api.model
+    def _generate_bundle_hash(self, bundle_salt, bundle_key, password):
+        """
+        The method to prepare hash based on bundle_salt, bundle_key, and bundle password
+
+        Args:
+         * bundle_salt - str
+         * bundle_key - str
+         * password - str
+
+        Methods:
+         * _encrypt_fernet
+
+        Returns:
+         * str
+        """
+        bundle_salt = base64.b64decode(bundle_salt.encode("utf-8"))
+        decoded_password = password.encode("utf-8")
+        kdf = PBKDF2HMAC(algorithm=hashes.SHA256(), length=32, salt=bundle_salt, iterations=480000)
+        bundle_hash = base64.urlsafe_b64encode(kdf.derive(decoded_password))
+        bundle_hash = self._encrypt_fernet(bundle_hash.decode(), bundle_key)
+        return bundle_hash
