@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+# This file is part of Odoo. The COPYRIGHT file at the top level of
+# this module contains the full copyright and licensing details.
+-->
+<odoo>
+
+    <record id="syscoon_datev_import_action" model="ir.actions.act_window">
+        <field name="name">Financial Imports</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">syscoon.datev.import</field>
+        <field name="views">tree,form</field>
+        <field name="view_id" ref="syscoon_datev_import_tree_view"/>
+    </record>
+
+    <menuitem action="syscoon_datev_import_action" id="datev_import_menu" parent="syscoon_financeinterface.menu_finance_interface" sequence="70" groups="syscoon_financeinterface.group_syscoon_financeinterface"/>
+
+    <record id="syscoon_datev_import_config_action" model="ir.actions.act_window">
+        <field name="name">Import Templates Config</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">syscoon.datev.import.config</field>
+        <field name="views">tree,form</field>
+        <field name="view_id" ref="syscoon_datev_import_config_tree_view"/>
+    </record>
+
+    <menuitem action="syscoon_datev_import_config_action" id="datev_import_config_menu" parent="syscoon_financeinterface.menu_finance_interface_configuration" groups="account.group_account_manager"/>
+
+    <record id="syscoon_datev_import_assignment_action" model="ir.actions.act_window">
+        <field name="name">Import Assignment Config</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">syscoon.datev.import.assignment</field>
+        <field name="views">tree,form</field>
+        <field name="view_id" ref="syscoon_datev_import_assignment_tree_view"/>
+    </record>
+
+    <menuitem action="syscoon_datev_import_assignment_action" id="datev_import_assignment_menu" parent="syscoon_financeinterface.menu_finance_interface_configuration" groups="account.group_account_manager"/>
+
+</odoo>

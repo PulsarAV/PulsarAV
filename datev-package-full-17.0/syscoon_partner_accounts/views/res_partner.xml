@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="syscoon_partern_accounts_partner_form" model="ir.ui.view">
+        <field name="name">syscoon.partner.accounts.partner.form</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='accounting']" position="inside">
+                <field name="auto_account_creation" invisible="1"/>
+                <group name="syscoon_partner_accounts" invisible="not auto_account_creation">
+                    <group string="Finance Interface Debitor- and Creditor Numbers">
+                        <label for="debitor_number"/>
+                        <div class="o_row">
+                            <field name="debitor_number" readonly="debitor_number"/>
+                            <button name="create_receivable_account" type="object"
+                                string="Create Debitor Account"
+                                help="Creates a new Debitor Account if it does not exist yet."
+                                class="btn-link mb-1 px-0" icon="fa-refresh"
+                                confirm="This will create a new Debitor Account."
+                                invisible="debitor_number"/>
+                        </div>
+                        <label for="creditor_number"/>
+                        <div class="o_row">
+                            <field name="creditor_number" readonly="creditor_number"/>
+                            <button name="create_payable_account" type="object"
+                                string="Create Creditor Account"
+                                help="Creates a new Creditor Account if it does not exist yet."
+                                class="btn-link mb-1 px-0" icon="fa-refresh"
+                                confirm="This will create a new Creditor Account."
+                                invisible="creditor_number"/>
+                        </div>
+                    </group>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
