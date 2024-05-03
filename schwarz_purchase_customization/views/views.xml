@@ -8,7 +8,6 @@
         <field name="arch" type="xml">
             <xpath expr="//field[@name='reference']" position="after">
                 <field name="sale_order_ref"/>
-                <field name="sale_order_deliveries"/>
                 <field name="sale_order_project"/>
             </xpath>
         </field>
@@ -20,7 +19,7 @@
         <field name="inherit_id" ref="purchase.purchase_order_form"/>
         <field name="arch" type="xml">
             <xpath expr="//div[@name='button_box']" position="inside">
-                <button class="oe_stat_button" name="view_purchase_stock_move_lines" type="object" icon="fa-bars" invisible="stock_move_line_count == 0">
+                <button class="oe_stat_button" name="view_purchase_stock_move_lines" type="object" icon="fa-bars">
                     <div class="o_field_widget o_stat_info">
                         <span class="o_stat_value">
                             <field name="stock_move_line_count"/>

@@ -7,9 +7,9 @@
     """,
     'author': 'schwarz',
     'category': 'Inventory/Purchase',
-    'version': '17.0.1.0',
+    'version': '17.0.2.0',
     'depends' : [
-        'purchase','stock'
+        'purchase','stock', 'sale', 'project'
     ],
     'data': [
         'views/views.xml',
