@@ -9,3 +9,4 @@ class ProjectRooms(models.Model):
     _description = 'Project Rooms'
 
     name = fields.Char(string='Name', required=True)
+    active = fields.Boolean(string="Active", default=True)

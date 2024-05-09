@@ -3,7 +3,7 @@
 
 {
     'name' : 'Schwarz Stock Rooms',
-    'version' : '1.0',
+    'version' : '1.1',
     'category': 'Services/Project',
     'summary': 'Schwarz Stock Rooms',
     'description': """ Schwarz Stock Rooms""",

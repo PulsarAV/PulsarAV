@@ -9,22 +9,35 @@
                     <sheet>
                         <group>
                             <field name="name"/>
+                            <field name="active"/>
                         </group>
                     </sheet>
                 </form>
             </field>
         </record>
-    </data>
-
-    <data>
         <record id="view_project_rooms_tree" model="ir.ui.view">
             <field name="name">project.rooms.tree</field>
             <field name="model">project.rooms</field>
             <field name="arch" type="xml">
                 <tree>
                     <field name="name"/>
+                    <field name="active"/>
                 </tree>
             </field>
         </record>
+ 
+        <record id="action_project_rooms" model="ir.actions.act_window">
+            <field name="name">Project Rooms</field>
+            <field name="res_model">project.rooms</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                Create a new rooms
+              </p><p>
+              </p>
+            </field>
+        </record>
+
+        <menuitem id="menu_action_project_rooms" name="Project Rooms" action="action_project_rooms" parent="project.menu_project_config"/>
     </data>
 </odoo>
