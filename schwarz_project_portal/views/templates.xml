@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="project_portal_my_task_assignees_editable" inherit_id="project.portal_my_task">
+        <xpath expr="//t[@t-set='entries']/div" position="inside">
+            <div t-if="allow_editable" class="container as-assignee-update">
+                <label for="assignees_selection"> Edit Assignees</label>
+                <select id="assignees_selection" class="d-none" multiple="multiple" style="width:100%;" t-att-data-task_id="task.id">
+                    <t t-foreach="task.project_id.responsible_ids" t-as="user">
+                        <t t-if="user.id in task.user_ids.ids">
+                            <option t-attf-id="#{user.id}" t-attf-selected="#{user.id}"><t t-esc='user.name'/></option>
+                        </t>
+                        <t t-else="">
+                            <option t-attf-id="#{user.id}"><t t-esc='user.name'/></option>
+                        </t>
+                    </t>
+                </select>
+            </div>
+        </xpath>
+    </template>
+
+</odoo>

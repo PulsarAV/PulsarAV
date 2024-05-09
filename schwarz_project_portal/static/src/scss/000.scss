@@ -1,0 +1,29 @@
+.as-assignee-update {
+	.select2-container {
+		.select2-choices {
+		    border: 1px solid #eee;
+		    box-shadow: none;
+		    background: none;
+		    padding: 4px;
+		    margin: 10px 0 0;
+		    border-radius: 5px;
+		    box-shadow: 2px 2px #eee;
+		    li.select2-search-choice {
+			    background: #f5f5ff;
+			    padding: 10px 14px 10px 26px;
+			    font-weight: 500;
+			    text-shadow: 1px 1px #fff;
+			    font-size: 14px;
+			    color: #000;
+			    border: 1px solid #ddd;
+			    &:hover {
+				    background: #eae7ff;
+				}
+			}
+			.select2-search-choice-close {
+			    left: 8px;
+			    top: 10px;
+			}
+		}
+	}
+}
