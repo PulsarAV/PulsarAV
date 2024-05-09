@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+        <record id="view_project_rooms_form" model="ir.ui.view">
+            <field name="name">project.rooms.form</field>
+            <field name="model">project.rooms</field>
+            <field name="arch" type="xml">
+                <form string="Project Rooms">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+    </data>
+
+    <data>
+        <record id="view_project_rooms_tree" model="ir.ui.view">
+            <field name="name">project.rooms.tree</field>
+            <field name="model">project.rooms</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+    </data>
+</odoo>
