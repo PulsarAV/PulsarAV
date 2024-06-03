@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- View settings for Taxes -->
+    <record id="syscoon_financeinterface_datev_ascii_view_tax_form" model="ir.ui.view">
+        <field name="name">syscoon.financeinterface.datev.ascii.view.tax.form</field>
+        <field name="model">account.tax</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="account.view_tax_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//group" position="inside">
+                <field name="export_finance_interface_active" invisible="1"/>
+                <group string="Financeinterface" id="syscoon_financeinterface_datev" invisible="not export_finance_interface_active">
+                    <field name="datev_tax_key"/>
+                    <field name="datev_tax_case"/>
+                    <field name="datev_country_id"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

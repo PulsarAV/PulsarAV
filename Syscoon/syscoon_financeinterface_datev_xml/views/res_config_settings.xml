@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- General Configuration -->
+    <record id="view_syscoon_financeinterface_configuration_datev_xml" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.syscoon.financeinterface.configuration.datev.xml</field>
+        <field name="model">res.config.settings</field>
+        <field name="priority" eval="90"/>
+        <field name="inherit_id" ref="syscoon_financeinterface_datev_ascii.view_syscoon_financeinterface_configuration_datev_ascii"/>
+        <field name="arch" type="xml">
+            <xpath expr="//block[@id='syscoon_financeinterface_datev_ascii_settings']" position="after">
+                <block title="syscoon Finance Interface (DATEV XML Settings)" id="syscoon_financeinterface_datev_xml_settings" invisible="not company_export_finance_interface_active">
+                    <setting company_dependent="1" help="Choose between three formats of the XML-export. Standard = without accounts = you will have booking suggestions in DATEV. Extended = include accounts = you will have direct bookings in DATEV. BEDI = only invoice PDFs with GUIDs will be exported.">
+                        <field name="company_export_xml_mode" string="XML Export Mode"/>
+                    </setting>
+                    <setting company_dependent="1" help="Group invoice lines that have the same account, tax, analytic account and analytic tag.">
+                        <field name="company_export_xml_group_lines" string="Group Invoice Lines"/>
+                    </setting>
+                    <setting company_dependent="1" help="Enabling this option will add the analytic accounts in to the XML export.">
+                        <field name="company_export_xml_analytic_accounts" string="Analytic Accounts"/>
+                    </setting>
+                </block>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

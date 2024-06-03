@@ -1,0 +1,4 @@
+"id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
+"access_syscoon_financeinterface","syscoon_financeinterface","model_syscoon_financeinterface","syscoon_financeinterface.group_syscoon_financeinterface",1,1,1,1
+"access_syscoon_financeinterface_bookingtext_config","syscoon_financeinterface_bookingtext_config","model_syscoon_financeinterface_bookingtext_config","account.group_account_manager",1,1,1,1
+"access_syscoon_financeinterface_export","syscoon_financeinterface_export","model_syscoon_financeinterface_export","syscoon_financeinterface.group_syscoon_financeinterface",1,1,1,1

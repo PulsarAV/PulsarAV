@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Mit XMLSpy v2012 rel. 2 sp1 (x64) (http://www.altova.com) von AC (DATEV e.G.) bearbeitet -->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://xml.datev.de/bedi/tps/ledger/v050" xmlns:de="http://xml.datev.de/DD/DE/bedi/tps/ledger/v050" targetNamespace="http://xml.datev.de/bedi/tps/ledger/v050" elementFormDefault="qualified">
+	<xsd:import namespace="http://xml.datev.de/DD/DE/bedi/tps/ledger/v050" schemaLocation="Belegverwaltung_online_ledger_types_v050.xsd"/>
+	<xsd:element name="LedgerImport">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="consolidate">
+					<xsd:complexType>
+						<xsd:choice>
+							<xsd:element name="accountsPayableLedger" type="accountsPayableLedger" maxOccurs="5000"/>
+							<xsd:element name="cashLedger" type="cashLedger" maxOccurs="5000"/>
+							<xsd:element name="accountsReceivableLedger" type="accountsReceivableLedger" maxOccurs="5000"/>
+						</xsd:choice>
+						<xsd:attribute name="consolidatedAmount" type="de:p7" use="required"/>
+						<xsd:attribute name="consolidatedDate" type="de:p10029" use="required"/>
+						<xsd:attribute name="consolidatedInvoiceId" type="de:p10040" use="optional"/>
+						<xsd:attribute name="consolidatedCurrencyCode" type="de:p1" use="required"/>
+						<xsd:attribute name="consolidatedDeliveryDate" type="de:p10029" use="optional"/>
+						<xsd:attribute name="consolidatedOrderId" type="de:p13" use="optional"/>
+					</xsd:complexType>
+				</xsd:element>
+			</xsd:sequence>
+			<xsd:attribute name="version" type="de:p3" use="required"/>
+			<xsd:attribute name="generator_info" type="de:p10009" use="required"/>
+			<xsd:attribute name="generating_system" type="de:p10009"/>
+			<xsd:attribute name="xml_data" type="de:p36" use="required" fixed="Kopie nur zur Verbuchung berechtigt nicht zum Vorsteuerabzug"/>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="base">
+		<xsd:sequence>
+			<xsd:element name="date" type="de:p10029" minOccurs="1" maxOccurs="1"/>
+			<xsd:element name="amount" type="de:p7" minOccurs="1" maxOccurs="1"/>
+			<xsd:element name="discountAmount" type="de:p34" minOccurs="0" maxOccurs="1"/>
+			<xsd:element name="accountNo" type="de:p10039" minOccurs="0" maxOccurs="1"/>
+			<xsd:element name="buCode" type="de:p10033" minOccurs="0" maxOccurs="1"/>
+			<xsd:element name="costAmount" type="de:p37" minOccurs="0" maxOccurs="1"/>
+			<xsd:element name="costCategoryId" type="de:p10041" minOccurs="0" maxOccurs="1"/>
+			<xsd:element name="costCategoryId2" type="de:p10041" minOccurs="0" maxOccurs="1"/>
+			<xsd:element name="tax" type="de:p33" minOccurs="0" maxOccurs="1"/>
+			<xsd:element name="information" type="de:p30" minOccurs="0" maxOccurs="1"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="base1">
+		<xsd:annotation>
+			<xsd:documentation>xsd:attribute bookingText: Attention: bookingText max length is changed in order for former changes! Please take only 30 digits, more digits would be cut!</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="base">
+				<xsd:sequence>
+					<xsd:element name="currencyCode" type="de:p1" minOccurs="1" maxOccurs="1"/>
+					<xsd:element name="invoiceId" type="de:p10040" minOccurs="1" maxOccurs="1"/>
+					<xsd:element name="bookingText" type="de:p10036" minOccurs="0" maxOccurs="1"/>
+					<xsd:element name="typeOfReceivable" type="de:p10001" minOccurs="0" maxOccurs="1"/>
+					<xsd:element name="ownVatId" type="de:p10027" minOccurs="0" maxOccurs="1"/>
+					<xsd:element name="shipFromCountry" type="de:p10014" minOccurs="0" maxOccurs="1"/>
+					<xsd:element name="partyId" type="de:p10011" minOccurs="0" maxOccurs="1"/>
+					<xsd:element name="paidAt" type="de:p10029" minOccurs="0" maxOccurs="1"/>
+					<xsd:element name="internalInvoiceId" type="de:p10" minOccurs="0" maxOccurs="1"/>
+					<xsd:element name="vatId" type="de:p10027" minOccurs="0" maxOccurs="1"/>
+					<xsd:element name="shipToCountry" type="de:p10014" minOccurs="0" maxOccurs="1"/>
+					<xsd:element name="exchangeRate" type="de:p31" minOccurs="0" maxOccurs="1"/>
+					<xsd:element name="bankCode" type="de:p10007" minOccurs="0" maxOccurs="1"/>
+					<xsd:element name="bankAccount" type="de:p10005" minOccurs="0" maxOccurs="1"/>
+					<xsd:element name="bankCountry" type="de:p10014" minOccurs="0" maxOccurs="1"/>
+					<xsd:element name="iban" type="de:p10010" minOccurs="0" maxOccurs="1"/>
+					<xsd:element name="swiftCode" type="de:p10030" minOccurs="0" maxOccurs="1"/>
+					<xsd:element name="accountName" type="de:p10009" minOccurs="0" maxOccurs="1"/>
+					<xsd:element name="paymentConditionsId" type="de:p23" minOccurs="0" maxOccurs="1"/>
+					<xsd:element name="discountPercentage" type="de:p33" minOccurs="0" maxOccurs="1"/>
+					<xsd:element name="discountPaymentDate" type="de:p10029" minOccurs="0" maxOccurs="1"/>
+					<xsd:element name="discountAmount2" type="de:p34" minOccurs="0" maxOccurs="1"/>
+					<xsd:element name="discountPercentage2" type="de:p33" minOccurs="0" maxOccurs="1"/>
+					<xsd:element name="discountPaymentDate2" type="de:p10029" minOccurs="0" maxOccurs="1"/>
+					<xsd:element name="dueDate" type="de:p10029" minOccurs="0" maxOccurs="1"/>
+					<xsd:element name="bpAccountNo" type="de:p11" minOccurs="0" maxOccurs="1"/>
+					<xsd:element name="deliveryDate" type="de:p10029" minOccurs="0" maxOccurs="1"/>
+					<xsd:element name="orderId" type="de:p13" minOccurs="0" maxOccurs="1"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="cashLedger">
+		<xsd:complexContent>
+			<xsd:extension base="base">
+				<xsd:sequence>
+					<xsd:element name="currencyCode" type="de:p1" fixed="EUR" minOccurs="1" maxOccurs="1"/>
+					<xsd:element name="invoiceId" type="de:p10040" minOccurs="0" maxOccurs="1"/>
+					<xsd:element name="bookingText" type="de:p10036" minOccurs="1" maxOccurs="1"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="accountsPayableLedger">
+		<xsd:complexContent>
+			<xsd:extension base="base1">
+				<xsd:sequence>
+					<xsd:element name="supplierName" type="de:p10012" minOccurs="0" maxOccurs="1"/>
+					<xsd:element name="supplierCity" type="de:p10019" minOccurs="0" maxOccurs="1"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="accountsReceivableLedger">
+		<xsd:complexContent>
+			<xsd:extension base="base1">
+				<xsd:sequence>
+					<xsd:element name="customerName" type="de:p10012" minOccurs="0" maxOccurs="1"/>
+					<xsd:element name="customerCity" type="de:p10019" minOccurs="0" maxOccurs="1"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+</xsd:schema>

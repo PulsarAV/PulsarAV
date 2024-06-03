@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <!-- Inherit Account Move Form -->
+    <record id="view_move_form_syscoon_financeinterface" model="ir.ui.view">
+        <field name="name">account.move.form.syscoon.financeinterface</field>
+        <field name="model">account.move</field>
+        <field name="priority" eval="99"/>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form/sheet" position="inside">
+                <field name="show_export_to_draft_button" invisible="1"/>
+                <field name="export_finance_interface_active" invisible="1"/>
+            </xpath>
+            <xpath expr="//button[@name='button_draft']" position="attributes">
+                <attribute name="invisible">
+                    not show_reset_to_draft_button or not show_export_to_draft_button
+                </attribute>
+                <attribute name="confirm">
+                    Account move is already exported. Do you want to proceed?
+                </attribute>
+            </xpath>
+            <xpath expr="//button[@name='button_draft']" position="after">
+                <button
+                    name="button_draft"
+                    string="Reset to Draft"
+                    type="object"
+                    groups="account.group_account_invoice"
+                    invisible="not show_reset_to_draft_button or not show_export_to_draft_button"
+                    data-hotkey="q"/>
+            </xpath>
+            <xpath expr="//group" position="inside">
+                <group id="syscoon_financeinterface_export" string="Financeinterface" groups="syscoon_financeinterface.group_syscoon_financeinterface" invisible="not export_finance_interface_active">
+                    <field name="export_id" readonly="1"/>
+                    <field name="export_manual"/>
+                    <field name="export_account_counterpart_manual" invisible="not export_manual"/>
+                    <field name="export_account_counterpart"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
