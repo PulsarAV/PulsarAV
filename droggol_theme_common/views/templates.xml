@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--
+    ============================================================================
+    Theme Configuration
+    ============================================================================
+    -->
+    <template id="frontend_layout" name="Droggol Frontend Layout" inherit_id="web.frontend_layout">
+        <xpath expr="//head/script[@id='web.layout.odooscript']" position="after">
+            <script type="text/javascript">
+                odoo.dr_theme_config = <t t-out="json.dumps(request.website.get_dr_theme_config())"/>;
+            </script>
+        </xpath>
+    </template>
+
+    <!--
+    ============================================================================
+    Design Page
+    ============================================================================
+    -->
+    <template id="design_content" name="Design Content">
+        <t t-call="website.layout">
+            <div id="wrap">
+                <div t-field="content.content"/>
+            </div>
+        </t>
+    </template>
+
+</odoo>
