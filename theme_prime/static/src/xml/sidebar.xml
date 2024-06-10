@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates>
+
+    <t t-name="theme_prime.Sidebar">
+        <div t-attf-class="offcanvas tp-offcanvas-sidebar offcanvas-#{widget.options.position || 'end'} #{widget.options.class || ''}">
+            <div class="d-flex flex-column h-100">
+                <div t-if="!widget.options.noHeader" class="tp-sidebar-header d-flex justify-content-between align-items-center border-bottom p-3">
+                    <div class="d-flex align-items-center">
+                        <i t-attf-class="#{widget.options.icon} text-primary me-3 tp-header-icon"></i>
+                        <h5 class="mb-0"><t t-esc="widget.options.title"/></h5>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" title="Close" aria-label="Close"></button>
+                </div>
+                <div class="content"/>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="theme_prime.Loader">
+        <div class="loader d-flex flex-column justify-content-center align-items-center" t-attf-style="height: #{height ? height : '45vh'};">
+            <div class="spinner-border text-primary" style="width: 2.5rem; height: 2.5rem;" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            <h6 t-if="loadingStr" class="mt-4 mb-0" t-esc="loadingStr"/>
+            <h6 t-else="" class="mt-4 mb-0">Loading...</h6>
+        </div>
+    </t>
+
+    <t t-name="theme_prime.ShopFilterSidebar">
+        <div class="tp-scrollable-y flex-grow-1 px-3">
+            <t t-out="content"/>
+        </div>
+    </t>
+
+    <t t-name="theme_prime.BulkPrice">
+        <div class="bg-100 p-2 border mt-2 tp-rounded-border">
+            <small style="font-size:14px;" class="fw-light mb-2 d-inline-block">
+                <svg class="text-danger" fill="currentColor" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" viewBox="0 0 511.548 511.548" style="enable-background:new 0 0 511.548 511.548;margin-top:-4px;" xml:space="preserve" width="20" height="20"><g><path d="M306.248,338.724c-4.329,0-8.658,3.936-8.658,17.12c0,13.184,4.329,17.12,8.658,17.12s8.658-3.936,8.658-17.12   C314.906,342.659,310.577,338.724,306.248,338.724z"/><path d="M205.301,273.787c-4.329,0-8.658,3.936-8.658,17.12c0,13.184,4.329,17.12,8.658,17.12c4.329,0,8.658-3.936,8.658-17.12   C213.959,277.723,209.63,273.787,205.301,273.787z"/><path d="M405.561,181.48c-43.372-47.903-69.147-90.072-83.134-117.013c-15.148-29.181-20.112-47.276-20.15-47.42L297.768,0   l-16.104,7.183c-1.882,0.839-46.376,21.13-71.307,70.991c-12.515,25.031-15.018,52.9-14.913,71.87   c0.061,11.04-7.761,20.626-18.598,22.793c-7.598,1.518-15.414-0.844-20.898-6.328l-29.997-29.997l-10.319,14.229   c-1.071,1.477-26.289,36.256-30.88,43.205c-22.419,33.937-34.109,73.47-33.806,114.325c0.406,54.565,21.864,105.686,60.421,143.948   c38.555,38.259,89.84,59.329,144.408,59.329c112.945-0.001,204.832-91.888,204.832-204.833   C460.608,265.764,440.544,220.118,405.561,181.48z M306.248,394.215c-20.858,0-36.601-13.774-36.601-38.371   c0-24.4,15.742-38.372,36.601-38.372s36.601,13.971,36.601,38.372C342.849,380.441,327.106,394.215,306.248,394.215z    M286.177,254.503h33.255l-94.06,137.744h-33.255L286.177,254.503z M168.701,290.907c0-24.4,15.742-38.371,36.601-38.371   s36.601,13.971,36.601,38.371c0,24.597-15.742,38.372-36.601,38.372S168.701,315.504,168.701,290.907z"/></g></svg> Discounts on Bulk Orders!
+            </small>
+            <div class="row g-2">
+                <div t-attf-class="#{!isQuickViewDialog ? 'col-md-3' : ''} col-6" t-foreach="prices" t-as="line" t-key="line.id">
+                    <t t-set="_lowerQty" t-value="parseInt(line.qty)"/>
+                    <t t-set="_upperQty" t-value="prices[line_index+1] ? parseInt(prices[line_index+1].qty - 1) : 0"/>
+                    <t t-set="_activeSlot" t-value="(inputQty &gt;= _lowerQty &amp;&amp; inputQty &lt;= _upperQty)"/>
+                    <t t-if="!_upperQty">
+                        <t t-set="_activeSlot" t-value="_lowerQty &lt;= inputQty"/>
+                    </t>
+
+                    <div t-att-data-qty="_lowerQty" t-attf-class="p-2 tp-cursor-pointer tp-bulk-price-block position-relative text-center border tp-rounded-border bg-white #{_activeSlot ? 'border-primary' : ' '}">
+                        <i t-if="_activeSlot" style="font-size:12px;top:-5px;right:-5px;" class="fa bg-white text-primary position-absolute fa-check-circle"/>
+                        <small class="fw-light d-block"><t t-out="_lowerQty"/>
+                        <t t-if="prices[line_index+1] and _upperQty !== _lowerQty">
+                            - <t t-esc="_upperQty"/>
+                        </t>
+                        <!-- Commit message for the details -->
+                        <t t-if="line_last">
+                            +
+                        </t> <t t-esc="line.uom_name"/> at</small>
+                        <h5 class="text-primary mb-1"><t t-out="markup(line.formatted_price)"/> <small style="font-size:12px;" class="text-muted">/ <t t-esc="line.uom_name"/></small></h5>
+                        <small t-if="line.saving_price" style="font-size:12px;" class="text-muted fw-light d-block">Save: <t t-out="markup(line.saving_price)"/></small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+
+    <div t-name="theme_prime.CategorySidebar" class="tp-category-sidebar d-flex flex-column h-100">
+        <t t-if="!parentCategory">
+            <div t-if="options.position === 'start'" class="shadow-sm p-3 tp-category-header tp-cursor-pointer d-flex align-items-center" data-bs-dismiss="offcanvas" aria-label="Close">
+                <i class="fa fa-angle-left me-3"/>
+                <h5 class="mb-0">Back</h5>
+            </div>
+            <div t-else="" class="tp-category-header d-flex justify-content-between align-items-center shadow-sm p-3">
+                <h5 class="mb-0">Categories</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" title="Close" aria-label="Close"></button>
+            </div>
+        </t>
+        <div class="tp-scrollable-y flex-grow-1">
+            <ul t-if="['1', '2'].includes(config.category_sidebar_style)" class="list-group">
+                <a t-if="parentCategory" href="#" class="list-group-item border-start-0 border-end-0 bg-light d-flex align-items-center justify-content-between tp-category-link back shadow-sm" t-att-data-parent-id="parentCategory.id">
+                    <div class="d-flex align-items-center px-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" heigh="16" width="16" fill="none" viewBox="0 0 16 17"><path fill="currentColor" d="M8.12109 15.9141c-.21093.1875-.41015.1875-.59765 0L.175781 8.53125c-.210937-.1875-.210937-.375 0-.5625L7.52344.585938c.1875-.1875.38672-.1875.59765 0l.70313.703122c.1875.1875.1875.38672 0 .59766L3.375 7.33594h11.9883c.2812 0 .4219.14062.4219.42187v.98438c0 .28125-.1407.42187-.4219.42187H3.375l5.44922 5.44924c.1875.2109.1875.4101 0 .5976l-.70313.7032z"></path></svg>
+                        <h6 t-esc="parentCategory.name" class="mb-0 ms-3"/>
+                    </div>
+                </a>
+                <t t-foreach="categories" t-as="category" t-key="category.id">
+                    <a class="list-group-item border-start-0 border-end-0 d-flex align-items-center justify-content-between tp-category-link" t-attf-href="/shop/category/#{category.id}" t-att-title="category.name" t-att-data-category-id="category.id" t-att-data-has-child="category.child_id.length or None">
+                        <div class="d-flex align-items-center">
+                            <img t-if="config.category_sidebar_style === '2'" loading="lazy" t-att-alt="category.name" class="img o_image_24_cover img-fluid me-3" t-attf-src="/web/image/product.public.category/#{category.id}/image_128" />
+                            <h6 class="mb-0" t-esc="category.name"/>
+                            <span t-if="categoryCount[category.id]" class="small ms-2">(<t t-esc="categoryCount[category.id]"/>)</span>
+                        </div>
+                        <i t-if="category.child_id.length" class="fa fa-angle-right"/>
+                    </a>
+                </t>
+            </ul>
+            <ul t-elif="config.category_sidebar_style === '3'" class="list-group style-cover">
+                <a t-if="parentCategory" href="#" class="list-group-item border-start-0 border-end-0 bg-light d-flex align-items-center justify-content-between tp-category-link back shadow-sm" t-att-data-parent-id="parentCategory.id">
+                    <div class="d-flex align-items-center px-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" heigh="16" width="16" fill="none" viewBox="0 0 16 17"><path fill="currentColor" d="M8.12109 15.9141c-.21093.1875-.41015.1875-.59765 0L.175781 8.53125c-.210937-.1875-.210937-.375 0-.5625L7.52344.585938c.1875-.1875.38672-.1875.59765 0l.70313.703122c.1875.1875.1875.38672 0 .59766L3.375 7.33594h11.9883c.2812 0 .4219.14062.4219.42187v.98438c0 .28125-.1407.42187-.4219.42187H3.375l5.44922 5.44924c.1875.2109.1875.4101 0 .5976l-.70313.7032z"></path></svg>
+                        <h6 t-esc="parentCategory.name" class="mb-0 ms-3"/>
+                    </div>
+                </a>
+                <t t-foreach="categories" t-as="category" t-key="category.id">
+                    <a t-if="!category.parent_id" t-attf-class="list-group-item border-start-0 border-end-0 d-flex align-items-center justify-content-between tp-category-link tp-root-category"
+                        t-attf-href="/shop/category/#{category.id}"
+                        t-att-title="category.name"
+                        t-att-data-category-id="category.id"
+                        t-attf-style="background-image: url('/web/image/product.public.category/#{category.id}/dr_category_sidebar_cover')"
+                        t-att-data-has-child="category.child_id.length or None">
+                        <div>
+                            <div class="d-flex align-items-center tp-category-name text-uppercase">
+                                <span class="mb-0" t-esc="category.name"/>
+                                <i t-if="category.child_id.length" class="fa fa-angle-right ms-3"/>
+                            </div>
+                            <span t-if="categoryCount[category.id]" class="small"><t t-esc="categoryCount[category.id]"/> Products</span>
+                        </div>
+                    </a>
+                    <a t-else="" t-attf-class="list-group-item border-start-0 border-end-0 d-flex align-items-center justify-content-between tp-category-link #{category.parent_id ? '' : 'root'}" t-attf-href="/shop/category/#{category.id}" t-att-title="category.name" t-att-data-category-id="category.id" t-att-data-has-child="category.child_id.length or None">
+                        <div class="d-flex align-items-center">
+                            <img loading="lazy" t-att-alt="category.name" class="img o_image_24_cover img-fluid me-3" t-attf-src="/web/image/product.public.category/#{category.id}/image_128" />
+                            <h6 class="mb-0" t-esc="category.name"/>
+                            <span t-if="categoryCount[category.id]" class="small ms-2">(<t t-esc="categoryCount[category.id]"/>)</span>
+                        </div>
+                        <i t-if="category.child_id.length" class="fa fa-angle-right"/>
+                    </a>
+                </t>
+            </ul>
+        </div>
+    </div>
+
+</templates>

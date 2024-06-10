@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<template>
+
+    <t t-name="theme_prime.pwa_popup">
+        <div class="tp-pwa-popup shadow">
+            <div class="d-flex align-items-center gap-3 p-3">
+                <img height="40" width="40" t-att-alt="widget.appName" t-attf-src="/web/image/website/#{widget.websiteID}/dr_pwa_icon_192/192x192"/>
+                <div class="d-flex flex-column">
+                    <h5 class="mb-0 text-white">Install App</h5>
+                    <span><t t-esc="widget.appName"/></span>
+                </div>
+            </div>
+            <div class="p-3 border-top">
+                Install the app on your device to easily access it anytime.
+                <ul t-if="widget.isIos" class="mb-0 mt-2 list-unstyled">
+                    <li class="d-flex aling-items-center">1. Tap on <img class="icon" src="/theme_prime/static/src/img/pwa_ios_share.png"/></li>
+                    <li>2. Select Add to Home Screen</li>
+                </ul>
+                <div t-if="widget.isIos" class="d-flex align-items-center justify-content-end gap-3 mt-3">
+                    <button type="button" class="btn btn-primary rounded-circle close">Got it!</button>
+                </div>
+                <div t-else="" class="d-flex align-items-center justify-content-end gap-2 mt-3">
+                    <button type="button" class="btn text-white rounded-circle close">Not Now</button>
+                    <button type="button" class="btn btn-primary rounded-circle install">Install</button>
+                </div>
+            </div>
+        </div>
+    </t>
+
+</template>
