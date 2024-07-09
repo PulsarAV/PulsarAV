@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+schwarz_stock_rooms.access_project_rooms,access_project_rooms,schwarz_stock_rooms.model_project_rooms,base.group_user,1,1,1,1
+schwarz_stock_rooms.access_project_rooms_all,access_project_rooms_all,schwarz_stock_rooms.model_project_rooms,,1,0,0,0

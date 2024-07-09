@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- General Configuration -->
+    <record id="view_syscoon_financeinterface_configuration_datev_ascii" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.syscoon.financeinterface.configuration.datev.ascii</field>
+        <field name="model">res.config.settings</field>
+        <field name="priority" eval="80"/>
+        <field name="inherit_id" ref="syscoon_financeinterface.view_syscoon_financeinterface_configuration"/>
+        <field name="arch" type="xml">
+            <xpath expr="//block[@id='syscoon_financeinterface_basic_settings']" position="after">
+                <block title="syscoon Finance Interface (DATEV Settings)" id="syscoon_financeinterface_datev_basic_settings" invisible="not company_export_finance_interface_active">
+                    <setting company_dependent="1" help="Please put in the consultant number of your tax consultant.">
+                        <field name="company_datev_accountant_number" string="Consultant Number"/>
+                    </setting>
+                    <setting company_dependent="1" help="Please put in the client number of your company.">
+                        <field name="company_datev_client_number" string="Client Number"/>
+                    </setting>
+                    <setting company_dependent="1" help="Enables fixing of moves to not allow changes when they are imported to DATEV.">
+                        <field name="company_datev_enable_fixing" string="Fixing Moves"/>
+                    </setting>
+                    <setting company_dependent="1" help="Set the digits of your account codes lenght. Default is 4.">
+                        <field name="company_datev_account_code_digits" string="Code Digits Lenght"/>
+                    </setting>
+                    <setting company_dependent="1" help="In Odoo, the asset accounts containting a leanding zero like 0670 which is not necessary in DATEV. This option will remove it during the export.">
+                        <field name="company_datev_remove_leading_zeros" string="Remove Leading Zero"/>
+                    </setting>
+                    <setting company_dependent="1" help="Use BEDI (UUID) in invoices for exporting the moves linked to PDFs to DATEV. For a complete range of functions the syscoon_financeinterface_datev_xml module is necessary.">
+                        <field name="company_datev_use_bedi" string="Use BEDI"/>
+                    </setting>
+                    <setting company_dependent="1" help="Enable checks for a healthy and complient export to DATEV without problems of automatic accounts and taxes.">
+                        <field name="company_datev_checks_enabled" string="Enable DATEV Checks"/>
+                    </setting>
+                    <setting company_dependent="1" help="Let Odoo set the tax keys and 'autmatic account' settings automatically.">
+                        <field name="company_datev_auto_set_accounts" string="Automated Setting For Accounts and Taxes" widget="radio"/>
+                    </setting>
+                </block>
+                <block id="syscoon_financeinterface_datev_ascii_settings" title="syscoon Financeinterface (DATEV ASCII Export Settings)" invisible="not company_export_finance_interface_active">
+                    <setting company_dependent="1" help="Set the export method for the DATEV ASCII export. You can choose between net and gross. Net = export of the moves with extra tax lines, no tax keys. Gross = export with tax keys and auto accounts">
+                        <field name="company_datev_export_method" string="Preferred Export Method"/>
+                    </setting>
+                    <setting company_dependent="1" help="Format of the date for the export. You can set the date freely as your interface needs it. For DATEV-ASCII the default format is 'ddmm'.">
+                        <field name="company_datev_voucher_date_format" string="Date Format"/>
+                    </setting>
+                    <setting company_dependent="1" help="Default journals you want to have always in the export wizard. You can add or remove further journals at any time here or directly in the wizard.">
+                        <field name="company_datev_default_journal_ids" string="Default Journals" widget="many2many_tags"/>
+                    </setting>
+                    <setting company_dependent="1" help="Group equal move lines for each of the journals.">
+                        <field name="company_datev_group_lines" string="Group Moves for" widget="many2many_tags"/>
+                    </setting>
+                </block>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

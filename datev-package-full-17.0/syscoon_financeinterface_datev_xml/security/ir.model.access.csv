@@ -1,0 +1,2 @@
+"id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
+"access_syscoon_financeinterface_xml","access_syscoon_financeinterface_xml","model_syscoon_financeinterface_xml","syscoon_financeinterface.group_syscoon_financeinterface",1,1,1,1

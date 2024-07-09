@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="stock_view_move_line_tree_sale_ref" model="ir.ui.view">
+        <field name="name">stock.view.move.line.tree.sale.ref</field>
+        <field name="model">stock.move.line</field>
+        <field name="inherit_id" ref="stock.view_move_line_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='reference']" position="after">
+                <field name="sale_order_ref"/>
+                <field name="sale_order_project"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="purchase_order_form_moves_history" model="ir.ui.view">
+        <field name="name">purchase.order.form.moves.history</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button class="oe_stat_button" name="view_purchase_stock_move_lines" type="object" icon="fa-bars">
+                    <div class="o_field_widget o_stat_info">
+                        <span class="o_stat_value">
+                            <field name="stock_move_line_count"/>
+                        </span>
+                        <span class="o_stat_text">Move Lines</span>
+                    </div>
+                </button>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

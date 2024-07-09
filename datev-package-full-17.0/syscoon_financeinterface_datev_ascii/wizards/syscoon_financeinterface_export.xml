@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="syscoon_financeinterface_export_datev_ascii_wizard_view" model="ir.ui.view">
+        <field name="name">syscoon.financeinterface.export.datev.ascii.wizard.view</field>
+        <field name="model">syscoon.financeinterface.export</field>
+        <field name="inherit_id" ref="syscoon_financeinterface.syscoon_financeinterface_export_wizard_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="inside">
+                <group name="datev_ascii_settings" invisible="mode != 'datev_ascii'">
+                    <field name="journal_ids" required="mode in ('datev_ascii')" widget="many2many_tags"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

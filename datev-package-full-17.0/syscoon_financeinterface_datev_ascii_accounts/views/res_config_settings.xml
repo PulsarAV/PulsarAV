@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_syscoon_financeinterface_configuration_datev_ascii_accoounts" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.syscoon.financeinterface.configuration.datev.ascii.accounts</field>
+        <field name="model">res.config.settings</field>
+        <field name="priority" eval="80"/>
+        <field name="inherit_id" ref="syscoon_financeinterface.view_syscoon_financeinterface_configuration"/>
+        <field name="arch" type="xml">
+            <xpath expr="//block[@id='quick_edit_mode']" position="after">
+                <block title="DATEV ASCII Account Export Settings" id="syscoon_financeinterface_datev_ascii_account_settings" invisible="not company_export_finance_interface_active">
+                    <setting company_dependent="1" help="Set the export method for the DATEV Account Export. You can choose between DATEV Kanzlei Rewe and DATEV Unternehmen Online.">
+                        <field name="company_datev_ascii_accounts_kind" string="DATEV Account Export Kind"/>
+                    </setting>
+                </block>
+            </xpath>
+        </field>
+    </record>
+</odoo>

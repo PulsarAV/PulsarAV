@@ -1,0 +1,6 @@
+"id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
+"access_import_datev","syscoon.datev.import","model_syscoon_datev_import","syscoon_financeinterface.group_syscoon_financeinterface",1,1,1,1
+"access_import_datev_log","syscoon.datev.import.log","model_syscoon_datev_import_log","syscoon_financeinterface.group_syscoon_financeinterface",1,1,1,1
+"access_import_datev_config","syscoon.datev.import.config","model_syscoon_datev_import_config","syscoon_financeinterface.group_syscoon_financeinterface",1,1,1,1
+"access_import_datev_config_rows","syscoon.datev.import.config.rows","model_syscoon_datev_import_config_rows","syscoon_financeinterface.group_syscoon_financeinterface",1,1,1,1
+"access_import_datev_assignment","syscoon.datev.import.assignment","model_syscoon_datev_import_assignment","syscoon_financeinterface.group_syscoon_financeinterface",1,1,1,1

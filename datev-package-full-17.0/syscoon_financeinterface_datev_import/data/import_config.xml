@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Impor Config Assignments -->
+    <record id="assignment_amount" model="syscoon.datev.import.assignment">
+        <field name="name">Amount</field>
+        <field name="type">amount</field>
+        <field name="field_type">decimal</field>
+        <field name="object"></field>
+        <field name="field"></field>
+        <field name="domain"></field>
+        <field name="account_move_field"></field>
+        <field name="account_move_line_field">amount</field>
+        <field name="decimal_sign">,</field>
+        <field name="date_format"></field>
+        <field name="skip_at"></field>
+        <field name="default"></field>
+    </record>
+    <record id="assignment_move_sign" model="syscoon.datev.import.assignment">
+        <field name="name">Move Sign</field>
+        <field name="type">move_sign</field>
+        <field name="field_type">string</field>
+        <field name="object"></field>
+        <field name="field"></field>
+        <field name="domain"></field>
+        <field name="account_move_field"></field>
+        <field name="account_move_line_field">move_sign</field>
+        <field name="decimal_sign"></field>
+        <field name="date_format"></field>
+        <field name="skip_at"></field>
+        <field name="default">S</field>
+    </record>
+    <record id="assignment_account" model="syscoon.datev.import.assignment">
+        <field name="name">Account</field>
+        <field name="type">account</field>
+        <field name="field_type">string</field>
+        <field name="object">account.account</field>
+        <field name="field">code</field>
+        <field name="domain"></field>
+        <field name="account_move_field"></field>
+        <field name="account_move_line_field">account_id</field>
+        <field name="decimal_sign"></field>
+        <field name="date_format"></field>
+        <field name="padding">4</field>
+        <field name="skip_at"></field>
+        <field name="default"></field>
+    </record>
+    <record id="assignment_counteraccount" model="syscoon.datev.import.assignment">
+        <field name="name">Counteraccount</field>
+        <field name="type">counteraccount</field>
+        <field name="field_type">string</field>
+        <field name="object">account.account</field>
+        <field name="field">code</field>
+        <field name="domain"></field>
+        <field name="account_move_field"></field>
+        <field name="account_move_line_field">account_id</field>
+        <field name="decimal_sign"></field>
+        <field name="date_format"></field>
+        <field name="padding">4</field>
+        <field name="skip_at"></field>
+        <field name="default"></field>
+    </record>
+    <record id="assignment_tax_key" model="syscoon.datev.import.assignment">
+        <field name="name">Tax Key</field>
+        <field name="type">tax_key</field>
+        <field name="field_type">string</field>
+        <field name="object">account.tax</field>
+        <field name="field">datev_tax_key</field>
+        <field name="domain"></field>
+        <field name="account_move_field"></field>
+        <field name="account_move_line_field">tax_ids</field>
+        <field name="decimal_sign"></field>
+        <field name="date_format"></field>
+        <field name="skip_at"></field>
+        <field name="default"></field>
+    </record>
+    <record id="assignment_move_date" model="syscoon.datev.import.assignment">
+        <field name="name">Move Date</field>
+        <field name="type">move_date</field>
+        <field name="field_type">date</field>
+        <field name="object"></field>
+        <field name="field"></field>
+        <field name="domain"></field>
+        <field name="account_move_field">date</field>
+        <field name="account_move_line_field"></field>
+        <field name="decimal_sign"></field>
+        <field name="date_format">%d%m</field>
+        <field name="padding">4</field>
+        <field name="skip_at"></field>
+        <field name="default"></field>
+    </record>
+    <record id="assignment_move_ref" model="syscoon.datev.import.assignment">
+        <field name="name">Move Reference</field>
+        <field name="type">move_ref</field>
+        <field name="field_type">string</field>
+        <field name="object"></field>
+        <field name="field"></field>
+        <field name="domain"></field>
+        <field name="account_move_field">ref</field>
+        <field name="account_move_line_field"></field>
+        <field name="decimal_sign"></field>
+        <field name="date_format"></field>
+        <field name="skip_at"></field>
+        <field name="default"></field>
+    </record>
+    <record id="assignment_move_name" model="syscoon.datev.import.assignment">
+        <field name="name">Move Name</field>
+        <field name="type">move_name</field>
+        <field name="field_type">string</field>
+        <field name="object"></field>
+        <field name="field"></field>
+        <field name="domain"></field>
+        <field name="account_move_field">name</field>
+        <field name="account_move_line_field"></field>
+        <field name="decimal_sign"></field>
+        <field name="date_format"></field>
+        <field name="skip_at"></field>
+        <field name="default"></field>
+    </record>
+    <record id="assignment_discount_amount" model="syscoon.datev.import.assignment">
+        <field name="name">Discount Amount</field>
+        <field name="type">discount_amount</field>
+        <field name="field_type">decimal</field>
+        <field name="object"></field>
+        <field name="field"></field>
+        <field name="domain"></field>
+        <field name="account_move_field"></field>
+        <field name="account_move_line_field"></field>
+        <field name="decimal_sign">,</field>
+        <field name="date_format"></field>
+        <field name="skip_at"></field>
+    </record>
+
+    <record id="assignment_analytic_account" model="syscoon.datev.import.assignment">
+        <field name="name">Analytic Account 1</field>
+        <field name="type">cost1</field>
+        <field name="field_type">string</field>
+        <field name="object">account.analytic.account</field>
+        <field name="field">code</field>
+        <field name="domain"></field>
+        <field name="account_move_field"></field>
+        <field name="account_move_line_field">analytic_distribution</field>
+        <field name="decimal_sign"></field>
+        <field name="date_format"></field>
+        <field name="skip_at"></field>
+        <field name="default"></field>
+    </record>
+    <record id="assignment_analytic_tags" model="syscoon.datev.import.assignment">
+        <field name="name">Analytic Account 2</field>
+        <field name="type">cost2</field>
+        <field name="field_type">string</field>
+        <field name="object">account.analytic.account</field>
+        <field name="field">code</field>
+        <field name="domain"></field>
+        <field name="account_move_field"></field>
+        <field name="account_move_line_field">analytic_distribution</field>
+        <field name="decimal_sign"></field>
+        <field name="date_format"></field>
+        <field name="skip_at"></field>
+        <field name="default"></field>
+    </record>
+    <record id="assignment_move_guid" model="syscoon.datev.import.assignment">
+        <field name="name">Move GUID</field>
+        <field name="type">guid</field>
+        <field name="field_type">string</field>
+        <field name="object"></field>
+        <field name="field"></field>
+        <field name="domain"></field>
+        <field name="account_move_field">syscoon_datev_import_guid</field>
+        <field name="account_move_line_field"></field>
+        <field name="decimal_sign"></field>
+        <field name="date_format"></field>
+        <field name="skip_at"></field>
+        <field name="default"></field>
+    </record>
+    <record id="assignment_move_currency" model="syscoon.datev.import.assignment">
+        <field name="name">Currency</field>
+        <field name="type">currency</field>
+        <field name="field_type">string</field>
+        <field name="object"></field>
+        <field name="field"></field>
+        <field name="domain"></field>
+        <field name="account_move_field"></field>
+        <field name="account_move_line_field"></field>
+        <field name="decimal_sign"></field>
+        <field name="date_format"></field>
+        <field name="skip_at"></field>
+        <field name="default"></field>
+    </record>
+    <record id="assignment_move_base_amount" model="syscoon.datev.import.assignment">
+        <field name="name">Base Amount</field>
+        <field name="type">base_amount</field>
+        <field name="field_type">decimal</field>
+        <field name="object"></field>
+        <field name="field"></field>
+        <field name="domain"></field>
+        <field name="account_move_field"></field>
+        <field name="account_move_line_field"></field>
+        <field name="decimal_sign">,</field>
+        <field name="date_format"></field>
+        <field name="skip_at"></field>
+        <field name="default"></field>
+    </record>
+    <record id="assignment_general_reversal" model="syscoon.datev.import.assignment">
+        <field name="name">General Reversal</field>
+        <field name="type">general_reversal</field>
+        <field name="field_type">string</field>
+        <field name="object"></field>
+        <field name="field"></field>
+        <field name="domain"></field>
+        <field name="account_move_field"></field>
+        <field name="account_move_line_field"></field>
+        <field name="decimal_sign"></field>
+        <field name="date_format"></field>
+        <field name="skip_at"></field>
+        <field name="default"></field>
+    </record>
+
+    <!-- Import Config Rows -->
+    <record id="umsatz" model="syscoon.datev.import.config.rows">
+        <field name="name">Umsatz (ohne Soll/Haben-Kz)</field>
+        <field name="assignment_type" ref="assignment_amount"/>
+        <field name="required" eval="True"/>
+    </record>
+    <record id="sollhaben" model="syscoon.datev.import.config.rows">
+        <field name="name">Soll/Haben-Kennzeichen</field>
+        <field name="assignment_type" ref="assignment_move_sign"/>
+        <field name="required" eval="True"/>
+    </record>
+    <record id="wkz_umsatz" model="syscoon.datev.import.config.rows">
+        <field name="name">WKZ Umsatz</field>
+        <field name="assignment_type" ref="assignment_move_currency"/>
+    </record>
+    <record id="basis_umsatz" model="syscoon.datev.import.config.rows">
+        <field name="name">Basis-Umsatz</field>
+        <field name="assignment_type" ref="assignment_move_base_amount"/>
+    </record>
+    <record id="konto" model="syscoon.datev.import.config.rows">
+        <field name="name">Konto</field>
+        <field name="assignment_type" ref="assignment_account"/>
+        <field name="required" eval="True"/>
+    </record>
+    <record id="gegenkonto" model="syscoon.datev.import.config.rows">
+        <field name="name">Gegenkonto (ohne BU-Schlüssel)</field>
+        <field name="assignment_type" ref="assignment_counteraccount"/>
+        <field name="required" eval="True"/>
+    </record>
+    <record id="buschluessel" model="syscoon.datev.import.config.rows">
+        <field name="name">BU-Schlüssel</field>
+        <field name="assignment_type" ref="assignment_tax_key"/>
+    </record>
+    <record id="belegdatum" model="syscoon.datev.import.config.rows">
+        <field name="name">Belegdatum</field>
+        <field name="assignment_type" ref="assignment_move_date"/>
+        <field name="required" eval="True"/>
+    </record>
+    <record id="beleg1" model="syscoon.datev.import.config.rows">
+        <field name="name">Belegfeld 1</field>
+        <field name="assignment_type" ref="assignment_move_name"/>
+        <field name="required" eval="False"/>
+    </record>
+    <record id="skonto" model="syscoon.datev.import.config.rows">
+        <field name="name">Skonto</field>
+        <field name="assignment_type" ref="assignment_discount_amount"/>
+    </record>
+    <record id="buchungstext" model="syscoon.datev.import.config.rows">
+        <field name="name">Buchungstext</field>
+        <field name="assignment_type" ref="assignment_move_ref"/>
+    </record>
+    <record id="kost1" model="syscoon.datev.import.config.rows">
+        <field name="name">KOST1 - Kostenstelle</field>
+        <field name="assignment_type" ref="assignment_analytic_account"/>
+    </record>
+    <record id="kost2" model="syscoon.datev.import.config.rows">
+        <field name="name">KOST2 - Kostenstelle</field>
+        <field name="assignment_type" ref="assignment_analytic_tags"/>
+    </record>
+    <record id="general_reverse" model="syscoon.datev.import.config.rows">
+        <field name="name">Generalumkehr (GU)</field>
+        <field name="assignment_type" ref="assignment_analytic_tags"/>
+    </record>
+
+</odoo>

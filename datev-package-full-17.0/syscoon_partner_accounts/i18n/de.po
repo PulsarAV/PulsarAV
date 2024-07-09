@@ -1,0 +1,197 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* syscoon_partner_accounts
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 17.0+e-20231215\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-01-04 10:14+0000\n"
+"PO-Revision-Date: 2024-01-04 10:14+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: syscoon_partner_accounts
+#: model_terms:ir.ui.view,arch_db:syscoon_partner_accounts.res_config_settings_view_form
+msgid "Activate Debit- and Credit Account Generation"
+msgstr "Aktiviere Debitoren- und Kreditorenkontengenerierung"
+
+#. module: syscoon_partner_accounts
+#: model_terms:ir.ui.view,arch_db:syscoon_partner_accounts.res_config_settings_view_form
+msgid ""
+"Activate the Account Generation for this company. If activated, all options "
+"include the menu entries will be visible."
+msgstr ""
+"Die Kontengenerierung für dieses Unternehmen aktivieren. Wenn aktiviert, "
+"werden alle Optionen einschließlich der Menüeinträge sichtbar."
+
+#. module: syscoon_partner_accounts
+#: model:ir.model.fields,field_description:syscoon_partner_accounts.field_res_company__auto_account_creation
+#: model:ir.model.fields,field_description:syscoon_partner_accounts.field_res_config_settings__auto_account_creation
+#: model:ir.model.fields,field_description:syscoon_partner_accounts.field_res_partner__auto_account_creation
+#: model:ir.model.fields,field_description:syscoon_partner_accounts.field_res_users__auto_account_creation
+msgid "Auto Account Creation"
+msgstr "Automatische Kontenerzeugung"
+
+#. module: syscoon_partner_accounts
+#: model:ir.model,name:syscoon_partner_accounts.model_res_company
+msgid "Companies"
+msgstr "Unternehmen"
+
+#. module: syscoon_partner_accounts
+#: model:ir.model,name:syscoon_partner_accounts.model_res_config_settings
+msgid "Config Settings"
+msgstr "Konfigurationseinstellungen"
+
+#. module: syscoon_partner_accounts
+#: model:ir.model,name:syscoon_partner_accounts.model_res_partner
+msgid "Contact"
+msgstr "Kontakt"
+
+#. module: syscoon_partner_accounts
+#: model_terms:ir.ui.view,arch_db:syscoon_partner_accounts.syscoon_partern_accounts_partner_form
+msgid "Create Creditor Account"
+msgstr "Erselle Kreditorenkonto"
+
+#. module: syscoon_partner_accounts
+#: model_terms:ir.ui.view,arch_db:syscoon_partner_accounts.syscoon_partern_accounts_partner_form
+msgid "Create Debitor Account"
+msgstr "Erstelle Debitorenkonto"
+
+#. module: syscoon_partner_accounts
+#: model_terms:ir.ui.view,arch_db:syscoon_partner_accounts.res_config_settings_view_form
+msgid "Create Payable Sequence"
+msgstr "Erstelle Kreditorensequenz"
+
+#. module: syscoon_partner_accounts
+#: model_terms:ir.ui.view,arch_db:syscoon_partner_accounts.res_config_settings_view_form
+msgid "Create Receivable Sequence"
+msgstr "Erstelle Debitorensequenz"
+
+#. module: syscoon_partner_accounts
+#: model_terms:ir.ui.view,arch_db:syscoon_partner_accounts.syscoon_partern_accounts_partner_form
+msgid "Creates a new Creditor Account if it does not exist yet."
+msgstr "Erstell ein neues Kreditorenkonto, wenn es noch nicht existiert."
+
+#. module: syscoon_partner_accounts
+#: model_terms:ir.ui.view,arch_db:syscoon_partner_accounts.syscoon_partern_accounts_partner_form
+msgid "Creates a new Debitor Account if it does not exist yet."
+msgstr "Erstellt ein neues Debitorenkonto, wenn es noch nicht existiert."
+
+#. module: syscoon_partner_accounts
+#: model_terms:ir.ui.view,arch_db:syscoon_partner_accounts.res_config_settings_view_form
+msgid "Creates a new payable sequence if it does not exist yet."
+msgstr "Erstellt eine neue Kreditorensequenz, wenn sie noch nicht existiert."
+
+#. module: syscoon_partner_accounts
+#: model_terms:ir.ui.view,arch_db:syscoon_partner_accounts.res_config_settings_view_form
+msgid "Creates a new receivable sequence if it does not exist yet."
+msgstr "Erstellt eine neue Debitorensequenz, wenn sie noch nicht existiert."
+
+#. module: syscoon_partner_accounts
+#: model:ir.model.fields,field_description:syscoon_partner_accounts.field_res_partner__creditor_number
+#: model:ir.model.fields,field_description:syscoon_partner_accounts.field_res_users__creditor_number
+msgid "Creditor Number"
+msgstr "Kreditorennummer"
+
+#. module: syscoon_partner_accounts
+#: model:ir.model.fields,field_description:syscoon_partner_accounts.field_res_partner__debitor_number
+#: model:ir.model.fields,field_description:syscoon_partner_accounts.field_res_users__debitor_number
+msgid "Debitor Number"
+msgstr "Debitorennummer"
+
+#. module: syscoon_partner_accounts
+#: model_terms:ir.ui.view,arch_db:syscoon_partner_accounts.syscoon_partern_accounts_partner_form
+msgid "Finance Interface Debitor- and Creditor Numbers"
+msgstr "Finanzschnittstelle Debitoren- und Kreditorennummern"
+
+#. module: syscoon_partner_accounts
+#: model:ir.model.fields,field_description:syscoon_partner_accounts.field_res_company__payable_template_id
+#: model:ir.model.fields,field_description:syscoon_partner_accounts.field_res_config_settings__payable_template_id
+msgid "Payable Account Template"
+msgstr "Lieferantenkontenvorlage"
+
+#. module: syscoon_partner_accounts
+#: model:ir.model.fields,field_description:syscoon_partner_accounts.field_res_company__payable_sequence_id
+#: model:ir.model.fields,field_description:syscoon_partner_accounts.field_res_config_settings__payable_sequence_id
+msgid "Payable Sequence"
+msgstr "Kreditorensequenz"
+
+#. module: syscoon_partner_accounts
+#: model_terms:ir.ui.view,arch_db:syscoon_partner_accounts.res_config_settings_view_form
+msgid ""
+"Payable account template, only necessary if 'Use separate accounts' is set "
+"to true."
+msgstr ""
+"Kreditorenkontenvorlage, nur notwendig, wenn 'Verwendung von separaten "
+"Konten aktiviert wurde."
+
+#. module: syscoon_partner_accounts
+#: model_terms:ir.ui.view,arch_db:syscoon_partner_accounts.res_config_settings_view_form
+msgid "Payable sequence for generating the credit account number."
+msgstr "Kontennummernseequenz für die Generierung des Kreditorenkontos."
+
+#. module: syscoon_partner_accounts
+#: model:ir.model.fields,field_description:syscoon_partner_accounts.field_res_company__receivable_template_id
+#: model:ir.model.fields,field_description:syscoon_partner_accounts.field_res_config_settings__receivable_template_id
+msgid "Receivable Account Template"
+msgstr "Debitoren-Vorlage"
+
+#. module: syscoon_partner_accounts
+#: model:ir.model.fields,field_description:syscoon_partner_accounts.field_res_company__receivable_sequence_id
+#: model:ir.model.fields,field_description:syscoon_partner_accounts.field_res_config_settings__receivable_sequence_id
+msgid "Receivable Sequence"
+msgstr "Debitorensequenz"
+
+#. module: syscoon_partner_accounts
+#: model_terms:ir.ui.view,arch_db:syscoon_partner_accounts.res_config_settings_view_form
+msgid ""
+"Receivable account template, only necessary if 'Use separate accounts' is "
+"set to true."
+msgstr ""
+"Debitorenkontenvorlage, nur notwendig, wenn 'Verwendung von separaten "
+"Konten aktiviert wurde."
+
+#. module: syscoon_partner_accounts
+#: model_terms:ir.ui.view,arch_db:syscoon_partner_accounts.res_config_settings_view_form
+msgid "Receivable sequence for generating the debit account number."
+msgstr "Kontennummernseequenz für die Generierung des Debitorenkontos."
+
+#. module: syscoon_partner_accounts
+#: model_terms:ir.ui.view,arch_db:syscoon_partner_accounts.syscoon_partern_accounts_partner_form
+msgid "This will create a new Creditor Account."
+msgstr "die wird ein neues Kreditorenkonto erzeugen."
+
+#. module: syscoon_partner_accounts
+#: model_terms:ir.ui.view,arch_db:syscoon_partner_accounts.syscoon_partern_accounts_partner_form
+msgid "This will create a new Debitor Account."
+msgstr "Dies wird ein neues Debitorenkonto erzeugen."
+
+#. module: syscoon_partner_accounts
+#: model:ir.model.fields,field_description:syscoon_partner_accounts.field_res_company__use_separate_accounts
+#: model:ir.model.fields,field_description:syscoon_partner_accounts.field_res_config_settings__use_separate_accounts
+msgid "Use Separate Accounts"
+msgstr "Separate Debitoren- und Kreditorenkonten erzeugen"
+
+#. module: syscoon_partner_accounts
+#: model_terms:ir.ui.view,arch_db:syscoon_partner_accounts.res_config_settings_view_form
+msgid ""
+"Use separate accounts in chart of accounts. Option is not prefered, because "
+"Odoo is handling it differently."
+msgstr ""
+"Verwendung von separaten Konten im Kontenplan. Diese Option wird nicht "
+"empfohlen, da Odoo dies anders handhabt."
+
+#. module: syscoon_partner_accounts
+#: model_terms:ir.ui.view,arch_db:syscoon_partner_accounts.res_config_settings_view_form
+msgid "Use separate debit and credit accounts"
+msgstr "Verwendung von separaten Debitoren- und Kreditorenkonten"
+
+#. module: syscoon_partner_accounts
+#: model_terms:ir.ui.view,arch_db:syscoon_partner_accounts.res_config_settings_view_form
+msgid "syscoon Automatic Account Generation"
+msgstr "syscoon Automatische Kontengenerierung"
