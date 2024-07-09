@@ -1,0 +1,105 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* schwarz_stock_rooms
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 17.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-07-09 07:39+0000\n"
+"PO-Revision-Date: 2024-07-09 07:39+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: schwarz_stock_rooms
+#: model:ir.model.fields,field_description:schwarz_stock_rooms.field_project_rooms__active
+msgid "Active"
+msgstr ""
+
+#. module: schwarz_stock_rooms
+#: model_terms:ir.actions.act_window,help:schwarz_stock_rooms.action_project_rooms
+msgid "Create a new rooms"
+msgstr "Lege neue Räume an"
+
+#. module: schwarz_stock_rooms
+#: model:ir.model.fields,field_description:schwarz_stock_rooms.field_project_rooms__create_uid
+msgid "Created by"
+msgstr "Erstellt von"
+
+#. module: schwarz_stock_rooms
+#: model:ir.model.fields,field_description:schwarz_stock_rooms.field_project_rooms__create_date
+msgid "Created on"
+msgstr "Erstellt am"
+
+#. module: schwarz_stock_rooms
+#: model:ir.model.fields,field_description:schwarz_stock_rooms.field_project_rooms__display_name
+msgid "Display Name"
+msgstr "Anzeigename"
+
+#. module: schwarz_stock_rooms
+#: model:ir.model.fields,field_description:schwarz_stock_rooms.field_project_rooms__id
+msgid "ID"
+msgstr ""
+
+#. module: schwarz_stock_rooms
+#: model:ir.model.fields,field_description:schwarz_stock_rooms.field_project_rooms__write_uid
+msgid "Last Updated by"
+msgstr "Zuletzt aktualisiert von"
+
+#. module: schwarz_stock_rooms
+#: model:ir.model.fields,field_description:schwarz_stock_rooms.field_project_rooms__write_date
+msgid "Last Updated on"
+msgstr "Zuletzt aktualisiert am"
+
+#. module: schwarz_stock_rooms
+#: model:ir.model,name:schwarz_stock_rooms.model_stock_lot
+msgid "Lot/Serial"
+msgstr "Los/Serie"
+
+#. module: schwarz_stock_rooms
+#: model:ir.model.fields,field_description:schwarz_stock_rooms.field_project_rooms__name
+msgid "Name"
+msgstr ""
+
+#. module: schwarz_stock_rooms
+#: model:ir.model,name:schwarz_stock_rooms.model_project_project
+msgid "Project"
+msgstr "Projekt"
+
+#. module: schwarz_stock_rooms
+#: model:ir.actions.act_window,name:schwarz_stock_rooms.action_project_rooms
+#: model:ir.model,name:schwarz_stock_rooms.model_project_rooms
+#: model:ir.model.fields,field_description:schwarz_stock_rooms.field_stock_lot__rooms_ids
+#: model:ir.ui.menu,name:schwarz_stock_rooms.menu_action_project_rooms
+#: model_terms:ir.ui.view,arch_db:schwarz_stock_rooms.view_project_rooms_form
+msgid "Project Rooms"
+msgstr "Projekträume"
+
+#. module: schwarz_stock_rooms
+#. odoo-javascript
+#: code:addons/schwarz_stock_rooms/static/src/xml/stock_traceability_report_backend.xml:0
+#: model:ir.model.fields,field_description:schwarz_stock_rooms.field_stock_move__room_id
+#: model:ir.model.fields,field_description:schwarz_stock_rooms.field_stock_move__room_ids
+#: model_terms:ir.ui.view,arch_db:schwarz_stock_rooms.report_stock_body_print
+#, python-format
+msgid "Room"
+msgstr "Raum"
+
+#. module: schwarz_stock_rooms
+#: model:ir.model.fields,field_description:schwarz_stock_rooms.field_project_project__rooms_ids
+msgid "Rooms"
+msgstr "Räume"
+
+#. module: schwarz_stock_rooms
+#: model:ir.model,name:schwarz_stock_rooms.model_stock_move
+msgid "Stock Move"
+msgstr "Lagerbuchung"
+
+#. module: schwarz_stock_rooms
+#: model:ir.model,name:schwarz_stock_rooms.model_stock_traceability_report
+msgid "Traceability Report"
+msgstr "Lieferverfolgungsbericht"
